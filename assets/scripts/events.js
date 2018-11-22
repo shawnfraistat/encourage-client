@@ -49,6 +49,13 @@ const onSignUp = event => {
   event.preventDefault()
   const target = $('#sign-up')[0]
   const data = getFormFields(target)
+  data.credentials.tags = ''
+  const checkBoxArray = $('.form-check-input')
+  for (let i = 0; i < checkBoxArray.length; i++) {
+    if (checkBoxArray[i].checked) {
+      data.credentials.tags += checkBoxArray[i].getAttribute('value') + ' '
+    }
+  }
   if (data.credentials.password === data.credentials.password_confirmation) {
     storeSignUpInfo(data)
     api.signUp(data)
