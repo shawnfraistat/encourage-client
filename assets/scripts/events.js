@@ -2,13 +2,55 @@
 
 /* This document is organized into the following sections:
 
-(1) SIGN IN/OUT/UP Events
-(2) */
+(1) ADVICE Events
+(2) ENCOURAGE BUTTON Events
+(3) SIGN IN/OUT/UP Events */
 
 const api = require('./api.js')
 const getFormFields = require('../../lib/get-form-fields.js')
 const store = require('./store.js')
 const ui = require('./ui.js')
+
+/////////////////////
+//                 //
+//  ADVICE Events  //
+//                 //
+/////////////////////
+
+const onAdviceSubmission = event => {
+  event.preventDefault()
+  const data = {
+    advice: {
+      approved: false,
+      content: '',
+      user_id: store.user.id,
+      tags: '',
+      upvotes: 0
+    }
+  }
+  data.advice.content = $('#submission-text').val()
+  const checkBoxArray = $('.encourage-form-check-input')
+  for (let i = 0; i < checkBoxArray.length; i++) {
+    if (checkBoxArray[i].checked) {
+      data.advice.tags += checkBoxArray[i].getAttribute('value') + ' '
+    }
+  }
+  if (data.advice.content === '') {
+    ui.submitContentFailure('contentError')
+  } else if (data.advice.tags === '') {
+    ui.submitContentFailure('noTags')
+  } else {
+    api.submitAdviceToAPI(data)
+      .then(ui.handleAdviceSubmissionSuccess)
+      .catch(ui.handleAdviceSubmissionFailure)
+  }
+}
+
+///////////////////////////////
+//                           //
+//  ENCOURAGE BUTTON Events  //
+//                           //
+///////////////////////////////
 
 const onFirstEncourageClick = event => {
   event.preventDefault()
@@ -16,7 +58,7 @@ const onFirstEncourageClick = event => {
 }
 
 const onLoggedInEncourageClick = event => {
-  console.log("Clicked on ENCOURAGE button when logged in")
+// $('#submitAdviceModal').modal('show')
 }
 
 const switchEncourageButtonToAdvice = () => {
@@ -35,8 +77,8 @@ const switchEncourageButtonToLogIn = () => {
 //                         //
 /////////////////////////////
 
-// onSignIn() is called when the player submits the sign-in form; it collects the info
-// from logInModal and passes it to the API
+// onSignIn() is called when the player submits the sign-in form;
+// it collects the info from logInModal and passes it to the API
 const onSignIn = event => {
   event.preventDefault()
   const target = $('#sign-in')[0]
@@ -48,7 +90,7 @@ const onSignIn = event => {
     .catch(ui.handleSignInFailure)
 }
 
-// onSignOut() is called when the player clicks the sign-out nav button
+// onSignOut() is called when the player clicks the sign-out nav item
 const onSignOut = event => {
   event.preventDefault()
   api.signOut()
@@ -57,8 +99,8 @@ const onSignOut = event => {
     .catch(ui.handleSignOutFailure)
 }
 
-// onSignUp() is called when the player submits the sign-up form; it collects the info
-// from logInModal and passes it to the API
+// onSignUp() is called when the player submits the sign-up form;
+//  it collects the info from logInModal and passes it to the API
 const onSignUp = event => {
   event.preventDefault()
   const target = $('#sign-up')[0]
@@ -126,6 +168,8 @@ const storeSignUpInfo = data => {
 }
 
 module.exports = {
+  // ADVICE Events
+  onAdviceSubmission,
   onFirstEncourageClick,
   // SIGN IN/OUT/UP Events
   onSignIn,

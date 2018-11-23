@@ -126,7 +126,49 @@
           </div>
         </div>
 
+        <!-- submitAdviceModal-->
+          <div class="modal fade" id="submitAdviceModal" role="dialog">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h4 class="modal-title" id="submitAdviceTitle">Submit Encouragement</h5>
+                  <button type="button" class="close" data-dismiss="modal">
+                    <span class='red modal-x'>x</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <br />
+                  <form id="submit-advice">
+                    <div class="form group">
+                        <fieldset>
+                          <h5 class="submit-advice-message"></h5>
+                          <textarea name="submission-text" id="submission-text" placeholder="Encouragement Text"></textarea>
+                          <div class="form-check form-check-inline">
+                            <input class="encourage-form-check-input" type="checkbox" id="inlineCheckbox4" value="general">
+                            <label class="form-check-label" for="inlineCheckbox1">General</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input class="encourage-form-check-input" type="checkbox" id="inlineCheckbox5" value="coding">
+                            <label class="form-check-label" for="inlineCheckbox2">Coding</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input class="encourage-form-check-input" type="checkbox" id="inlineCheckbox6" value="bleak">
+                            <label class="form-check-label" for="inlineCheckbox3">Bleak</label>
+                          </div>
+                          <button type="button" id="submit-advice-submit">Submit</button>
+                        </fieldset>
+                    </div>
+                  </form>
+                  <br />
+                </div>
+                <div class="modal-footer">
+                  <button type="button" id="user-view-done" data-dismiss="modal" class="btn btn-primary">Done</button>
+                </div>
+              </div>
+            </div>
+          </div>
 
+    <!-- main page body -->
       <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
 
         <header>
@@ -141,7 +183,7 @@
                 <li class="nav-item m-2 collapse" id="user-profile-nav-button" data-toggle="modal" data-target="#userViewModal">
                   User Profile
                 </li>
-                <li class="nav-item m-2 collapse" id="submit-encouragement-nav-button" data-toggle="modal" data-target="#encouragementViewModal">
+                <li class="nav-item m-2 collapse" id="submit-encouragement-nav-button" data-toggle="modal" data-target="#submitAdviceModal">
                   Submit Encouragement
                 </li>
                 <li class="nav-item m-2" id="login-nav-button" data-toggle="modal" data-target="#logInModal">

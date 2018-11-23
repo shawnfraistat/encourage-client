@@ -13,6 +13,19 @@ $peach: #fedcd2;
 $powder: #8fd8d2;
 $warm: #df744a;
 
+#submission-text {
+  width: 100%;
+  height: 50%;
+}
+
+.failure {
+  color: $vermillion;
+}
+
+.success {
+  color: $blue;
+}
+
 html,
 body {
   height: 100%;

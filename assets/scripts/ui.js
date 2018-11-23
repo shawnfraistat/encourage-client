@@ -2,15 +2,38 @@
 
 /* This document is organized into the following sections:
 
-(1) FORM rest
-
-(8) USER API Interactions */
+(1) ADVICE UI Functions
+(2) FORM Reset
+(3) SIGN-IN/UP View UI functions
+(4) USER API Interactions */
 
 const store = require('./store.js')
 
+////////////////////////////
+//                        //
+//  ADVICE UI Functions   //
+//                        //
+////////////////////////////
+
+const handleAdviceSubmissionFailure = () => {
+  $('.submit-advice-message').html(`<h5 class="submit-advice-message failure">Encouragement submission failed</h5>`)
+}
+
+const handleAdviceSubmissionSuccess = () => {
+  $('.submit-advice-message').html(`<h5 class="submit-advice-message success">Encouragement submitted!</h5>`)
+}
+
+const submitContentFailure = error => {
+  if (error === 'contentError') {
+    $('.submit-advice-message').html('<h5 class="submit-advice-message failure">Encouragement needs content</h5>')
+  } else if (error === 'noTags') {
+    $('.submit-advice-message').html('<h5 class="submit-advice-message failure">Need at least one tag</h5>')
+  }
+}
+
 ////////////////////
 //                //
-//  FORM  reset   //
+//  FORM  Reset   //
 //                //
 ////////////////////
 
@@ -22,13 +45,15 @@ const clearForms = () => {
   document.getElementById('sign-in').reset()
   $('.sign-in-message').html('<h5 class="sign-in-message"></h5>')
   document.getElementById('change-password').reset()
+  $('.submit-advice-message').html('<h5 class="submit-advice-message"></h5>')
+  document.getElementById('submit-advice').reset()
   $('.change-password-message').text('')
   $('#user-name').text('')
 }
 
 ////////////////////////////////////
 //                                //
-//  SIGN-IN/UP view UI functions  //
+//  SIGN-IN/UP View UI Functions  //
 //                                //
 ////////////////////////////////////
 
@@ -36,7 +61,7 @@ const clearForms = () => {
 const handleSignInSuccess = event => {
   $('#logInModalHeader').addClass('collapse')
   $('#navbar-content').addClass('collapse')
-  $('.sign-in-message').html(`<h4 class="sign-in-message">Signed in as <scan class="blue">${store.user.email}</scan></h4>`)
+  $('.sign-in-message').html(`<h4 class="sign-in-message">Signed in as <scan class="success">${store.user.email}</scan></h4>`)
   // $('#log-in-nav-button').toggleClass('collapse')
   $('#login-nav-button').addClass('collapse')
   $('#sign-out-nav-button').removeClass('collapse')
@@ -50,13 +75,13 @@ const handleSignInSuccess = event => {
 
 // handleSignInFailure() displays an error message if a sign-in attempt fails
 const handleSignInFailure = event => {
-  $('.sign-in-message').html('<h5 class="sign-in-message red">Sign in failed</h5>')
+  $('.sign-in-message').html('<h5 class="sign-in-message failure">Sign in failed</h5>')
 }
 
 // handleSignInAfterSignUpFailure() displays an error if the program fails when it
 // tries to automatically sign a user in after a successful sign up
 const handleSignInAfterSignUpFailure = event => {
-  $('.sign-in-message').html('<h5 class="sign-up-message red">Sign in after sign up failed</h5>')
+  $('.sign-in-message').html('<h5 class="sign-up-message failure">Sign in after sign up failed</h5>')
 }
 
 // handleSignInAfterSignUpSuccess() hides the logInModal if the program is able
@@ -84,14 +109,14 @@ const handleSignOutSuccess = () => {
 
 // handleSignOutFailure() displays an error if a sign-out attempt fails
 const handleSignOutFailure = event => {
-  $('.sign-out-message').html('<p class="red">Failed to sign out</p>')
+  $('.sign-out-message').html('<p class="failure">Failed to sign out</p>')
   console.log(event)
 }
 
 // handleSignUpSuccess() transforms the logInModal after the user successfully
 // signs up to display a confirmation and get ready for automatic sign-in
 const handleSignUpSuccess = event => {
-  $('.sign-up-message').html(`<h4 class="sign-up-message">New account created. Logged in as <scan class="blue">${store.user.email}</scan>.</h4>`)
+  $('.sign-up-message').html(`<h4 class="sign-up-message">New account created. Logged in as <scan class="success">${store.user.email}</scan>.</h4>`)
   $('#logInModalHeader').addClass('collapse')
   $('#sign-up').addClass('collapse')
   $('#sign-up-cancel').addClass('collapse')
@@ -101,7 +126,7 @@ const handleSignUpSuccess = event => {
 
 // handleSignUpFailure() displays an error if a sign-up attempt fails
 const handleSignUpFailure = event => {
-  $('.sign-up-message').html('<h5 class="sign-up-message red">Sign up failed</h5>')
+  $('.sign-up-message').html('<h5 class="sign-up-message failure">Sign up failed</h5>')
   console.log('Invalid sign up event', event)
 }
 
@@ -144,9 +169,13 @@ const switchToSignUp = function () {
 }
 
 module.exports = {
-  // FORM reset
+  // ADVICE UI Functions,
+  handleAdviceSubmissionFailure,
+  handleAdviceSubmissionSuccess,
+  submitContentFailure,
+  // FORM Reset
   clearForms,
-  // SIGN-IN/UP view UI functions
+  // SIGN-IN/UP View UI Functions
   handleSignInSuccess,
   handleSignInFailure,
   handleSignInAfterSignUpFailure,
@@ -159,7 +188,7 @@ module.exports = {
   resetLogInModal,
   switchToSignIn,
   switchToSignUp
-  // USER view UI functions
+  // USER View UI Functions
   // handleChangePasswordFailure,
   // handleChangePasswordMismatchingPasswords,
   // handleChangePasswordSuccess,

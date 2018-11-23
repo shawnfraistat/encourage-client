@@ -16,6 +16,7 @@ $(() => {
   $('#sign-out-submit').on('click', events.onSignOut)
   $('#sign-up-submit').on('click', events.onSignUp)
   $('#sign-up-continue').on('click', events.onSignUpContinue)
+  $('#submit-advice-submit').on('click', events.onAdviceSubmission)
   $('.switch-to-sign-in').on('click', events.onSwitchToSignIn)
   $('.switch-to-sign-up').on('click', events.onSwitchToSignUp)
   $('#user-view-done').on('click', ui.clearForms)

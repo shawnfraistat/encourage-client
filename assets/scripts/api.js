@@ -14,7 +14,17 @@ const store = require('./store.js')
 //                      //
 //////////////////////////
 
-
+const submitAdviceToAPI = data => {
+  console.log('Inside submitAdviceToAPI--data is', data)
+  return $.ajax({
+    url: config.apiUrl + '/advices',
+    method: 'POST',
+    data,
+    headers: {
+      Authorization: 'Token token=' + store.user.token
+    }
+  })
+}
 
 ////////////////////////
 //                    //
@@ -65,8 +75,9 @@ const signUp = data => {
 }
 
 module.exports = {
-// ADVICE API action
-// USER API actions
+  // ADVICE API action
+  submitAdviceToAPI,
+  // USER API actions
   changePassword,
   signIn,
   signOut,
