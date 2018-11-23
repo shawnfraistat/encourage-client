@@ -59,16 +59,52 @@ div {
 }
 
 #encourage-button {
+  display: float;
+  position: absolute;
+  top: 38%;
   border: solid grey 10px;
   border-radius: 300px;
   font-family: 'Josefin Sans', sans-serif;
   // font-family: 'Nunito', sans-serif;
   margin: 0 auto;
-  width: 75%;
+  width: 40%;
+
+  &:hover {
+    background-color: $yellow;
+  }
 }
 
 h1 {
   font-size: 80px;
+}
+
+li {
+  &:hover {
+    // text-decoration: underline;
+    background-color: $warm;
+    color: white;
+  }
+}
+
+.navbar-toggler-icon {
+  background-image: url('https://mdbootstrap.com/img/svg/hamburger1.svg?color=df744a');
+}
+
+.navbar-collapse {
+  background-color: $yellow;
+  display: float;
+  float: right;
+  margin: 0;
+  width: 35%;
+  font-weight: 800;
+  font-size: 20px;
+  color: grey;
+  // text-shadow: 1px 1px $black;
+  text-align: right;
+}
+
+ul {
+  padding: 5px;
 }
 
 // .top-dash {

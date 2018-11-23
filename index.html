@@ -130,20 +130,28 @@
       <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
 
         <header>
-          <nav class="navbar justify-content-end">
-            <button type="button" class="navbar-btn btn btn-colored m-1 collapse" data-toggle="modal" data-target="#userViewModal">
-              User Profile
-            </button>
-            <button type="button" class="navbar-btn btn btn-colored m-1 collapse" data-toggle="modal" data-target="#encouragementViewModal">
-              Submit Encouragement
-            </button>
-            <!-- <button type="button" class="navbar-btn btn btn-colored m-1" data-toggle="modal" data-target="#logInModal">
-              Log In
-            </button> -->
-            <button type="button" class="navbar-btn btn btn-colored m-1 collapse" data-toggle="modal" data-target="#signOutModal">
-              Sign Out
-            </button>
-          </nav>
+            <nav class="navbar justify-content-end">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-content"
+    aria-controls="navbarSupportedContent15" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+
+
+            </nav>
+            <div class="collapse navbar-collapse" id="navbar-content">
+              <ul class="navbar-nav mr-auto">
+                <li class="nav-item m-2 collapse" id="user-profile-nav-button" data-toggle="modal" data-target="#userViewModal">
+                  User Profile
+                </li>
+                <li class="nav-item m-2 collapse" id="submit-encouragement-nav-button" data-toggle="modal" data-target="#encouragementViewModal">
+                  Submit Encouragement
+                </li>
+                <li class="nav-item m-2" id="login-nav-button" data-toggle="modal" data-target="#logInModal">
+                  Log In
+                </li>
+                <li class="nav-item m-2 collapse" id="sign-out-nav-button"  data-toggle="modal" data-target="#signOutModal">
+                  Sign Out
+                </li>
+              </ul>
+            </div>
         </header>
 
         <main role="main">

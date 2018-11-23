@@ -35,10 +35,13 @@ const clearForms = () => {
 // handleSignInSuccess() transforms the logInModal to display a confirmation that the user signed in successfully
 const handleSignInSuccess = event => {
   $('#logInModalHeader').addClass('collapse')
+  $('#navbar-content').addClass('collapse')
   $('.sign-in-message').html(`<h4 class="sign-in-message">Signed in as <scan class="blue">${store.user.email}</scan></h4>`)
   // $('#log-in-nav-button').toggleClass('collapse')
-  $('#sign-out-nav-button').addClass('collapse')
-  $('#user-profile-nav-button').addClass('collapse')
+  $('#login-nav-button').addClass('collapse')
+  $('#sign-out-nav-button').removeClass('collapse')
+  $('#user-profile-nav-button').removeClass('collapse')
+  $('#submit-encouragement-nav-button').removeClass('collapse')
   $('#sign-in').addClass('collapse')
   $('#sign-in-cancel').addClass('collapse')
   $('#sign-in-submit').addClass('collapse')
@@ -60,16 +63,23 @@ const handleSignInAfterSignUpFailure = event => {
 // to sign the user in automatically following a successful sign up
 const handleSignInAfterSignUpSuccess = event => {
   $('#logInModal').modal('hide')
+  $('#navbar-content').addClass('collapse')
+  $('#login-nav-button').addClass('collapse')
+  $('#sign-out-nav-button').removeClass('collapse')
+  $('#user-profile-nav-button').removeClass('collapse')
+  $('#submit-encouragement-nav-button').removeClass('collapse')
 }
 
 // handleSignOutSuccess() clears local data in store.js and resets the view if
 // the user successfully signs out
 const handleSignOutSuccess = () => {
-  $('#signOutModal').modal('hide')
   store.user = {}
-  $('#log-in-nav-button').toggleClass('collapse')
-  $('#sign-out-nav-button').toggleClass('collapse')
-  $('#user-profile-nav-button').toggleClass('collapse')
+  $('#signOutModal').modal('hide')
+  $('#navbar-content').addClass('collapse')
+  $('#login-nav-button').removeClass('collapse')
+  $('#sign-out-nav-button').addClass('collapse')
+  $('#user-profile-nav-button').addClass('collapse')
+  $('#submit-encouragement-nav-button').addClass('collapse')
 }
 
 // handleSignOutFailure() displays an error if a sign-out attempt fails
@@ -83,8 +93,6 @@ const handleSignOutFailure = event => {
 const handleSignUpSuccess = event => {
   $('.sign-up-message').html(`<h4 class="sign-up-message">New account created. Logged in as <scan class="blue">${store.user.email}</scan>.</h4>`)
   $('#logInModalHeader').addClass('collapse')
-  $('#sign-out-nav-button').toggleClass('collapse')
-  $('#user-profile-nav-button').toggleClass('collapse')
   $('#sign-up').addClass('collapse')
   $('#sign-up-cancel').addClass('collapse')
   $('#sign-up-submit').addClass('collapse')

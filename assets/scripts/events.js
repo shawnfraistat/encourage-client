@@ -10,11 +10,23 @@ const getFormFields = require('../../lib/get-form-fields.js')
 const store = require('./store.js')
 const ui = require('./ui.js')
 
-
-
 const onFirstEncourageClick = event => {
   event.preventDefault()
   $('#logInModal').modal('show')
+}
+
+const onLoggedInEncourageClick = event => {
+  console.log("Clicked on ENCOURAGE button when logged in")
+}
+
+const switchEncourageButtonToAdvice = () => {
+  $('#encourage-button').off('click', onFirstEncourageClick)
+  $('#encourage-button').on('click', onLoggedInEncourageClick)
+}
+
+const switchEncourageButtonToLogIn = () => {
+  $('#encourage-button').off('click', onLoggedInEncourageClick)
+  $('#encourage-button').on('click', onFirstEncourageClick)
 }
 
 /////////////////////////////
@@ -31,6 +43,7 @@ const onSignIn = event => {
   const data = getFormFields(target)
   api.signIn(data)
     .then(storeSignInInfo)
+    .then(switchEncourageButtonToAdvice)
     .then(ui.handleSignInSuccess)
     .catch(ui.handleSignInFailure)
 }
@@ -39,6 +52,7 @@ const onSignIn = event => {
 const onSignOut = event => {
   event.preventDefault()
   api.signOut()
+    .then(switchEncourageButtonToLogIn)
     .then(ui.handleSignOutSuccess)
     .catch(ui.handleSignOutFailure)
 }
@@ -77,6 +91,7 @@ const onSignUpContinue = data => {
   }
   api.signIn(newCredentials)
     .then(storeSignInInfo)
+    .then(switchEncourageButtonToAdvice)
     .then(ui.handleSignInAfterSignUpSuccess)
     .catch(ui.handleSignInAfterSignUpFailure)
 }
