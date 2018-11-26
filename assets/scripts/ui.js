@@ -128,11 +128,12 @@ const handleSignInAfterSignUpSuccess = event => {
 const handleSignOutSuccess = () => {
   store.user = {}
   $('#signOutModal').modal('hide')
-  $('#navbar-content').addClass('collapse')
   $('#login-nav-button').removeClass('collapse')
   $('#sign-out-nav-button').addClass('collapse')
   $('#user-profile-nav-button').addClass('collapse')
   $('#submit-encouragement-nav-button').addClass('collapse')
+  $('#advice-display').html('')
+  // $('#navbar-content').removeClass('show')
 }
 
 // handleSignOutFailure() displays an error if a sign-out attempt fails
