@@ -160,6 +160,7 @@ h5 {
   color: $black;
   font-weight: 500;
   border-radius: 0;
+  width: 600px;
 }
 
 .modal-body {
@@ -195,6 +196,10 @@ h5 {
   color: $grey;
   text-align: right;
   z-index: 100;
+}
+
+th {
+  font-size: 16px;
 }
 
 ul {
@@ -270,6 +275,23 @@ scan {
     color: $warm;
     text-decoration: underline;
   }
+}
+
+.submission-table {
+  height: 150px;
+  overflow-y: scroll;
+}
+
+.delete-modal-content {
+  position: relative;
+  left: 150px;
+  width: 275px;
+}
+
+.delete-modal-body {
+  padding: 2px;
+  display: flex;
+  justify-content: space-around;
 }
 
 #submission-text {

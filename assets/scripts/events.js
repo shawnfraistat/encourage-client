@@ -4,7 +4,8 @@
 
 (1) ADVICE Events
 (2) ENCOURAGE BUTTON Events
-(3) SIGN IN/OUT/UP Events */
+(3) SIGN IN/OUT/UP Events
+(4) USER View Events */
 
 const api = require('./api.js')
 const getFormFields = require('../../lib/get-form-fields.js')
@@ -183,6 +184,50 @@ const storeSignUpInfo = data => {
   return data
 }
 
+////////////////////////
+//                    //
+//  USER View Events  //
+//                    //
+////////////////////////
+
+const addDeleteHandlers = () => {
+  $('.delete-advice').on('click', onDeleteAdvice)
+}
+
+// onChangePassword() fires when the player clicks submit on the change password submit button in the USER view
+const onChangePasswordSubmit = event => {
+  event.preventDefault()
+  const target = $('#change-password')[0]
+  const data = getFormFields(target)
+  if (data.passwords.new === data.passwords.confirm_new) {
+    api.changePassword(data)
+      .done(ui.handleChangePasswordSuccess(data.passwords.new))
+      .fail(ui.handleChangePasswordFailure)
+  } else {
+    ui.handleChangePasswordMismatchingPasswords()
+  }
+}
+
+const onShowUserView = () => {
+  api.getUserAdvicesFromAPI()
+    .then(ui.showUserView)
+    .then(addDeleteHandlers)
+    .catch(console.log)
+}
+
+const onDeleteAdvice = event => {
+  console.log('inside onDeleteAdvice')
+  $('#deleteConfirmModal').modal('show')
+  event.preventDefault()
+}
+
+const onDeleteConfirm = event => {
+  event.preventDefault()
+  api.deleteAdviceFromAPI(event.currentTarget.id)
+    .then(ui.refreshUserView)
+    .catch(console.log)
+}
+
 module.exports = {
   // ADVICE Events
   onAdviceSubmission,
@@ -195,5 +240,9 @@ module.exports = {
   onSignUp,
   onSignUpContinue,
   onSwitchToSignIn,
-  onSwitchToSignUp
+  onSwitchToSignUp,
+  // USER View Events
+  onChangePasswordSubmit,
+  onDeleteConfirm,
+  onShowUserView
 }

@@ -20,5 +20,6 @@ $(() => {
   $('.switch-to-sign-in').on('click', events.onSwitchToSignIn)
   $('.switch-to-sign-up').on('click', events.onSwitchToSignUp)
   $('#user-view-done').on('click', ui.clearForms)
-  $('#userViewModal').on('show.bs.modal', ui.showUserView)
+  $('#userViewModal').on('show.bs.modal', events.onShowUserView)
+  $('#delete-item-submit').on('click', events.onDeleteConfirm)
 })

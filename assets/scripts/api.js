@@ -34,11 +34,31 @@ const getAdviceFromAPI = () => {
   })
 }
 
+const getUserAdvicesFromAPI = () => {
+  return $.ajax({
+    url: config.apiUrl + '/users/' + store.user.id,
+    method: 'GET',
+    headers: {
+      Authorization: 'Token token=' + store.user.token
+    }
+  })
+}
+
 const submitAdviceToAPI = data => {
   return $.ajax({
     url: config.apiUrl + '/advices',
     method: 'POST',
     data,
+    headers: {
+      Authorization: 'Token token=' + store.user.token
+    }
+  })
+}
+
+const deleteAdviceFromAPI = data => {
+  return $.ajax({
+    url: config.apiUrl + '/advices/' + data.id,
+    method: 'DELETE',
     headers: {
       Authorization: 'Token token=' + store.user.token
     }
@@ -96,7 +116,9 @@ const signUp = data => {
 module.exports = {
   // ADVICE API action
   addUpvote,
+  deleteAdviceFromAPI,
   getAdviceFromAPI,
+  getUserAdvicesFromAPI,
   submitAdviceToAPI,
   // USER API actions
   changePassword,

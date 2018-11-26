@@ -93,7 +93,8 @@
       </div>
 
       <!-- userViewModal-->
-        <div class="modal fade" id="userViewModal" role="dialog">
+
+        <div class="modal fade user-view-modal" id="userViewModal" role="dialog">
           <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
               <div class="modal-header">
@@ -108,12 +109,17 @@
                 <form id="change-password">
                   <div class="form group">
                       <fieldset>
-                        <legend>Change Password</legend>
+                        <h5>Change Password</h5>
                         <h5 class="change-password-message"></h5>
                         <input type="password" name="passwords[old]" placeholder="Current Password" />
                         <input type="password" name="passwords[new]" placeholder="New Password" />
                         <input type="password" name="passwords[confirm_new]" placeholder="Confirm New" />
                         <button type="button" id="change-password-submit">Submit</button>
+                      </fieldset>
+                      <fieldset>
+                        <h5>Your Submissions</h5>
+                        <h5 class="your-submissions-message"></h5>
+                        <div class="your-submissions-field"></div>
                       </fieldset>
                   </div>
                 </form>
@@ -126,7 +132,24 @@
           </div>
         </div>
 
+        <!-- deleteConfirmModal-->
+
+        <div class="modal fadel" id="deleteConfirmModal" role="dialog">
+          <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content delete-modal-content">
+              <div class="modal-body delete-modal-body">
+                <h5 class="modal-title" id="deleteConfirmModalTitle">
+                  Delete This Item?
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">&times;</button>
+                    <button type="button" id="delete-item-submit" class="btn btn-primary">&#10004;</button>
+                </h5>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <!-- submitAdviceModal-->
+
           <div class="modal fade" id="submitAdviceModal" role="dialog">
             <div class="modal-dialog modal-dialog-centered" role="document">
               <div class="modal-content">
@@ -144,6 +167,7 @@
                           <h5 class="submit-advice-message"></h5>
                           <textarea name="submission-text" rows="4" maxlength="150" id="submission-text" placeholder="Encouragement Text"></textarea>
                           <p class="grey">150 character limit</p>
+                          <p class="select-tags-text">Select Tags:</p>
                           <div class="form-check form-check-inline">
                             <input class="encourage-form-check-input" type="checkbox" id="inlineCheckbox4" value="general">
                             <label class="form-check-label" for="inlineCheckbox1">General</label>
@@ -169,8 +193,7 @@
             </div>
           </div>
 
-    <!-- main page body -->
-
+      <!-- main page body -->
 
         <header>
             <nav class="navbar justify-content-end">

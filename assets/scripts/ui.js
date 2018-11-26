@@ -197,6 +197,72 @@ const switchToSignUp = function () {
   $('#logInModalTitle').text('Sign Up')
 }
 
+
+//////////////////////////////
+//                          //
+//  USER View UI Functions  //
+//                          //
+//////////////////////////////
+
+// handleChangePasswordFailure() displays an error message if the attempt to
+// change a user's password on the API failed
+const handleChangePasswordFailure = function () {
+  $('.change-password-message').html('<h6 class="change-password-message red">Invalid password</h6>')
+}
+
+// handleChangePasswordMismatchingPasswords() displays an error if the user
+// tries to change their password, and the new password and
+// new password confirmation fields don't match
+const handleChangePasswordMismatchingPasswords = function () {
+  $('.change-password-message').html('<h6 class="change-password-message red">New passwords do not match</h6>')
+}
+
+// handleChangePasswordSuccess() displays a message when the user successfully
+// changes their password
+const handleChangePasswordSuccess = function (newPassword) {
+  store.user.password = newPassword
+  $('.change-password-message').html('<h6 class="change-password-message blue">Password changed</h6>')
+}
+
+const refreshUserView = () => {
+  $('#deleteConfirmModal').modal('hide')
+}
+
+const showUserView = advices => {
+  console.log('advices is', advices)
+  let newHTML = ''
+  newHTML += `
+  <table class="table text-center table-responsive submission-table">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Content</th>
+        <th scope="col">Tags</th>
+        <th scope="col">Upvotes</th>
+        <th scope="col">Approved?</th>
+        <th scope="col">Delete?</th>
+      </tr>
+    </thead>
+    <tbody`
+  let i = 0
+  advices.advices.forEach((element) => {
+    i++
+    newHTML += `
+      <tr>
+        <th scope="row">${i}</th>
+        <td>${element.content.slice(0, 9)}</td>
+        <td>${element.tags.split(' ').join(', ').slice(0, -2)}</td>
+        <td>${element.upvotes}</td>
+        <td>${element.approved}</td>
+        <td style="width: 22px;"><img src="assets/images/delete.ico" style="width: 20px;" id="${element.id}" class="delete-advice"></td>
+      </tr>
+    `
+  })
+  newHTML += `  </tbody>
+  </table>`
+  $('.your-submissions-field').html(newHTML)
+}
+
 module.exports = {
   // ADVICE UI Functions,
   displayAdvice,
@@ -218,11 +284,11 @@ module.exports = {
   handleSignOutFailure,
   resetLogInModal,
   switchToSignIn,
-  switchToSignUp
+  switchToSignUp,
   // USER View UI Functions
-  // handleChangePasswordFailure,
-  // handleChangePasswordMismatchingPasswords,
-  // handleChangePasswordSuccess,
-  // showUserView,
-  // updateHeader
+  handleChangePasswordFailure,
+  handleChangePasswordMismatchingPasswords,
+  handleChangePasswordSuccess,
+  refreshUserView,
+  showUserView
 }
