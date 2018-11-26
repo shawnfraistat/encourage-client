@@ -136,8 +136,8 @@ li {
 
 .navbar-collapse {
   background-color: $yellow;
-  display: float;
-  float: right;
+  position: absolute;
+  right: 0;
   margin: 0;
   width: 300px;
   font-weight: 800;
@@ -186,6 +186,7 @@ ul {
 
 footer {
   background-color: $yellow;
+  height: 56px;
 }
 
 scan {
