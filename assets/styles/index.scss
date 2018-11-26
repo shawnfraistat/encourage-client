@@ -4,6 +4,8 @@ $yellow: #ffce00;
 $blue: #0357b4;
 $green: #007849;
 $black: #262228;
+$white: #fff;
+$grey: #808080;
 
 $lightgreen: #4abdac;
 $vermillion: #fc4a1a;
@@ -11,11 +13,40 @@ $anotheryellow: #f7b733;
 $lemon: #dcb239;
 $peach: #fedcd2;
 $powder: #8fd8d2;
+$lesswarm: #e89b7d;
 $warm: #df744a;
 
-#submission-text {
-  width: 100%;
-  height: 50%;
+/* Container holding the image and the text */
+.master-container {
+  position: relative;
+  width: 70%;
+}
+
+/* Centered text */
+.centered {
+    position: absolute;
+    top: 37%;
+    left: 48%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    word-break: break-word;
+}
+
+.display-text {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  background-color: $white;
+  width: 400px;
+  height: 100px;
+  min-height: 10%;
+  min-width: 20%;
+}
+
+.cover-container {
+  align-items: center;
+  justify-content: center;
+  max-width: 800px;
 }
 
 .failure {
@@ -32,9 +63,9 @@ body {
 }
 
 body {
-  display: -ms-flexbox;
+  background-color: $powder;
   display: flex;
-  background-color: white;
+  flex-direction: column;
 }
 
 main {
@@ -45,42 +76,42 @@ main {
   align-items: center;
 }
 
-.cover-container {
-  max-width: 800px;
-  background-color: $powder;
-}
-
 div {
   &.color-section {
-    background-color: white;
+    background-color: $white;
   }
 
   &.jumbotron-fluid {
     text-align: center;
     width: 100%;
+    background-image: linear-gradient($lesswarm, $warm);
     background-color: $warm;
-    color: white;
-    // border-radius: 100px;
+    color: $white;
+  }
+
+  &#advice-display {
+    justify-content: center;
+    display: flex;
   }
 }
 
-.btn-colored {
-  background-color: $warm;
-  border-radius: 100px;
-  color: white;
-  text-shadow: 1px 1px $black;
-}
+// .btn-colored {
+//   background-color: $warm;
+//   border-radius: 100px;
+//   color: $white;
+//   text-shadow: 1px 1px $black;
+// }
 
 #encourage-button {
-  display: float;
-  position: absolute;
-  top: 38%;
-  border: solid grey 10px;
-  border-radius: 300px;
+  // position: absolute;
+  // margin: 0 auto;
+  // top: 32%;
+  display: flex;
+  border: solid $grey 10px;
+  border-radius: 500px;
   font-family: 'Josefin Sans', sans-serif;
-  // font-family: 'Nunito', sans-serif;
-  margin: 0 auto;
-  width: 40%;
+  min-width: 450px;
+  width: 100%;
 
   &:hover {
     background-color: $yellow;
@@ -95,7 +126,7 @@ li {
   &:hover {
     // text-decoration: underline;
     background-color: $warm;
-    color: white;
+    color: $white;
   }
 }
 
@@ -108,11 +139,10 @@ li {
   display: float;
   float: right;
   margin: 0;
-  width: 35%;
+  width: 300px;
   font-weight: 800;
   font-size: 20px;
-  color: grey;
-  // text-shadow: 1px 1px $black;
+  color: $grey;
   text-align: right;
 }
 
@@ -120,31 +150,34 @@ ul {
   padding: 5px;
 }
 
-// .top-dash {
-//   background-color: rgba(255, 255, 255, .2);
-//   border-radius: 100px;
-//   position: relative;
-//   height: 20px;
-//   width: 25%;
-//   top: -230px;
-//   left: -80px;
-//   margin: 0;
-// }
-//
-// .bottom-dash {
-//   background-color: rgba(0, 0, 0, .1);
-//   border-radius: 100px;
-//   position: relative;
-//   height: 20px;
-//   width: 15%;
-//   top: -70px;
-//   left: 120px;
-//   margin: 0;
-// }
+.speech-card {
+  position: relative;
+  top: 15%;
+
+  left: 44%;
+  // max-width: 31%;
+
+  // position: relative;
+  // top: -46%;
+  // left: -22%;
+}
+
+.speech-bubble {
+  height: 50%;
+  width: 60%;
+  position: relative;
+  left: 35%;
+}
+
+.upvote-count {
+  background-color: $white;
+  text-align: center;
+  border: 1px solid $grey;
+}
 
 #encourage-e {
   font-size: 50px;
-};
+}
 
 .navbar {
   background-color: $yellow;
@@ -165,4 +198,9 @@ scan {
     color: $blue;
     text-decoration: underline;
   }
+}
+
+#submission-text {
+  width: 100%;
+  height: 50%;
 }

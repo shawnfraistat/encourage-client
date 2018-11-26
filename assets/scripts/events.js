@@ -58,7 +58,10 @@ const onFirstEncourageClick = event => {
 }
 
 const onLoggedInEncourageClick = event => {
-// $('#submitAdviceModal').modal('show')
+  event.preventDefault()
+  api.getAdviceFromAPI()
+    .then(ui.displayAdvice)
+    .catch(console.log)
 }
 
 const switchEncourageButtonToAdvice = () => {
@@ -170,7 +173,9 @@ const storeSignUpInfo = data => {
 module.exports = {
   // ADVICE Events
   onAdviceSubmission,
+  // ENCOURAGE BUTTON Events
   onFirstEncourageClick,
+  onLoggedInEncourageClick,
   // SIGN IN/OUT/UP Events
   onSignIn,
   onSignOut,

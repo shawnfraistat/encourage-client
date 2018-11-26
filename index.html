@@ -97,7 +97,7 @@
           <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content">
               <div class="modal-header">
-                <h4 class="modal-title" id="userViewTitle">User Profile</h5>
+                <h5 class="modal-title" id="userViewTitle">User Profile</h5>
                 <button type="button" class="close" data-dismiss="modal">
                   <span class='red modal-x'>x</span>
                 </button>
@@ -131,7 +131,7 @@
             <div class="modal-dialog modal-dialog-centered" role="document">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h4 class="modal-title" id="submitAdviceTitle">Submit Encouragement</h5>
+                  <h5 class="modal-title" id="submitAdviceTitle">Submit Encouragement</h5>
                   <button type="button" class="close" data-dismiss="modal">
                     <span class='red modal-x'>x</span>
                   </button>
@@ -142,7 +142,7 @@
                     <div class="form group">
                         <fieldset>
                           <h5 class="submit-advice-message"></h5>
-                          <textarea name="submission-text" id="submission-text" placeholder="Encouragement Text"></textarea>
+                          <textarea name="submission-text" maxlength="150" id="submission-text" placeholder="Encouragement Text"></textarea>
                           <div class="form-check form-check-inline">
                             <input class="encourage-form-check-input" type="checkbox" id="inlineCheckbox4" value="general">
                             <label class="form-check-label" for="inlineCheckbox1">General</label>
@@ -162,21 +162,19 @@
                   <br />
                 </div>
                 <div class="modal-footer">
-                  <button type="button" id="user-view-done" data-dismiss="modal" class="btn btn-primary">Done</button>
+                  <button type="button" data-dismiss="modal" class="btn btn-primary">Done</button>
                 </div>
               </div>
             </div>
           </div>
 
     <!-- main page body -->
-      <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+
 
         <header>
             <nav class="navbar justify-content-end">
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-content"
-    aria-controls="navbarSupportedContent15" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
-
-
+              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-content"
+      aria-controls="navbarSupportedContent15" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
             </nav>
             <div class="collapse navbar-collapse" id="navbar-content">
               <ul class="navbar-nav mr-auto">
@@ -197,28 +195,21 @@
         </header>
 
         <main role="main">
-            <div class="jumbotron jumbotron-fluid btn btn-primary" id="encourage-button">
-              <!-- <div class="white-dash">
-              </div> -->
+          <div class="cover-container d-flex flex-column w-100 h-100 p-3 mx-auto">
+            <div id="advice-display">
+            </div>
+            <div class="jumbotron jumbotron-fluid btn btn-primary" role="button" id="encourage-button">
               <div class="container core-container">
                 <h1><span id="encourage-e">e</span>ncourage</h1>
               </div>
             </div>
-            <!-- <div class="top-dash">
-            </div>
-            <div class="bottom-dash">
-            </div> -->
-            <!-- <div class="color-section">
-            </div>
-            <button type="button" id="encourage-button" class="btn btn-colored btn-small">Encourage Me</button> -->
+          </div>
         </main>
 
         <footer>
           <p></p>
           <br/>
         </footer>
-      </div>
 
-    </div>
   </body>
 </html>

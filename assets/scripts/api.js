@@ -14,8 +14,18 @@ const store = require('./store.js')
 //                      //
 //////////////////////////
 
+const getAdviceFromAPI = () => {
+  console.log('Inside getAdviceFromAPI')
+  return $.ajax({
+    url: config.apiUrl + '/random-advice',
+    method: 'GET',
+    headers: {
+      Authorization: 'Token token=' + store.user.token
+    }
+  })
+}
+
 const submitAdviceToAPI = data => {
-  console.log('Inside submitAdviceToAPI--data is', data)
   return $.ajax({
     url: config.apiUrl + '/advices',
     method: 'POST',
@@ -76,6 +86,7 @@ const signUp = data => {
 
 module.exports = {
   // ADVICE API action
+  getAdviceFromAPI,
   submitAdviceToAPI,
   // USER API actions
   changePassword,
