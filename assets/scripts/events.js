@@ -17,6 +17,10 @@ const ui = require('./ui.js')
 //                 //
 /////////////////////
 
+const addHandlerToLikeButton = () => {
+  $('#upvote-button').on('click', onLikeButtonClick)
+}
+
 const onAdviceSubmission = event => {
   event.preventDefault()
   const data = {
@@ -46,6 +50,14 @@ const onAdviceSubmission = event => {
   }
 }
 
+const onLikeButtonClick = event => {
+  event.preventDefault()
+  api.addUpvote(store.advice)
+    .then(ui.updateUpvoteDisplay)
+    .then($('#upvote-button').off('click', onLikeButtonClick))
+    .catch(console.log)
+}
+
 ///////////////////////////////
 //                           //
 //  ENCOURAGE BUTTON Events  //
@@ -61,6 +73,7 @@ const onLoggedInEncourageClick = event => {
   event.preventDefault()
   api.getAdviceFromAPI()
     .then(ui.displayAdvice)
+    .then(addHandlerToLikeButton)
     .catch(console.log)
 }
 

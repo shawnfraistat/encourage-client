@@ -18,6 +18,7 @@ const store = require('./store.js')
 const displayAdvice = (data) => {
   console.log(data)
   console.log(data.advice.content)
+  store.advice = data.advice
   const adviceDisplay = $('#advice-display')
   adviceDisplay.html(`
     <div class="master-container">
@@ -28,31 +29,15 @@ const displayAdvice = (data) => {
           <div class="blockquote-footer text-right mr-2">${data.advice.first_name} ${data.advice.last_name}</div>
         </blockquote>
         <hr />
-        <div class="upvote-div text-right"><img src="assets/images/thumbs-up3.png" style="width:7%;" alt="click here to like"><span class="upvote-count">${data.advice.upvotes}</span></div>
+        <div class="upvote-div text-right">
+          <button class="btn upvote-button" type="submit" id="upvote-button">
+            <img style="width: 22px;" src="assets/images/thumbs-up3.png" alt="click here to like">
+          </button>
+          <span class="upvote-count">${data.advice.upvotes}</span></div>
       </div>
     </div>
     `)
 }
-
-// <div>
-//   <img class="speech-bubble" s">
-//   <div class="speech-card">
-
-//   </div>
-// </div>
-
-// <img class="speech-bubble" src="assets/images/speech-bubble.png">
-// <div class="card" style="width: 18rem;">
-//   <div class="card-body">
-//     <blockquote class="blockquote mb-0">
-//       <p class="card-text">${data.advice.content}</p>
-//       <div class="blockquote-footer text-right mr-2">${data.advice.first_name} ${data.advice.last_name}</div>
-//     </blockquote>
-//   </div>
-//   <div class="card-footer text-right">
-//     <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span><span class="upvote-count">${data.advice.upvotes}</span>
-//   </div>
-// </div>
 
 const handleAdviceSubmissionFailure = () => {
   $('.submit-advice-message').html(`<h5 class="submit-advice-message failure">Encouragement submission failed</h5>`)
@@ -68,6 +53,11 @@ const submitContentFailure = error => {
   } else if (error === 'noTags') {
     $('.submit-advice-message').html('<h5 class="submit-advice-message failure">Need at least one tag</h5>')
   }
+}
+
+const updateUpvoteDisplay = () => {
+  const upvotes = store.advice.upvotes + 1
+  $('.upvote-count').text(upvotes)
 }
 
 ////////////////////
@@ -213,6 +203,7 @@ module.exports = {
   handleAdviceSubmissionFailure,
   handleAdviceSubmissionSuccess,
   submitContentFailure,
+  updateUpvoteDisplay,
   // FORM Reset
   clearForms,
   // SIGN-IN/UP View UI Functions
