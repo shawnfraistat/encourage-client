@@ -217,13 +217,15 @@ const onShowUserView = () => {
 
 const onDeleteAdvice = event => {
   console.log('inside onDeleteAdvice')
+  store.idToDelete = event.currentTarget.id
   $('#deleteConfirmModal').modal('show')
   event.preventDefault()
 }
 
 const onDeleteConfirm = event => {
   event.preventDefault()
-  api.deleteAdviceFromAPI(event.currentTarget.id)
+  api.deleteAdviceFromAPI(store.idToDelete)
+    .then(api.getUserAdvicesFromAPI)
     .then(ui.refreshUserView)
     .catch(console.log)
 }

@@ -162,7 +162,7 @@ const handleSignUpFailure = event => {
 // handleSignUpMismatchingPasswords() displays an error if, when the user tries
 // to sign up, the password and password_confirmation fields don't match
 const handleSignUpMismatchingPasswords = event => {
-  $('.sign-up-message').html('<h5 class="sign-up-message red">Passwords do not match</h5>')
+  $('.sign-up-message').html('<h5 class="sign-up-message failure">Passwords do not match</h5>')
   console.log('Invalid sign up event', event)
 }
 
@@ -207,25 +207,26 @@ const switchToSignUp = function () {
 // handleChangePasswordFailure() displays an error message if the attempt to
 // change a user's password on the API failed
 const handleChangePasswordFailure = function () {
-  $('.change-password-message').html('<h6 class="change-password-message red">Invalid password</h6>')
+  $('.change-password-message').html('<h6 class="change-password-message failure">Invalid password</h6>')
 }
 
 // handleChangePasswordMismatchingPasswords() displays an error if the user
 // tries to change their password, and the new password and
 // new password confirmation fields don't match
 const handleChangePasswordMismatchingPasswords = function () {
-  $('.change-password-message').html('<h6 class="change-password-message red">New passwords do not match</h6>')
+  $('.change-password-message').html('<h6 class="change-password-message failure">New passwords do not match</h6>')
 }
 
 // handleChangePasswordSuccess() displays a message when the user successfully
 // changes their password
 const handleChangePasswordSuccess = function (newPassword) {
   store.user.password = newPassword
-  $('.change-password-message').html('<h6 class="change-password-message blue">Password changed</h6>')
+  $('.change-password-message').html('<h6 class="change-password-message success">Password changed</h6>')
 }
 
-const refreshUserView = () => {
+const refreshUserView = advices => {
   $('#deleteConfirmModal').modal('hide')
+  showUserView(advices)
 }
 
 const showUserView = advices => {

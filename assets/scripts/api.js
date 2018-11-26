@@ -24,6 +24,16 @@ const addUpvote = data => {
   })
 }
 
+const deleteAdviceFromAPI = id => {
+  return $.ajax({
+    url: config.apiUrl + '/advices/' + id,
+    method: 'DELETE',
+    headers: {
+      Authorization: 'Token token=' + store.user.token
+    }
+  })
+}
+
 const getAdviceFromAPI = () => {
   return $.ajax({
     url: config.apiUrl + '/random-advice',
@@ -55,15 +65,7 @@ const submitAdviceToAPI = data => {
   })
 }
 
-const deleteAdviceFromAPI = data => {
-  return $.ajax({
-    url: config.apiUrl + '/advices/' + data.id,
-    method: 'DELETE',
-    headers: {
-      Authorization: 'Token token=' + store.user.token
-    }
-  })
-}
+
 
 ////////////////////////
 //                    //
