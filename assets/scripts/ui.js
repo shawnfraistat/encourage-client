@@ -91,7 +91,6 @@ const handleSignInSuccess = event => {
   $('#logInModalHeader').addClass('collapse')
   $('#navbar-content').addClass('collapse')
   $('.sign-in-message').html(`<h4 class="sign-in-message">Signed in as <scan class="success">${store.user.email}</scan></h4>`)
-  // $('#log-in-nav-button').toggleClass('collapse')
   $('#login-nav-button').addClass('collapse')
   $('#sign-out-nav-button').removeClass('collapse')
   $('#user-profile-nav-button').removeClass('collapse')
