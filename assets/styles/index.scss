@@ -15,6 +15,7 @@ $peach: #fedcd2;
 $powder: #8fd8d2;
 $lesswarm: #e89b7d;
 $warm: #df744a;
+$light-grey: #a9a9a9;
 
 /* Container holding the image and the text */
 .master-container {
@@ -130,6 +131,10 @@ li {
   }
 }
 
+.grey {
+  color: $grey;
+}
+
 .navbar-toggler-icon {
   background-image: url('https://mdbootstrap.com/img/svg/hamburger1.svg?color=df744a');
 }
@@ -164,15 +169,26 @@ ul {
 
 .speech-bubble {
   height: 50%;
-  width: 60%;
-  position: relative;
   left: 35%;
+  position: relative;
+  width: 60%;
 }
 
 .upvote-count {
   background-color: $white;
-  text-align: center;
   border: 1px solid $grey;
+  font-size: 14px;
+  margin: 1px;
+  padding: 0 4px;
+  text-align: center;
+}
+
+.upvote-div {
+  align-items: center;
+  display: flex;
+  justify-content: flex-end;
+  position: relative;
+  top: -10px;
 }
 
 #encourage-e {

@@ -27,7 +27,8 @@ const displayAdvice = (data) => {
           <p>${data.advice.content}</p>
           <div class="blockquote-footer text-right mr-2">${data.advice.first_name} ${data.advice.last_name}</div>
         </blockquote>
-        <div class="text-right"><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span><span class="upvote-count">${data.advice.upvotes}</span></div>
+        <hr />
+        <div class="upvote-div text-right"><img src="assets/images/thumbs-up3.png" style="width:7%;" alt="click here to like"><span class="upvote-count">${data.advice.upvotes}</span></div>
       </div>
     </div>
     `)
