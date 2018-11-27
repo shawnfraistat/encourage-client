@@ -2,15 +2,110 @@
 
 /* This document is organized into the following sections:
 
-(1) ADVICE UI Functions
-(2) FORM Reset
-(3) SIGN-IN/UP View UI functions
-(4) USER API Interactions */
+(1) ADMIN UI functions
+(2) ADVICE UI Functions
+(3) FORM Reset
+(4) SIGN-IN/UP View UI functions
+(5) USER View UI Functions */
 
 const store = require('./store.js')
 
 // sentiment analysis courtesy of https://github.com/thisandagain/sentiment
 const Sentiment = require('sentiment')
+
+///////////////////////////
+//                       //
+//  ADMIN UI Functions   //
+//                       //
+///////////////////////////
+
+const showApprovedDiv = () => {
+  $('#approved-submissions-div').removeClass('collapse')
+  $('#unapproved-submissions-div').addClass('collapse')
+  $('#approved-submissions-nav-link').addClass('active')
+  $('#unapproved-submissions-nav-link').removeClass('active')
+}
+
+const showUnapprovedDiv = () => {
+  $('#approved-submissions-div').addClass('collapse')
+  $('#unapproved-submissions-div').removeClass('collapse')
+  $('#approved-submissions-nav-link').removeClass('active')
+  $('#unapproved-submissions-nav-link').addClass('active')
+}
+
+const refreshAdminView = advices => {
+  $('#adminApproveConfirmModal').modal('hide')
+  $('#adminDeleteConfirmModal').modal('hide')
+  showAdminView(advices)
+}
+
+const showAdminView = advices => {
+  console.log('advices is', advices)
+  const unapprovedAdvices = advices.advices.filter(advice => advice.approved !== "true")
+  const approvedAdvices = advices.advices.filter(advice => advice.approved === "true")
+  let unapprovedHTML = ''
+  unapprovedHTML += `
+  <table class="table text-center table-responsive submission-table">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Content</th>
+        <th scope="col">Tags</th>
+        <th scope="col">Upvotes</th>
+        <th scope="col">Approve?</th>
+        <th scope="col">Delete?</th>
+      </tr>
+    </thead>
+    <tbody`
+  let i = 0
+  unapprovedAdvices.forEach((element) => {
+    i++
+    unapprovedHTML += `
+      <tr>
+        <th scope="row">${i}</th>
+        <td style="text-align: left;">${element.content}</td>
+        <td>${element.tags.split(' ').join(', ').slice(0, -2)}</td>
+        <td>${element.likes.length}</td>
+        <td style="width: 22px;"><img src="assets/images/approval.png" style="width: 20px;" id="${element.id}" class="approve-advice"></td>
+        <td style="width: 22px;"><img src="assets/images/delete.ico" style="width: 20px;" id="${element.id}" class="delete-advice"></td>
+      </tr>
+    `
+  })
+  unapprovedHTML += `  </tbody>
+  </table>`
+  let approvedHTML = ''
+  approvedHTML += `
+  <table class="table text-center table-responsive submission-table">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Content</th>
+        <th scope="col">Tags</th>
+        <th scope="col">Upvotes</th>
+        <th scope="col">Unapprove?</th>
+        <th scope="col">Delete?</th>
+      </tr>
+    </thead>
+    <tbody`
+  i = 0
+  approvedAdvices.forEach((element) => {
+    i++
+    approvedHTML += `
+      <tr>
+        <th scope="row">${i}</th>
+        <td style="text-align: left;">${element.content}</td>
+        <td>${element.tags.split(' ').join(', ').slice(0, -2)}</td>
+        <td>${element.likes.length}</td>
+        <td style="width: 22px;"><img src="assets/images/delete.ico" style="width: 20px;" id="${element.id}" class="unapprove-advice"></td>
+        <td style="width: 22px;"><img src="assets/images/delete.ico" style="width: 20px;" id="${element.id}" class="delete-advice"></td>
+      </tr>
+    `
+  })
+  approvedHTML += `  </tbody>
+  </table>`
+  $('.unapproved-submissions-field').html(unapprovedHTML)
+  $('.approved-submissions-field').html(approvedHTML)
+}
 
 ////////////////////////////
 //                        //
@@ -144,6 +239,9 @@ const handleSignInSuccess = event => {
   $('#sign-in-cancel').addClass('collapse')
   $('#sign-in-submit').addClass('collapse')
   $('#sign-in-continue').removeClass('collapse')
+  if (store.user.admin === "true") {
+    $('#admin-div').removeClass('collapse')
+  }
 }
 
 // handleSignInFailure() displays an error message if a sign-in attempt fails
@@ -180,7 +278,8 @@ const handleSignOutSuccess = () => {
     first_name: '',
     last_name: '',
     token: '',
-    tags: ''
+    tags: '',
+    admin: ''
   }
   $('#signOutModal').modal('hide')
   $('#login-nav-button').removeClass('collapse')
@@ -188,8 +287,8 @@ const handleSignOutSuccess = () => {
   $('#user-profile-nav-button').addClass('collapse')
   $('#submit-encouragement-nav-button').addClass('collapse')
   $('#advice-display').html('')
+  $('#admin-div').addClass('collapse')
   $('body').attr('style', 'background-color: #8fd8d2;')
-  // $('#navbar-content').removeClass('show')
 }
 
 // handleSignOutFailure() displays an error if a sign-out attempt fails
@@ -352,6 +451,11 @@ const showUserView = advices => {
 }
 
 module.exports = {
+  // ADMIN UI Functions
+  refreshAdminView,
+  showAdminView,
+  showApprovedDiv,
+  showUnapprovedDiv,
   // ADVICE UI Functions,
   displayAdvice,
   handleAdviceSubmissionFailure,

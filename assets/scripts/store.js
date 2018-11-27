@@ -10,7 +10,8 @@ let user = {
   first_name: '',
   last_name: '',
   token: '',
-  tags: ''
+  tags: '',
+  admin: ''
 }
 
 module.exports = {

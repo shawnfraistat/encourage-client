@@ -2,11 +2,38 @@
 
 /* This document is organized into the following sections:
 
-(1) ADVICE API Actions
-(2) USER API Actions */
+(1) ADMIN API Actions
+(2) ADVICE API Actions
+(3) USER API Actions */
 
 const config = require('./config.js')
 const store = require('./store.js')
+
+/////////////////////////
+//                     //
+//  ADMIN API actions  //
+//                     //
+/////////////////////////
+
+const approveAdviceOnAPI = id => {
+  return $.ajax({
+    url: config.apiUrl + '/advices/' + id,
+    method: 'PATCH',
+    headers: {
+      Authorization: 'Token token=' + store.user.token
+    }
+  })
+}
+
+const getAllAdvicesFromAPI = () => {
+  return $.ajax({
+    url: config.apiUrl + '/advices/',
+    method: 'GET',
+    headers: {
+      Authorization: 'Token token=' + store.user.token
+    }
+  })
+}
 
 //////////////////////////
 //                      //
@@ -146,7 +173,10 @@ const updateUserTags = data => {
 }
 
 module.exports = {
-  // ADVICE API action
+  // ADMIN API actions
+  approveAdviceOnAPI,
+  getAllAdvicesFromAPI,
+  // ADVICE API actions
   addUpvote,
   checkLikesOnAdviceFromAPI,
   deleteUpvote,

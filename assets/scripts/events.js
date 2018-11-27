@@ -2,15 +2,65 @@
 
 /* This document is organized into the following sections:
 
-(1) ADVICE Events
-(2) ENCOURAGE BUTTON Events
-(3) SIGN IN/OUT/UP Events
-(4) USER View Events */
+(1) ADMIN Events
+(2) ADVICE Events
+(3) ENCOURAGE BUTTON Events
+(4) SIGN IN/OUT/UP Events
+(5) USER View Events */
 
 const api = require('./api.js')
 const getFormFields = require('../../lib/get-form-fields.js')
 const store = require('./store.js')
 const ui = require('./ui.js')
+
+////////////////////
+//                //
+//  ADMIN Events  //
+//                //
+////////////////////
+
+const onAdminApproveAdvice = event => {
+  event.preventDefault()
+  store.idToDelete = event.currentTarget.id
+  $('#adminApproveConfirmModal').modal('show')
+}
+
+const onAdminApproveConfirm = event => {
+  event.preventDefault()
+  api.approveAdviceOnAPI(store.idToDelete)
+    .then(api.getAllAdvicesFromAPI)
+    .then(ui.refreshAdminView)
+    .then(addAdminHandlers)
+    .catch(console.log)
+}
+
+const onAdminDeleteAdvice = event => {
+  event.preventDefault()
+  store.idToDelete = event.currentTarget.id
+  $('#adminDeleteConfirmModal').modal('show')
+}
+
+const onAdminDeleteConfirm = event => {
+  event.preventDefault()
+  console.log('Inside onAdminDeleteConfirm')
+  api.deleteAdviceFromAPI(store.idToDelete)
+    .then(api.getAllAdvicesFromAPI)
+    .then(ui.refreshAdminView)
+    .then(addAdminHandlers)
+    .catch(console.log)
+}
+
+const onShowAdminView = () => {
+  api.getAllAdvicesFromAPI()
+    .then(ui.showAdminView)
+    .then(addAdminHandlers)
+    .catch(console.log)
+}
+
+const addAdminHandlers = () => {
+  $('.delete-advice').on('click', onAdminDeleteAdvice)
+  $('.approve-advice').on('click', onAdminApproveAdvice)
+}
 
 /////////////////////
 //                 //
@@ -133,6 +183,7 @@ const onSignUp = event => {
   const target = $('#sign-up')[0]
   const data = getFormFields(target)
   data.credentials.tags = ''
+  data.credentials.admin = false
   const checkBoxArray = $('.sign-up-check')
   for (let i = 0; i < checkBoxArray.length; i++) {
     if (checkBoxArray[i].checked) {
@@ -186,6 +237,9 @@ const storeSignInInfo = data => {
   store.user.id = data.user.id
   store.user.email = data.user.email
   store.user.token = data.user.token
+  store.user.admin = data.user.admin
+  console.log('data is', data)
+  console.log('store.user.admin is', store.user.admin)
   return data
 }
 
@@ -231,6 +285,7 @@ const onDeleteConfirm = event => {
   api.deleteAdviceFromAPI(store.idToDelete)
     .then(api.getUserAdvicesFromAPI)
     .then(ui.refreshUserView)
+    .then(addDeleteHandlers)
     .catch(console.log)
 }
 
@@ -260,6 +315,10 @@ const onUserChooseTagsSubmit = () => {
 }
 
 module.exports = {
+  // ADMIN events
+  onAdminDeleteConfirm,
+  onAdminApproveConfirm,
+  onShowAdminView,
   // ADVICE Events
   onAdviceSubmission,
   // ENCOURAGE BUTTON Events
