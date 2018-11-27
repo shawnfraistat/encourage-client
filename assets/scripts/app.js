@@ -1,5 +1,13 @@
 'use strict'
 
+/*
+TO-DO LIST:
+
+1. Add Favorite Functions
+2. Add tooltips
+3. Add sentiment analysis
+*/
+
 // use require with a reference to bundle the file and use it in this file
 // const example = require('./example')
 

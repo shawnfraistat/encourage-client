@@ -9,6 +9,9 @@
 
 const store = require('./store.js')
 
+// sentiment analysis courtesy of https://github.com/thisandagain/sentiment
+const Sentiment = require('sentiment')
+
 ////////////////////////////
 //                        //
 //  ADVICE UI Functions   //
@@ -43,10 +46,38 @@ const displayAdvice = data => {
       </div>
     </div>
     `)
+  sentimentAnalysis(data.advice.content)
   if (data.advice.likes.every(like => like.user_id !== store.user.id)) {
     return false
   } else {
     return true
+  }
+}
+
+const sentimentAnalysis = string => {
+  const sentiment = new Sentiment()
+  const result = (sentiment.analyze(string)).comparative
+  console.log(result)
+  if (result >= 1 && result <= 5) {
+    $('body').attr('style', 'background-color: #66fff2;')
+  } else if (result >= 0.75 && result < 1) {
+    $('body').attr('style', 'background-color: #75f0e5;')
+  } else if (result >= 0.5 && result < 0.75) {
+    $('body').attr('style', 'background-color: #79ece2;')
+  } else if (result >= 0.25 && result < 0.5) {
+    $('body').attr('style', 'background-color: #7de8df;')
+  } else if (result >= 0 && result < 0.25) {
+    $('body').attr('style', 'background-color: #8fd8d2;')
+  } else if (result >= -0.25 && result < 0) {
+    $('body').attr('style', 'background-color: #2e847d;')
+  } else if (result >= -0.5 && result < -0.25) {
+    $('body').attr('style', 'background-color: #215e59')
+  } else if (result >= -0.75 && result < -0.5) {
+    $('body').attr('style', 'background-color: #1b4b47;')
+  } else if (result >= -1 && result < -0.75) {
+    $('body').attr('style', 'background-color: #143936;')
+  } else if (result >= -5 && result < -1) {
+    $('body').attr('style', 'background-color: #0d2624;')
   }
 }
 
@@ -267,9 +298,9 @@ const showUserView = advices => {
     newHTML += `
       <tr>
         <th scope="row">${i}</th>
-        <td>${element.content.slice(0, 9)}</td>
+        <td data-content="${element.content}">${element.content.slice(0, 9)}</td>
         <td>${element.tags.split(' ').join(', ').slice(0, -2)}</td>
-        <td>${element.upvotes}</td>
+        <td>${element.likes.length}</td>
         <td>${element.approved}</td>
         <td style="width: 22px;"><img src="assets/images/delete.ico" style="width: 20px;" id="${element.id}" class="delete-advice"></td>
       </tr>
