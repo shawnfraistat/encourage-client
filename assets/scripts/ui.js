@@ -19,9 +19,6 @@ const Sentiment = require('sentiment')
 ////////////////////////////
 
 const displayAdvice = data => {
-  console.log(data)
-  console.log(data.advice.content)
-  console.log(data.advice.likes)
   store.advice = data.advice
   let imageURL = ''
   if (data.advice.likes.every(like => like.user_id !== store.user.id)) {
@@ -82,7 +79,6 @@ const sentimentAnalysis = string => {
 }
 
 const decrementUpvoteDisplay = data => {
-  console.log(data)
   $('.upvote-count').text(data.advice.likes.length)
   $('.like-image').attr('src', 'assets/images/thumbs-up3.png')
 }
@@ -126,6 +122,7 @@ const clearForms = () => {
   document.getElementById('submit-advice').reset()
   $('.change-password-message').text('')
   $('#user-name').text('')
+  $('.change-tags-message').text('')
 }
 
 ////////////////////////////////////
@@ -169,12 +166,22 @@ const handleSignInAfterSignUpSuccess = event => {
   $('#sign-out-nav-button').removeClass('collapse')
   $('#user-profile-nav-button').removeClass('collapse')
   $('#submit-encouragement-nav-button').removeClass('collapse')
+  $('#sign-up-continue').addClass('collapse')
+  $('#sign-up-submit').removeClass('collapse')
 }
 
 // handleSignOutSuccess() clears local data in store.js and resets the view if
 // the user successfully signs out
 const handleSignOutSuccess = () => {
-  store.user = {}
+  store.user = {
+    id: 0,
+    email: '',
+    password: '',
+    first_name: '',
+    last_name: '',
+    token: '',
+    tags: ''
+  }
   $('#signOutModal').modal('hide')
   $('#login-nav-button').removeClass('collapse')
   $('#sign-out-nav-button').addClass('collapse')
@@ -213,6 +220,11 @@ const handleSignUpFailure = event => {
 const handleSignUpMismatchingPasswords = event => {
   $('.sign-up-message').html('<h5 class="sign-up-message failure">Passwords do not match</h5>')
   console.log('Invalid sign up event', event)
+}
+
+// handleSignUpNoTags() displays an error if there are no tags selected
+const handleSignUpNoTags = () => {
+  $('.sign-up-message').html('<h5 class="sign-up-message failure">Must select at least one tag</h5>')
 }
 
 // resetLogInModal() sets the sign-in/up modal back to its defaults
@@ -272,6 +284,18 @@ const handleChangePasswordSuccess = function (newPassword) {
   $('.change-password-message').html('<h6 class="change-password-message success">Password changed</h6>')
 }
 
+const handleUpdateTagsFailure = () => {
+  $('.choose-tags-message').html('<h6 class="choose-tags-message failure">Tags failed to update/h6>')
+}
+
+const handleUpdateTagsNoTags = () => {
+  $('.choose-tags-message').html('<h6 class="choose-tags-message failure">Must select at least one tag</h6>')
+}
+
+const handleUpdateTagsSuccess = () => {
+  $('.choose-tags-message').html('<h6 class="choose-tags-message success">Tags updated!</h6>')
+}
+
 const refreshUserView = advices => {
   $('#deleteConfirmModal').modal('hide')
   showUserView(advices)
@@ -313,7 +337,7 @@ const showUserView = advices => {
     newHTML += `
       <tr>
         <th scope="row">${i}</th>
-        <td data-content="${element.content}">${element.content.slice(0, 9)}</td>
+        <td data-toggle="tooltip" title="${element.content.slice(0, 100)}">${element.content.slice(0, 9)}</td>
         <td>${element.tags.split(' ').join(', ').slice(0, -2)}</td>
         <td>${element.likes.length}</td>
         <td>${element.approved}</td>
@@ -324,6 +348,7 @@ const showUserView = advices => {
   newHTML += `  </tbody>
   </table>`
   $('.your-submissions-field').html(newHTML)
+  $('[data-toggle="tooltip"]').tooltip()
 }
 
 module.exports = {
@@ -344,6 +369,7 @@ module.exports = {
   handleSignUpSuccess,
   handleSignUpFailure,
   handleSignUpMismatchingPasswords,
+  handleSignUpNoTags,
   handleSignOutSuccess,
   handleSignOutFailure,
   resetLogInModal,
@@ -353,6 +379,9 @@ module.exports = {
   handleChangePasswordFailure,
   handleChangePasswordMismatchingPasswords,
   handleChangePasswordSuccess,
+  handleUpdateTagsFailure,
+  handleUpdateTagsNoTags,
+  handleUpdateTagsSuccess,
   refreshUserView,
   showSettingsDiv,
   showSubmissionsDiv,

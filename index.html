@@ -31,18 +31,25 @@
                 <fieldset>
                   <input type="text" name="credentials[email]" placeholder="Email" />
                   <input type="password" name="credentials[password]" placeholder="Password" />
-                  <p>New users <scan class="switch-to-sign-up">sign up</scan>
-                  </p>
+                  <br />
+                  <br />
+                  <h6>New users <scan class="switch-to-sign-up">sign up</scan></h6>
                 </fieldset>
               </form>
             <p class="sign-up-message"></p>
             <form id="sign-up" class="collapse">
               <fieldset>
-                <input type="text" name="credentials[email]" placeholder="Email" />
+                <h5>User Info</h5>
                 <input type="text" name="credentials[first_name]" placeholder="First Name" />
                 <input type="text" name="credentials[last_name]" placeholder="Last Name" />
+                <br />
                 <input type="password" name="credentials[password]" placeholder="Password" />
                 <input type="password" name="credentials[password_confirmation]" placeholder="Confirm Password" />
+                <br />
+                <input type="text" name="credentials[email]" placeholder="Email" />
+                <br />
+                <br />
+                <h5 title="Choose what kinds of encouragement you'd like to view">Choose Tags to View</h5>
                 <div class="form-check form-check-inline">
                   <input class="form-check-input sign-up-check" type="checkbox" id="inlineCheckbox1" value="general">
                   <label class="form-check-label" for="inlineCheckbox1">General</label>
@@ -55,8 +62,9 @@
                   <input class="form-check-input sign-up-check" type="checkbox" id="inlineCheckbox3" value="bleak">
                   <label class="form-check-label" for="inlineCheckbox3">Bleak</label>
                 </div>
-                <p>Existing users <scan class="switch-to-sign-in">sign in</scan>
-                </p>
+                <br />
+                <br />
+                <h6>Existing users <scan class="switch-to-sign-in">sign in</scan></h6>
               </fieldset>
             </form>
             </div>
@@ -128,10 +136,11 @@
                         </fieldset>
                     </div>
                   </form>
+                  <br />
                   <form id="choose-tags">
                     <div class="form group">
                         <fieldset>
-                          <h5>Update Tags</h5>
+                          <h5 title="Change which types of encouragement you'd like to view">Update Tags</h5>
                           <h5 class="choose-tags-message"></h5>
                           <div class="form-check form-check-inline">
                             <input class="form-check-input choose-tags-check" type="checkbox" id="inlineCheckbox4" value="general">
@@ -201,7 +210,7 @@
                           <h5 class="submit-advice-message"></h5>
                           <textarea name="submission-text" rows="4" maxlength="150" id="submission-text" placeholder="Encouragement Text"></textarea>
                           <p class="grey">150 character limit</p>
-                          <p class="select-tags-text">Select Tags:</p>
+                          <p class="select-tags-text" title="Choose how this piece of encouragement should be classified">Select Tags:</p>
                           <div class="form-check form-check-inline">
                             <input class="encourage-form-check-input" type="checkbox" id="inlineCheckbox7" value="general">
                             <label class="form-check-label" for="inlineCheckbox7">General</label>

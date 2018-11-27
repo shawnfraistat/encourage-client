@@ -3,10 +3,10 @@
 /*
 TO-DO LIST:
 
-1. Add Favorite Functions
+1. Add Favorite Function
 2. Add tooltips
-3. Add sentiment analysis
-4. Add user abiltiy to choose tags
+3. Adjust sentiment analysis colors?
+4. Add Admin View
 */
 
 // use require with a reference to bundle the file and use it in this file
@@ -18,6 +18,7 @@ const events = require('./events.js')
 const ui = require('./ui.js')
 
 $(() => {
+  $('[data-toggle="tooltip"]').tooltip()
   $('#change-password-submit').on('click', events.onChangePasswordSubmit)
   $('#encourage-button').on('click', events.onFirstEncourageClick)
   $('#logInModal').on('show.bs.modal', ui.resetLogInModal)

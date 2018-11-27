@@ -139,13 +139,15 @@ const onSignUp = event => {
       data.credentials.tags += checkBoxArray[i].getAttribute('value') + ' '
     }
   }
-  if (data.credentials.password === data.credentials.password_confirmation) {
+  if (data.credentials.tags.trim() === '') {
+    ui.handleSignUpNoTags()
+  } else if (data.credentials.password !== data.credentials.password_confirmation) {
+    ui.handleSignUpMismatchingPasswords()
+  } else {
     storeSignUpInfo(data)
     api.signUp(data)
       .then(ui.handleSignUpSuccess)
       .catch(ui.handleSignUpFailure)
-  } else {
-    ui.handleSignUpMismatchingPasswords()
   }
 }
 
@@ -247,10 +249,14 @@ const onUserChooseTagsSubmit = () => {
       tags += checkBoxArray[i].getAttribute('value') + ' '
     }
   }
-  const data = { tags: tags }
-  api.updateUserTags(data)
-    .then(ui.handleUpdateTagsSuccess)
-    .catch(console.log)
+  if (tags.trim() === '') {
+    ui.handleUpdateTagsNoTags()
+  } else {
+    const data = { tags: tags }
+    api.updateUserTags(data)
+      .then(ui.handleUpdateTagsSuccess)
+      .catch(ui.handleUpdateTagsFailure)
+  }
 }
 
 module.exports = {

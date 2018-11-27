@@ -3,7 +3,7 @@
 const store = {
 }
 
-const user = {
+let user = {
   id: 0,
   email: '',
   password: '',
