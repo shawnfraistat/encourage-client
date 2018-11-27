@@ -115,9 +115,6 @@ div {
 // }
 
 #encourage-button {
-  // position: absolute;
-  // margin: 0 auto;
-  // top: 32%;
   display: flex;
   border: solid $grey 10px;
   border-radius: 500px;
@@ -136,7 +133,6 @@ h1 {
 
 li {
   &:hover {
-    // text-decoration: underline;
     background-color: $warm;
     color: $white;
   }
@@ -210,11 +206,6 @@ ul {
   position: relative;
   top: 15%;
   left: 44%;
-  // max-width: 31%;
-
-  // position: relative;
-  // top: -46%;
-  // left: -22%;
 }
 
 .speech-bubble {
@@ -278,7 +269,7 @@ scan {
 }
 
 .submission-table {
-  height: 150px;
+  max-height: 250px;
   overflow-y: scroll;
 }
 

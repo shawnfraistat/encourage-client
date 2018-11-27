@@ -181,6 +181,7 @@ const handleSignOutSuccess = () => {
   $('#user-profile-nav-button').addClass('collapse')
   $('#submit-encouragement-nav-button').addClass('collapse')
   $('#advice-display').html('')
+  $('body').attr('style', 'background-color: #8fd8d2;')
   // $('#navbar-content').removeClass('show')
 }
 
@@ -276,6 +277,20 @@ const refreshUserView = advices => {
   showUserView(advices)
 }
 
+const showSettingsDiv = () => {
+  $('#settings-div').removeClass('collapse')
+  $('#your-submissions-div').addClass('collapse')
+  $('#settings-nav-link').addClass('active')
+  $('#your-submissions-nav-link').removeClass('active')
+}
+
+const showSubmissionsDiv = () => {
+  $('#settings-div').addClass('collapse')
+  $('#your-submissions-div').removeClass('collapse')
+  $('#settings-nav-link').removeClass('active')
+  $('#your-submissions-nav-link').addClass('active')
+}
+
 const showUserView = advices => {
   console.log('advices is', advices)
   let newHTML = ''
@@ -339,5 +354,7 @@ module.exports = {
   handleChangePasswordMismatchingPasswords,
   handleChangePasswordSuccess,
   refreshUserView,
+  showSettingsDiv,
+  showSubmissionsDiv,
   showUserView
 }

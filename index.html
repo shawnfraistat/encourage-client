@@ -103,24 +103,40 @@
                   <span class='modal-x'>x</span>
                 </button>
               </div>
+              <ul class="nav nav-tabs">
+                <li class="nav-item">
+                  <button class="nav-link active" id="settings-nav-link">Settings</button>
+                </li>
+                <li class="nav-item">
+                  <button class="nav-link" id="your-submissions-nav-link">Your Submissions</button>
+                </li>
+                <li class="nav-item">
+                  <button class="nav-link">Favorites</button>
+                </li>
+              </ul>
               <div class="modal-body">
-                <form id="change-password">
-                  <div class="form group">
-                      <fieldset>
-                        <h5>Change Password</h5>
-                        <h5 class="change-password-message"></h5>
-                        <input type="password" name="passwords[old]" placeholder="Current Password" />
-                        <input type="password" name="passwords[new]" placeholder="New Password" />
-                        <input type="password" name="passwords[confirm_new]" placeholder="Confirm New" />
-                        <button type="button" id="change-password-submit">Submit</button>
-                      </fieldset>
-                  </div>
+                <div id="settings-div">
+                  <form id="change-password">
+                    <div class="form group">
+                        <fieldset>
+                          <h5>Change Password</h5>
+                          <h5 class="change-password-message"></h5>
+                          <input type="password" name="passwords[old]" placeholder="Current Password" />
+                          <input type="password" name="passwords[new]" placeholder="New Password" />
+                          <input type="password" name="passwords[confirm_new]" placeholder="Confirm New" />
+                          <button type="button" id="change-password-submit">Submit</button>
+                        </fieldset>
+                    </div>
+                  </form>
+                </div
                 </form>
                 <br />
-                <h5>Your Submissions</h5>
-                <h5 class="your-submissions-message"></h5>
-                <div class="your-submissions-field"></div>
-                <br />
+                  <div id="your-submissions-div" class="collapse">
+                  <h5>Your Submissions</h5>
+                  <h5 class="your-submissions-message"></h5>
+                  <div class="your-submissions-field"></div>
+                  <br />
+                </div>
               </div>
               <div class="modal-footer">
                 <button type="button" id="user-view-done" data-dismiss="modal" class="btn btn-primary">Done</button>

@@ -30,4 +30,6 @@ $(() => {
   $('#user-view-done').on('click', ui.clearForms)
   $('#userViewModal').on('show.bs.modal', events.onShowUserView)
   $('#delete-item-submit').on('click', events.onDeleteConfirm)
+  $('#your-submissions-nav-link').on('click', ui.showSubmissionsDiv)
+  $('#settings-nav-link').on('click', ui.showSettingsDiv)
 })
