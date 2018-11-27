@@ -6,7 +6,8 @@ TO-DO LIST:
 1. Add Favorite Function
 2. Add tooltips
 3. Adjust sentiment analysis colors?
-4. Add Admin View
+4. Refactor code so that when Admin makes changes to advice, there's only one
+update route that's used?
 */
 
 // use require with a reference to bundle the file and use it in this file
@@ -20,7 +21,9 @@ const ui = require('./ui.js')
 $(() => {
   $('#admin-delete-item-submit').on('click', events.onAdminDeleteConfirm)
   $('#admin-approve-item-submit').on('click', events.onAdminApproveConfirm)
+  $('#admin-unapprove-item-submit').on('click', events.onAdminUnapproveConfirm)
   $('#adminModal').on('show.bs.modal', events.onShowAdminView)
+  $('#approved-submissions-nav-link').on('click', ui.showApprovedDiv)
   $('#change-password-submit').on('click', events.onChangePasswordSubmit)
   $('[data-toggle="tooltip"]').tooltip()
   $('#delete-item-submit').on('click', events.onDeleteConfirm)
@@ -34,10 +37,9 @@ $(() => {
   $('#submit-advice-submit').on('click', events.onAdviceSubmission)
   $('.switch-to-sign-in').on('click', events.onSwitchToSignIn)
   $('.switch-to-sign-up').on('click', events.onSwitchToSignUp)
+  $('#unapproved-submissions-nav-link').on('click', ui.showUnapprovedDiv)
   $('#user-view-done').on('click', ui.clearForms)
   $('#userViewModal').on('show.bs.modal', events.onShowUserView)
   $('#user-choose-tags-submit').on('click', events.onUserChooseTagsSubmit)
   $('#your-submissions-nav-link').on('click', ui.showSubmissionsDiv)
-  $('#unapproved-submissions-nav-link').on('click', ui.showUnapprovedDiv)
-  $('#approved-submissions-nav-link').on('click', ui.showApprovedDiv)
 })

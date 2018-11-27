@@ -16,8 +16,8 @@
     <body>
 
       <!-- admin modal -->
-      <div class="modal fade user-view-modal" id="adminModal" role="dialog">
-        <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal fade" id="adminModal" role="dialog">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title" id="adminModalTitle">Admin Tools</h5>
@@ -141,7 +141,7 @@
 
       <!-- userViewModal -->
       <div class="modal fade user-view-modal" id="userViewModal" role="dialog">
-        <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title" id="userViewTitle">User Profile</h5>
@@ -261,6 +261,22 @@
         </div>
       </div>
 
+
+      <!-- adminUnapproveConfirmModal-->
+
+      <div class="modal fadel" id="adminUnapproveConfirmModal" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content approve-confirm-modal-content">
+            <div class="modal-body approve-confirm-modal-body">
+              <h5 class="modal-title" id="adminUnapproveConfirmModalTitle">
+                Unapprove This?
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">&times;</button>
+                  <button type="button" id="admin-unapprove-item-submit" class="btn btn-primary">&#10004;</button>
+              </h5>
+            </div>
+          </div>
+        </div>
+      </div>
 
       <!-- submitAdviceModal-->
 

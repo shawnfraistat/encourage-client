@@ -21,13 +21,13 @@ const ui = require('./ui.js')
 
 const onAdminApproveAdvice = event => {
   event.preventDefault()
-  store.idToDelete = event.currentTarget.id
+  store.idToApprove = event.currentTarget.id
   $('#adminApproveConfirmModal').modal('show')
 }
 
 const onAdminApproveConfirm = event => {
   event.preventDefault()
-  api.approveAdviceOnAPI(store.idToDelete)
+  api.approveAdviceOnAPI(store.idToApprove)
     .then(api.getAllAdvicesFromAPI)
     .then(ui.refreshAdminView)
     .then(addAdminHandlers)
@@ -50,6 +50,22 @@ const onAdminDeleteConfirm = event => {
     .catch(console.log)
 }
 
+const onAdminUnapproveAdvice = event => {
+  event.preventDefault()
+  console.log('inside onAdminUnapproveAdvice')
+  store.idToUnapprove = event.currentTarget.id
+  $('#adminUnapproveConfirmModal').modal('show')
+}
+
+const onAdminUnapproveConfirm = event => {
+  event.preventDefault()
+  api.unapproveAdviceOnAPI(store.idToUnapprove)
+    .then(api.getAllAdvicesFromAPI)
+    .then(ui.refreshAdminView)
+    .then(addAdminHandlers)
+    .catch(console.log)
+}
+
 const onShowAdminView = () => {
   api.getAllAdvicesFromAPI()
     .then(ui.showAdminView)
@@ -60,6 +76,7 @@ const onShowAdminView = () => {
 const addAdminHandlers = () => {
   $('.delete-advice').on('click', onAdminDeleteAdvice)
   $('.approve-advice').on('click', onAdminApproveAdvice)
+  $('.unapprove-advice').on('click', onAdminUnapproveAdvice)
 }
 
 /////////////////////
@@ -318,6 +335,7 @@ module.exports = {
   // ADMIN events
   onAdminDeleteConfirm,
   onAdminApproveConfirm,
+  onAdminUnapproveConfirm,
   onShowAdminView,
   // ADVICE Events
   onAdviceSubmission,

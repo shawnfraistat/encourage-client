@@ -36,11 +36,11 @@ const showUnapprovedDiv = () => {
 const refreshAdminView = advices => {
   $('#adminApproveConfirmModal').modal('hide')
   $('#adminDeleteConfirmModal').modal('hide')
+  $('#adminUnapproveConfirmModal').modal('hide')
   showAdminView(advices)
 }
 
 const showAdminView = advices => {
-  console.log('advices is', advices)
   const unapprovedAdvices = advices.advices.filter(advice => advice.approved !== "true")
   const approvedAdvices = advices.advices.filter(advice => advice.approved === "true")
   let unapprovedHTML = ''
@@ -66,7 +66,7 @@ const showAdminView = advices => {
         <td style="text-align: left;">${element.content}</td>
         <td>${element.tags.split(' ').join(', ').slice(0, -2)}</td>
         <td>${element.likes.length}</td>
-        <td style="width: 22px;"><img src="assets/images/approval.png" style="width: 20px;" id="${element.id}" class="approve-advice"></td>
+        <td style="width: 22px;"><img src="assets/images/approval.png" style="width: 25px;" id="${element.id}" class="approve-advice"></td>
         <td style="width: 22px;"><img src="assets/images/delete.ico" style="width: 20px;" id="${element.id}" class="delete-advice"></td>
       </tr>
     `
@@ -96,7 +96,7 @@ const showAdminView = advices => {
         <td style="text-align: left;">${element.content}</td>
         <td>${element.tags.split(' ').join(', ').slice(0, -2)}</td>
         <td>${element.likes.length}</td>
-        <td style="width: 22px;"><img src="assets/images/delete.ico" style="width: 20px;" id="${element.id}" class="unapprove-advice"></td>
+        <td style="width: 22px;"><img src="assets/images/unapprove.png" style="width: 20px;" id="${element.id}" class="unapprove-advice"></td>
         <td style="width: 22px;"><img src="assets/images/delete.ico" style="width: 20px;" id="${element.id}" class="delete-advice"></td>
       </tr>
     `
@@ -239,7 +239,7 @@ const handleSignInSuccess = event => {
   $('#sign-in-cancel').addClass('collapse')
   $('#sign-in-submit').addClass('collapse')
   $('#sign-in-continue').removeClass('collapse')
-  if (store.user.admin === "true") {
+  if (store.user.admin === 'true') {
     $('#admin-div').removeClass('collapse')
   }
 }
@@ -436,7 +436,7 @@ const showUserView = advices => {
     newHTML += `
       <tr>
         <th scope="row">${i}</th>
-        <td data-toggle="tooltip" title="${element.content.slice(0, 100)}">${element.content.slice(0, 9)}</td>
+        <td>${element.content}</td>
         <td>${element.tags.split(' ').join(', ').slice(0, -2)}</td>
         <td>${element.likes.length}</td>
         <td>${element.approved}</td>

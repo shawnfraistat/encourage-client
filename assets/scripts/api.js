@@ -25,6 +25,16 @@ const approveAdviceOnAPI = id => {
   })
 }
 
+const unapproveAdviceOnAPI = id => {
+  return $.ajax({
+    url: config.apiUrl + '/advices/unapprove/' + id,
+    method: 'PATCH',
+    headers: {
+      Authorization: 'Token token=' + store.user.token
+    }
+  })
+}
+
 const getAllAdvicesFromAPI = () => {
   return $.ajax({
     url: config.apiUrl + '/advices/',
@@ -71,15 +81,15 @@ const deleteAdviceFromAPI = id => {
   })
 }
 
-const checkLikesOnAdviceFromAPI = () => {
-  return $.ajax({
-    url: config.apiUrl + '/random-advice',
-    method: 'GET',
-    headers: {
-      Authorization: 'Token token=' + store.user.token
-    }
-  })
-}
+// const checkLikesOnAdviceFromAPI = () => {
+//   return $.ajax({
+//     url: config.apiUrl + '/random-advice',
+//     method: 'GET',
+//     headers: {
+//       Authorization: 'Token token=' + store.user.token
+//     }
+//   })
+// }
 
 const getAdviceFromAPI = () => {
   return $.ajax({
@@ -111,7 +121,6 @@ const submitAdviceToAPI = data => {
     }
   })
 }
-
 
 ////////////////////////
 //                    //
@@ -161,6 +170,7 @@ const signUp = data => {
   })
 }
 
+// updateUserTags() updates the tags associated with this user on the API
 const updateUserTags = data => {
   return $.ajax({
     url: config.apiUrl + '/change-tags',
@@ -176,9 +186,10 @@ module.exports = {
   // ADMIN API actions
   approveAdviceOnAPI,
   getAllAdvicesFromAPI,
+  unapproveAdviceOnAPI,
   // ADVICE API actions
   addUpvote,
-  checkLikesOnAdviceFromAPI,
+  // checkLikesOnAdviceFromAPI,
   deleteUpvote,
   deleteAdviceFromAPI,
   getAdviceFromAPI,
