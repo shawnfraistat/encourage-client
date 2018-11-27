@@ -16,8 +16,18 @@ const store = require('./store.js')
 
 const addUpvote = data => {
   return $.ajax({
-    url: config.apiUrl + '/advices/' + data.id,
-    method: 'PATCH',
+    url: config.apiUrl + '/likes/' + data.id,
+    method: 'POST',
+    headers: {
+      Authorization: 'Token token=' + store.user.token
+    }
+  })
+}
+
+const deleteUpvote = data => {
+  return $.ajax({
+    url: config.apiUrl + '/likes/' + data.id,
+    method: 'DELETE',
     headers: {
       Authorization: 'Token token=' + store.user.token
     }
@@ -28,6 +38,16 @@ const deleteAdviceFromAPI = id => {
   return $.ajax({
     url: config.apiUrl + '/advices/' + id,
     method: 'DELETE',
+    headers: {
+      Authorization: 'Token token=' + store.user.token
+    }
+  })
+}
+
+const checkLikesOnAdviceFromAPI = () => {
+  return $.ajax({
+    url: config.apiUrl + '/random-advice',
+    method: 'GET',
     headers: {
       Authorization: 'Token token=' + store.user.token
     }
@@ -64,7 +84,6 @@ const submitAdviceToAPI = data => {
     }
   })
 }
-
 
 
 ////////////////////////
@@ -118,6 +137,8 @@ const signUp = data => {
 module.exports = {
   // ADVICE API action
   addUpvote,
+  checkLikesOnAdviceFromAPI,
+  deleteUpvote,
   deleteAdviceFromAPI,
   getAdviceFromAPI,
   getUserAdvicesFromAPI,

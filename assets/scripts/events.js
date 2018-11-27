@@ -18,8 +18,8 @@ const ui = require('./ui.js')
 //                 //
 /////////////////////
 
-const addHandlerToLikeButton = () => {
-  $('#upvote-button').on('click', onLikeButtonClick)
+const addHandlerToLikeButton = hasBeenLiked => {
+  hasBeenLiked ? $('#upvote-button').on('click', onLikeButtonUnclick) : $('#upvote-button').on('click', onLikeButtonClick)
 }
 
 const onAdviceSubmission = event => {
@@ -54,8 +54,18 @@ const onAdviceSubmission = event => {
 const onLikeButtonClick = event => {
   event.preventDefault()
   api.addUpvote(store.advice)
-    .then(ui.updateUpvoteDisplay)
+    .then(ui.incrementUpvoteDisplay)
     .then($('#upvote-button').off('click', onLikeButtonClick))
+    .then($('#upvote-button').on('click', onLikeButtonUnclick))
+    .catch(console.log)
+}
+
+const onLikeButtonUnclick = event => {
+  event.preventDefault()
+  api.deleteUpvote(store.advice)
+    .then(ui.decrementUpvoteDisplay)
+    .then($('#upvote-button').off('click', onLikeButtonUnclick))
+    .then($('#upvote-button').on('click', onLikeButtonClick))
     .catch(console.log)
 }
 

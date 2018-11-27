@@ -15,12 +15,18 @@ const store = require('./store.js')
 //                        //
 ////////////////////////////
 
-const displayAdvice = (data) => {
+const displayAdvice = data => {
   console.log(data)
   console.log(data.advice.content)
+  console.log(data.advice.likes)
   store.advice = data.advice
-  const adviceDisplay = $('#advice-display')
-  adviceDisplay.html(`
+  let imageURL = ''
+  if (data.advice.likes.every(like => like.user_id !== store.user.id)) {
+    imageURL = 'assets/images/thumbs-up3.png'
+  } else {
+    imageURL = 'assets/images/thumbs-up-active.png'
+  }
+  $('#advice-display').html(`
     <div class="master-container">
       <img src="assets/images/speech-bubble.png" alt="speech bubble" style="width:100%;">
       <div class="centered">
@@ -31,12 +37,23 @@ const displayAdvice = (data) => {
         <hr />
         <div class="upvote-div text-right">
           <button class="btn upvote-button" type="submit" id="upvote-button">
-            <img style="width: 22px;" src="assets/images/thumbs-up3.png" alt="click here to like">
+            <img class="like-image" style="width: 22px;" src=${imageURL} alt="click here to like">
           </button>
-          <span class="upvote-count">${data.advice.upvotes}</span></div>
+          <span class="upvote-count">${data.advice.likes.length}</span></div>
       </div>
     </div>
     `)
+  if (data.advice.likes.every(like => like.user_id !== store.user.id)) {
+    return false
+  } else {
+    return true
+  }
+}
+
+const decrementUpvoteDisplay = data => {
+  console.log(data)
+  $('.upvote-count').text(data.advice.likes.length)
+  $('.like-image').attr('src', 'assets/images/thumbs-up3.png')
 }
 
 const handleAdviceSubmissionFailure = () => {
@@ -47,17 +64,17 @@ const handleAdviceSubmissionSuccess = () => {
   $('.submit-advice-message').html(`<h5 class="submit-advice-message success">Encouragement submitted!</h5>`)
 }
 
+const incrementUpvoteDisplay = data => {
+  $('.upvote-count').text(data.like.advice.likes.length)
+  $('.like-image').attr('src', 'assets/images/thumbs-up-active.png')
+}
+
 const submitContentFailure = error => {
   if (error === 'contentError') {
     $('.submit-advice-message').html('<h5 class="submit-advice-message failure">Encouragement needs content</h5>')
   } else if (error === 'noTags') {
     $('.submit-advice-message').html('<h5 class="submit-advice-message failure">Need at least one tag</h5>')
   }
-}
-
-const updateUpvoteDisplay = () => {
-  const upvotes = store.advice.upvotes + 1
-  $('.upvote-count').text(upvotes)
 }
 
 ////////////////////
@@ -197,7 +214,6 @@ const switchToSignUp = function () {
   $('#logInModalTitle').text('Sign Up')
 }
 
-
 //////////////////////////////
 //                          //
 //  USER View UI Functions  //
@@ -270,7 +286,8 @@ module.exports = {
   handleAdviceSubmissionFailure,
   handleAdviceSubmissionSuccess,
   submitContentFailure,
-  updateUpvoteDisplay,
+  decrementUpvoteDisplay,
+  incrementUpvoteDisplay,
   // FORM Reset
   clearForms,
   // SIGN-IN/UP View UI Functions
