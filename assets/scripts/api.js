@@ -134,6 +134,17 @@ const signUp = data => {
   })
 }
 
+const updateUserTags = data => {
+  return $.ajax({
+    url: config.apiUrl + '/change-tags',
+    method: 'PATCH',
+    data,
+    headers: {
+      Authorization: 'Token token=' + store.user.token
+    }
+  })
+}
+
 module.exports = {
   // ADVICE API action
   addUpvote,
@@ -147,5 +158,6 @@ module.exports = {
   changePassword,
   signIn,
   signOut,
-  signUp
+  signUp,
+  updateUserTags
 }

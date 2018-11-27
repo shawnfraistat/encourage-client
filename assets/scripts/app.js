@@ -6,6 +6,7 @@ TO-DO LIST:
 1. Add Favorite Functions
 2. Add tooltips
 3. Add sentiment analysis
+4. Add user abiltiy to choose tags
 */
 
 // use require with a reference to bundle the file and use it in this file
@@ -32,4 +33,5 @@ $(() => {
   $('#delete-item-submit').on('click', events.onDeleteConfirm)
   $('#your-submissions-nav-link').on('click', ui.showSubmissionsDiv)
   $('#settings-nav-link').on('click', ui.showSettingsDiv)
+  $('#user-choose-tags-submit').on('click', events.onUserChooseTagsSubmit)
 })

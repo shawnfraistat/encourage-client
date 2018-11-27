@@ -44,15 +44,15 @@
                 <input type="password" name="credentials[password]" placeholder="Password" />
                 <input type="password" name="credentials[password_confirmation]" placeholder="Confirm Password" />
                 <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="general">
+                  <input class="form-check-input sign-up-check" type="checkbox" id="inlineCheckbox1" value="general">
                   <label class="form-check-label" for="inlineCheckbox1">General</label>
                 </div>
                 <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="checkbox" id="inlineCheckbox2" value="coding">
+                  <input class="form-check-input sign-up-check" type="checkbox" id="inlineCheckbox2" value="coding">
                   <label class="form-check-label" for="inlineCheckbox2">Coding</label>
                 </div>
                 <div class="form-check form-check-inline">
-                  <input class="form-check-input" type="checkbox" id="inlineCheckbox3" value="bleak">
+                  <input class="form-check-input sign-up-check" type="checkbox" id="inlineCheckbox3" value="bleak">
                   <label class="form-check-label" for="inlineCheckbox3">Bleak</label>
                 </div>
                 <p>Existing users <scan class="switch-to-sign-in">sign in</scan>
@@ -128,6 +128,27 @@
                         </fieldset>
                     </div>
                   </form>
+                  <form id="choose-tags">
+                    <div class="form group">
+                        <fieldset>
+                          <h5>Update Tags</h5>
+                          <h5 class="choose-tags-message"></h5>
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input choose-tags-check" type="checkbox" id="inlineCheckbox4" value="general">
+                            <label class="form-check-label" for="inlineCheckbox4">General</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input choose-tags-check" type="checkbox" id="inlineCheckbox5" value="coding">
+                            <label class="form-check-label" for="inlineCheckbox5">Coding</label>
+                          </div>
+                          <div class="form-check form-check-inline">
+                            <input class="form-check-input choose-tags-check" type="checkbox" id="inlineCheckbox6" value="bleak">
+                            <label class="form-check-label" for="inlineCheckbox6">Bleak</label>
+                          </div>
+                          <button type="button" id="user-choose-tags-submit">Submit</button>
+                        </fieldset>
+                    </div>
+                  </form>
                 </div
                 </form>
                 <br />
@@ -182,16 +203,16 @@
                           <p class="grey">150 character limit</p>
                           <p class="select-tags-text">Select Tags:</p>
                           <div class="form-check form-check-inline">
-                            <input class="encourage-form-check-input" type="checkbox" id="inlineCheckbox4" value="general">
-                            <label class="form-check-label" for="inlineCheckbox1">General</label>
+                            <input class="encourage-form-check-input" type="checkbox" id="inlineCheckbox7" value="general">
+                            <label class="form-check-label" for="inlineCheckbox7">General</label>
                           </div>
                           <div class="form-check form-check-inline">
-                            <input class="encourage-form-check-input" type="checkbox" id="inlineCheckbox5" value="coding">
-                            <label class="form-check-label" for="inlineCheckbox2">Coding</label>
+                            <input class="encourage-form-check-input" type="checkbox" id="inlineCheckbox8" value="coding">
+                            <label class="form-check-label" for="inlineCheckbox8">Coding</label>
                           </div>
                           <div class="form-check form-check-inline">
-                            <input class="encourage-form-check-input" type="checkbox" id="inlineCheckbox6" value="bleak">
-                            <label class="form-check-label" for="inlineCheckbox3">Bleak</label>
+                            <input class="encourage-form-check-input" type="checkbox" id="inlineCheckbox9" value="bleak">
+                            <label class="form-check-label" for="inlineCheckbox9">Bleak</label>
                           </div>
                           <button type="button" id="submit-advice-submit">Submit</button>
                         </fieldset>

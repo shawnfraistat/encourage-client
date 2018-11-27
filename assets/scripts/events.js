@@ -133,7 +133,7 @@ const onSignUp = event => {
   const target = $('#sign-up')[0]
   const data = getFormFields(target)
   data.credentials.tags = ''
-  const checkBoxArray = $('.form-check-input')
+  const checkBoxArray = $('.sign-up-check')
   for (let i = 0; i < checkBoxArray.length; i++) {
     if (checkBoxArray[i].checked) {
       data.credentials.tags += checkBoxArray[i].getAttribute('value') + ' '
@@ -218,15 +218,7 @@ const onChangePasswordSubmit = event => {
   }
 }
 
-const onShowUserView = () => {
-  api.getUserAdvicesFromAPI()
-    .then(ui.showUserView)
-    .then(addDeleteHandlers)
-    .catch(console.log)
-}
-
 const onDeleteAdvice = event => {
-  console.log('inside onDeleteAdvice')
   store.idToDelete = event.currentTarget.id
   $('#deleteConfirmModal').modal('show')
   event.preventDefault()
@@ -237,6 +229,27 @@ const onDeleteConfirm = event => {
   api.deleteAdviceFromAPI(store.idToDelete)
     .then(api.getUserAdvicesFromAPI)
     .then(ui.refreshUserView)
+    .catch(console.log)
+}
+
+const onShowUserView = () => {
+  api.getUserAdvicesFromAPI()
+    .then(ui.showUserView)
+    .then(addDeleteHandlers)
+    .catch(console.log)
+}
+
+const onUserChooseTagsSubmit = () => {
+  let tags = ''
+  const checkBoxArray = $('.choose-tags-check')
+  for (let i = 0; i < checkBoxArray.length; i++) {
+    if (checkBoxArray[i].checked) {
+      tags += checkBoxArray[i].getAttribute('value') + ' '
+    }
+  }
+  const data = { tags: tags }
+  api.updateUserTags(data)
+    .then(ui.handleUpdateTagsSuccess)
     .catch(console.log)
 }
 
@@ -256,5 +269,6 @@ module.exports = {
   // USER View Events
   onChangePasswordSubmit,
   onDeleteConfirm,
-  onShowUserView
+  onShowUserView,
+  onUserChooseTagsSubmit
 }
