@@ -5,7 +5,7 @@ TO-DO LIST:
 
 1. Add Favorite Function
 2. Add tooltips
-3. Adjust sentiment analysis colors?
+3. Adjust sentiment analysis colors? Add something that displays value and explains?
 4. Refactor code so that when Admin makes changes to advice, there's only one
 update route that's used?
 */

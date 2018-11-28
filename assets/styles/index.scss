@@ -110,6 +110,13 @@ div {
     justify-content: center;
     display: flex;
   }
+
+  &.advice-footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
 }
 
 // .btn-colored {
@@ -158,6 +165,12 @@ h5 {
 
 h6 {
   font-weight: 600;
+}
+
+hr {
+  &.advice-display-hr {
+    margin-bottom: 10px;
+  }
 }
 
 .modal {
@@ -240,9 +253,9 @@ ul {
 .upvote-count {
   background-color: $white;
   border: 1px solid $grey;
-  font-size: 14px;
+  font-size: 16px;
   margin: 1px;
-  padding: 0 4px;
+  padding: 0 5px;
   text-align: center;
 }
 
@@ -250,8 +263,6 @@ ul {
   align-items: center;
   display: flex;
   justify-content: flex-end;
-  position: relative;
-  top: -10px;
 }
 
 #encourage-e {

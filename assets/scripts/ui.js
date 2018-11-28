@@ -116,11 +116,15 @@ const showAdminView = advices => {
 const displayAdvice = data => {
   store.advice = data.advice
   let imageURL = ''
+  let title = ''
   if (data.advice.likes.every(like => like.user_id !== store.user.id)) {
     imageURL = 'assets/images/thumbs-up3.png'
+    title = 'Click here to like'
   } else {
     imageURL = 'assets/images/thumbs-up-active.png'
+    title = 'Click here to unlike'
   }
+  const sentimentValue = sentimentAnalysis(data.advice.content)
   $('#advice-display').html(`
     <div class="master-container">
       <img src="assets/images/speech-bubble.png" alt="speech bubble" style="width:100%;">
@@ -129,16 +133,21 @@ const displayAdvice = data => {
           <p>${data.advice.content}</p>
           <div class="blockquote-footer text-right mr-2">${data.advice.first_name} ${data.advice.last_name}</div>
         </blockquote>
-        <hr />
-        <div class="upvote-div text-right">
-          <button class="btn upvote-button" type="submit" id="upvote-button">
-            <img class="like-image" style="width: 22px;" src=${imageURL} alt="click here to like">
-          </button>
-          <span class="upvote-count">${data.advice.likes.length}</span></div>
+        <hr class="advice-display-hr"/>
+        <div class="advice-footer">
+          <div>
+            <img style="width: 27px; height: 25px;" src="assets/images/face${sentimentValue}.png" data-toggle="tooltip" title="Result of performing sentiment analysis on this piece of encouragement: score is ${sentimentValue}">
+          </div>
+          <div class="upvote-div">
+            <button class="btn upvote-button" type="submit" id="upvote-button" data-toggle="tooltip" >
+              <img class="like-image" style="width: 25px;" src=${imageURL} title="${title}" alt="${title}">
+            </button>
+            <span class="upvote-count" data-toggle="tooltip" title="Total likes">${data.advice.likes.length}</span></div>
+        </div>
       </div>
     </div>
     `)
-  sentimentAnalysis(data.advice.content)
+  $('[data-toggle="tooltip"]').tooltip()
   if (data.advice.likes.every(like => like.user_id !== store.user.id)) {
     return false
   } else {
@@ -152,24 +161,34 @@ const sentimentAnalysis = string => {
   console.log(result)
   if (result >= 1 && result <= 5) {
     $('body').attr('style', 'background-color: #66fff2;')
+    return 5
   } else if (result >= 0.75 && result < 1) {
     $('body').attr('style', 'background-color: #75f0e5;')
+    return 4
   } else if (result >= 0.5 && result < 0.75) {
     $('body').attr('style', 'background-color: #79ece2;')
+    return 3
   } else if (result >= 0.25 && result < 0.5) {
     $('body').attr('style', 'background-color: #7de8df;')
+    return 2
   } else if (result >= 0 && result < 0.25) {
     $('body').attr('style', 'background-color: #8fd8d2;')
+    return 1
   } else if (result >= -0.25 && result < 0) {
     $('body').attr('style', 'background-color: #2e847d;')
+    return 0
   } else if (result >= -0.5 && result < -0.25) {
     $('body').attr('style', 'background-color: #215e59')
+    return -1
   } else if (result >= -0.75 && result < -0.5) {
     $('body').attr('style', 'background-color: #1b4b47;')
+    return -2
   } else if (result >= -1 && result < -0.75) {
     $('body').attr('style', 'background-color: #143936;')
+    return -3
   } else if (result >= -5 && result < -1) {
     $('body').attr('style', 'background-color: #0d2624;')
+    return -4
   }
 }
 
