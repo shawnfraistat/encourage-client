@@ -9,6 +9,7 @@
 (5) USER View UI Functions */
 
 const store = require('./store.js')
+const api = require('./api.js')
 
 // sentiment analysis courtesy of https://github.com/thisandagain/sentiment
 const Sentiment = require('sentiment')
@@ -41,8 +42,8 @@ const refreshAdminView = advices => {
 }
 
 const showAdminView = advices => {
-  const unapprovedAdvices = advices.advices.filter(advice => advice.approved !== "true")
-  const approvedAdvices = advices.advices.filter(advice => advice.approved === "true")
+  const unapprovedAdvices = advices.advices.filter(advice => advice.approved !== 'true')
+  const approvedAdvices = advices.advices.filter(advice => advice.approved === 'true')
   let unapprovedHTML = ''
   unapprovedHTML += `
   <table class="table text-center table-responsive submission-table">
@@ -115,14 +116,41 @@ const showAdminView = advices => {
 
 const displayAdvice = data => {
   store.advice = data.advice
-  let imageURL = ''
-  let title = ''
-  if (data.advice.likes.every(like => like.user_id !== store.user.id)) {
-    imageURL = 'assets/images/thumbs-up3.png'
-    title = 'Click here to like'
+  console.log('inside displayAdvice, data is ', data)
+  let likeImageURL = ''
+  let likeTitle = ''
+  let favoriteImageURL = ''
+  let favoriteTitle = ''
+  const displayState = []
+  if (data.advice.likes !== undefined) {
+    if (data.advice.likes.every(like => like.user_id !== store.user.id)) {
+      likeImageURL = 'assets/images/thumbs-up3.png'
+      likeTitle = 'Click here to like'
+      displayState.push(false)
+    } else {
+      likeImageURL = 'assets/images/thumbs-up-active.png'
+      likeTitle = 'Click here to unlike'
+      displayState.push(true)
+    }
   } else {
-    imageURL = 'assets/images/thumbs-up-active.png'
-    title = 'Click here to unlike'
+    likeImageURL = 'assets/images/thumbs-up3.png'
+    likeTitle = 'Click here to like'
+    displayState.push(false)
+  }
+  if (data.advice.favorites !== undefined) {
+    if (data.advice.favorites.every(favorite => favorite.user_id !== store.user.id)) {
+      favoriteImageURL = 'assets/images/favorite.png'
+      favoriteTitle = 'Click here to favorite'
+      displayState.push(false)
+    } else {
+      favoriteImageURL = 'assets/images/favorited.png'
+      favoriteTitle = 'Click here to unfavorite'
+      displayState.push(true)
+    }
+  } else {
+    favoriteImageURL = 'assets/images/favorite.png'
+    favoriteTitle = 'Click here to favorite'
+    displayState.push(false)
   }
   const sentimentValue = sentimentAnalysis(data.advice.content)
   $('#advice-display').html(`
@@ -136,11 +164,14 @@ const displayAdvice = data => {
         <hr class="advice-display-hr"/>
         <div class="advice-footer">
           <div>
-            <img style="width: 27px; height: 25px;" src="assets/images/face${sentimentValue}.png" data-toggle="tooltip" title="Result of performing sentiment analysis on this piece of encouragement: score is ${sentimentValue}">
+            <img class="sentiment-image" src="assets/images/face${sentimentValue}.png" data-toggle="tooltip" title="Result of performing sentiment analysis on this piece of encouragement: score is ${sentimentValue}">
           </div>
           <div class="upvote-div">
-            <button class="btn upvote-button" type="submit" id="upvote-button" data-toggle="tooltip" >
-              <img class="like-image" style="width: 25px;" src=${imageURL} title="${title}" alt="${title}">
+            <button class="btn favorite-button" type="submit" id="favorite-button">
+              <img class="favorite-image" src=${favoriteImageURL} data-toggle="tooltip" title="${favoriteTitle}">
+            </button>
+            <button class="btn upvote-button" type="submit" id="upvote-button">
+              <img class="like-image" src=${likeImageURL} data-toggle="tooltip" title="${likeTitle}" alt="${likeTitle}">
             </button>
             <span class="upvote-count" data-toggle="tooltip" title="Total likes">${data.advice.likes.length}</span></div>
         </div>
@@ -148,11 +179,38 @@ const displayAdvice = data => {
     </div>
     `)
   $('[data-toggle="tooltip"]').tooltip()
-  if (data.advice.likes.every(like => like.user_id !== store.user.id)) {
-    return false
-  } else {
-    return true
-  }
+  console.log('inside displayAdvice, displayState is', displayState)
+  return displayState
+}
+
+const addFavoriteDisplay = data => {
+  $('.favorite-image').attr('src', 'assets/images/favorited.png')
+  $('.favorite-image').attr('data-original-title', 'Click here to unfavorite')
+}
+
+const deleteFavoriteDisplay = data => {
+  $('.favorite-image').attr('src', 'assets/images/favorite.png')
+  $('.favorite-image').attr('data-original-title', 'Click here to favorite')
+}
+
+const decrementUpvoteDisplay = data => {
+  $('.upvote-count').text(data.advice.likes.length)
+  $('.like-image').attr('src', 'assets/images/thumbs-up3.png')
+  $('.like-image').attr('data-original-title', 'Click here to like')
+}
+
+const handleAdviceSubmissionFailure = () => {
+  $('.submit-advice-message').html(`<h5 class="submit-advice-message failure">Encouragement submission failed</h5>`)
+}
+
+const handleAdviceSubmissionSuccess = () => {
+  $('.submit-advice-message').html(`<h5 class="submit-advice-message success">Encouragement submitted!</h5>`)
+}
+
+const incrementUpvoteDisplay = data => {
+  $('.upvote-count').text(data.like.advice.likes.length)
+  $('.like-image').attr('src', 'assets/images/thumbs-up-active.png')
+  $('.like-image').attr('data-original-title', 'Click here to unlike')
 }
 
 const sentimentAnalysis = string => {
@@ -190,24 +248,6 @@ const sentimentAnalysis = string => {
     $('body').attr('style', 'background-color: #0d2624;')
     return -4
   }
-}
-
-const decrementUpvoteDisplay = data => {
-  $('.upvote-count').text(data.advice.likes.length)
-  $('.like-image').attr('src', 'assets/images/thumbs-up3.png')
-}
-
-const handleAdviceSubmissionFailure = () => {
-  $('.submit-advice-message').html(`<h5 class="submit-advice-message failure">Encouragement submission failed</h5>`)
-}
-
-const handleAdviceSubmissionSuccess = () => {
-  $('.submit-advice-message').html(`<h5 class="submit-advice-message success">Encouragement submitted!</h5>`)
-}
-
-const incrementUpvoteDisplay = data => {
-  $('.upvote-count').text(data.like.advice.likes.length)
-  $('.like-image').attr('src', 'assets/images/thumbs-up-active.png')
 }
 
 const submitContentFailure = error => {
@@ -414,27 +454,79 @@ const handleUpdateTagsSuccess = () => {
   $('.choose-tags-message').html('<h6 class="choose-tags-message success">Tags updated!</h6>')
 }
 
+const refreshFavoritesUserView = advices => {
+  $('#deleteFavoriteConfirmModal').modal('hide')
+  showFavoritesUserView(advices)
+}
+
 const refreshUserView = advices => {
   $('#deleteConfirmModal').modal('hide')
   showUserView(advices)
 }
 
+const showFavoritesDiv = () => {
+  $('#settings-div').addClass('collapse')
+  $('#your-favorites-div').removeClass('collapse')
+  $('#your-submissions-div').addClass('collapse')
+  $('#settings-nav-link').removeClass('active')
+  $('#your-favorites-nav-link').addClass('active')
+  $('#your-submissions-nav-link').removeClass('active')
+}
+
 const showSettingsDiv = () => {
   $('#settings-div').removeClass('collapse')
+  $('#your-favorites-div').addClass('collapse')
   $('#your-submissions-div').addClass('collapse')
   $('#settings-nav-link').addClass('active')
+  $('#your-favorites-nav-link').removeClass('active')
   $('#your-submissions-nav-link').removeClass('active')
 }
 
 const showSubmissionsDiv = () => {
   $('#settings-div').addClass('collapse')
+  $('#your-favorites-div').addClass('collapse')
   $('#your-submissions-div').removeClass('collapse')
   $('#settings-nav-link').removeClass('active')
+  $('#your-favorites-nav-link').removeClass('active')
   $('#your-submissions-nav-link').addClass('active')
 }
 
-const showUserView = advices => {
-  console.log('advices is', advices)
+const showFavoritesUserView = data => {
+  console.log('In showFavoritesUserView--data is', data)
+  let newHTML = ''
+  newHTML += `
+  <table class="table text-center table-responsive submission-table">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Content</th>
+        <th scope="col">Tags</th>
+        <th scope="col">Upvotes</th>
+        <th scope="col">Unfavorite?</th>
+      </tr>
+    </thead>
+    <tbody>`
+  let i = 0
+  data.advices.forEach((element) => {
+    i++
+    newHTML += `
+      <tr>
+        <th scope="row">${i}</th>
+        <td>${element.content}</td>
+        <td>${element.tags.split(' ').join(', ').slice(0, -2)}</td>
+        <td>${element.likes.length}</td>
+        <td style="width: 22px;"><img src="assets/images/delete.ico" style="width: 20px;" id="${element.id}" class="delete-favorite"></td>
+      </tr>
+    `
+  })
+  newHTML += `  </tbody>
+  </table>`
+  $('.your-favorites-field').html(newHTML)
+  $('[data-toggle="tooltip"]').tooltip()
+}
+
+const showUserView = data => {
+  console.log('in showUser view, data is', data)
   let newHTML = ''
   newHTML += `
   <table class="table text-center table-responsive submission-table">
@@ -448,9 +540,9 @@ const showUserView = advices => {
         <th scope="col">Delete?</th>
       </tr>
     </thead>
-    <tbody`
+    <tbody>`
   let i = 0
-  advices.advices.forEach((element) => {
+  data.advices.forEach((element) => {
     i++
     newHTML += `
       <tr>
@@ -476,6 +568,8 @@ module.exports = {
   showApprovedDiv,
   showUnapprovedDiv,
   // ADVICE UI Functions,
+  addFavoriteDisplay,
+  deleteFavoriteDisplay,
   displayAdvice,
   handleAdviceSubmissionFailure,
   handleAdviceSubmissionSuccess,
@@ -505,8 +599,11 @@ module.exports = {
   handleUpdateTagsFailure,
   handleUpdateTagsNoTags,
   handleUpdateTagsSuccess,
+  refreshFavoritesUserView,
   refreshUserView,
+  showFavoritesDiv,
   showSettingsDiv,
   showSubmissionsDiv,
+  showFavoritesUserView,
   showUserView
 }

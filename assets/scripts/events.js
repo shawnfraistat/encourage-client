@@ -85,8 +85,18 @@ const addAdminHandlers = () => {
 //                 //
 /////////////////////
 
-const addHandlerToLikeButton = hasBeenLiked => {
-  hasBeenLiked ? $('#upvote-button').on('click', onLikeButtonUnclick) : $('#upvote-button').on('click', onLikeButtonClick)
+const refreshAdvice = () => {
+  if (store.advice !== undefined) {
+    api.getSpecificAdviceFromAPI(store.advice.id)
+      .then(ui.displayAdvice)
+      .then(addHandlersToAdviceButtons)
+      .catch(console.log)
+  }
+}
+
+const addHandlersToAdviceButtons = displayState => {
+  displayState[0] ? $('#upvote-button').on('click', onLikeButtonUnclick) : $('#upvote-button').on('click', onLikeButtonClick)
+  displayState[1] ? $('#favorite-button').on('click', onFavoriteButtonUnclick) : $('#favorite-button').on('click', onFavoriteButtonClick)
 }
 
 const onAdviceSubmission = event => {
@@ -116,6 +126,24 @@ const onAdviceSubmission = event => {
       .then(ui.handleAdviceSubmissionSuccess)
       .catch(ui.handleAdviceSubmissionFailure)
   }
+}
+
+const onFavoriteButtonClick = event => {
+  event.preventDefault()
+  api.addFavorite(store.advice)
+    .then(ui.addFavoriteDisplay)
+    .then($('#favorite-button').off('click', onFavoriteButtonClick))
+    .then($('#favorite-button').on('click', onFavoriteButtonUnclick))
+    .catch(console.log)
+}
+
+const onFavoriteButtonUnclick = event => {
+  event.preventDefault()
+  api.deleteFavorite(store.advice)
+    .then(ui.deleteFavoriteDisplay)
+    .then($('#favorite-button').off('click', onFavoriteButtonUnclick))
+    .then($('#favorite-button').on('click', onFavoriteButtonClick))
+    .catch(console.log)
 }
 
 const onLikeButtonClick = event => {
@@ -151,7 +179,7 @@ const onLoggedInEncourageClick = event => {
   event.preventDefault()
   api.getAdviceFromAPI()
     .then(ui.displayAdvice)
-    .then(addHandlerToLikeButton)
+    .then(addHandlersToAdviceButtons)
     .catch(console.log)
 }
 
@@ -277,6 +305,10 @@ const addDeleteHandlers = () => {
   $('.delete-advice').on('click', onDeleteAdvice)
 }
 
+const addFavoriteDeleteHandlers = () => {
+  $('.delete-favorite').on('click', onDeleteFavorite)
+}
+
 // onChangePassword() fires when the player clicks submit on the change password submit button in the USER view
 const onChangePasswordSubmit = event => {
   event.preventDefault()
@@ -306,6 +338,25 @@ const onDeleteConfirm = event => {
     .catch(console.log)
 }
 
+const onDeleteFavorite = event => {
+  event.preventDefault()
+  console.log('Inside onDeleteFavorite')
+  console.log(event)
+  console.log(event.currentTarget.id)
+  store.idToDelete = event.currentTarget
+  console.log(store.idToDelete)
+  $('#deleteFavoriteConfirmModal').modal('show')
+}
+
+const onDeleteFavoriteConfirm = event => {
+  event.preventDefault()
+  api.deleteFavorite(store.idToDelete)
+    .then(api.getUserFavoritesFromAPI)
+    .then(ui.refreshFavoritesUserView)
+    .then(addFavoriteDeleteHandlers)
+    .catch(console.log)
+}
+
 const onShowUserView = () => {
   api.getUserAdvicesFromAPI()
     .then(ui.showUserView)
@@ -313,6 +364,12 @@ const onShowUserView = () => {
     .catch(console.log)
 }
 
+const onShowUserFavoritesView = () => {
+  api.getUserFavoritesFromAPI()
+    .then(ui.showFavoritesUserView)
+    .then(addFavoriteDeleteHandlers)
+    .catch(console.log)
+}
 const onUserChooseTagsSubmit = () => {
   let tags = ''
   const checkBoxArray = $('.choose-tags-check')
@@ -339,6 +396,7 @@ module.exports = {
   onShowAdminView,
   // ADVICE Events
   onAdviceSubmission,
+  refreshAdvice,
   // ENCOURAGE BUTTON Events
   onFirstEncourageClick,
   onLoggedInEncourageClick,
@@ -352,6 +410,8 @@ module.exports = {
   // USER View Events
   onChangePasswordSubmit,
   onDeleteConfirm,
+  onDeleteFavoriteConfirm,
   onShowUserView,
+  onShowUserFavoritesView,
   onUserChooseTagsSubmit
 }

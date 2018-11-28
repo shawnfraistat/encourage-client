@@ -88,7 +88,7 @@
                 <input type="text" name="credentials[email]" placeholder="Email" />
                 <br />
                 <br />
-                <h5 title="Choose what kinds of encouragement you'd like to view">Choose Tags to View</h5>
+                <h5 data-toggle="tooltip" title="eNCOURAGE will display random pieces of encouragement based on your interests--select your interests here">Choose Types of Encouragement You Want to Receive</h5>
                 <div class="form-check form-check-inline">
                   <input class="form-check-input sign-up-check" type="checkbox" id="inlineCheckbox1" value="general">
                   <label class="form-check-label" for="inlineCheckbox1">General</label>
@@ -157,7 +157,7 @@
                 <button class="nav-link" id="your-submissions-nav-link">Your Submissions</button>
               </li>
               <li class="nav-item">
-                <button class="nav-link">Favorites</button>
+                <button class="nav-link" id="your-favorites-nav-link">Favorites</button>
               </li>
             </ul>
             <div class="modal-body">
@@ -196,22 +196,24 @@
                       </fieldset>
                   </div>
                 </form>
-              </div
-              </form>
-              <br />
+              </div>
               <div id="your-submissions-div" class="collapse">
                 <h5>Your Submissions</h5>
                 <h5 class="your-submissions-message"></h5>
                 <div class="your-submissions-field"></div>
-                <br />
               </div>
+            <div id="your-favorites-div" class="collapse">
+              <h5>Your Favorites</h5>
+              <h5 class="your-favorites-message"></h5>
+              <div class="your-favorites-field"></div>
             </div>
-            <div class="modal-footer">
-              <button type="button" id="user-view-done" data-dismiss="modal" class="btn btn-primary">Done</button>
-            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" id="user-view-done" data-dismiss="modal" class="btn btn-primary">Done</button>
           </div>
         </div>
       </div>
+    </div>
 
       <!-- deleteConfirmModal-->
 
@@ -244,6 +246,23 @@
           </div>
         </div>
       </div>
+
+      <!-- deleteFavoriteConfirmModal-->
+
+      <div class="modal fadel" id="deleteFavoriteConfirmModal" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content delete-favorite-confirm-modal-content">
+            <div class="modal-body delete-modal-body">
+              <h5 class="modal-title" id="deleteFavoriteConfirmModalTitle">
+                Unfavorite This Item?
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">&times;</button>
+                  <button type="button" id="delete-favorite-submit" class="btn btn-primary">&#10004;</button>
+              </h5>
+            </div>
+          </div>
+        </div>
+      </div>
+
 
       <!-- adminApproveConfirmModal-->
 

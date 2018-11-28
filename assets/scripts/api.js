@@ -71,6 +71,26 @@ const deleteUpvote = data => {
   })
 }
 
+const addFavorite = data => {
+  return $.ajax({
+    url: config.apiUrl + '/favorites/' + data.id,
+    method: 'POST',
+    headers: {
+      Authorization: 'Token token=' + store.user.token
+    }
+  })
+}
+
+const deleteFavorite = data => {
+  return $.ajax({
+    url: config.apiUrl + '/favorites/' + data.id,
+    method: 'DELETE',
+    headers: {
+      Authorization: 'Token token=' + store.user.token
+    }
+  })
+}
+
 const deleteAdviceFromAPI = id => {
   return $.ajax({
     url: config.apiUrl + '/advices/' + id,
@@ -94,6 +114,27 @@ const deleteAdviceFromAPI = id => {
 const getAdviceFromAPI = () => {
   return $.ajax({
     url: config.apiUrl + '/random-advice',
+    method: 'GET',
+    headers: {
+      Authorization: 'Token token=' + store.user.token
+    }
+  })
+}
+
+const getSpecificAdviceFromAPI = id => {
+  return $.ajax({
+    url: config.apiUrl + '/advices/' + id,
+    method: 'GET',
+    headers: {
+      Authorization: 'Token token=' + store.user.token
+    }
+  })
+}
+
+const getUserFavoritesFromAPI = () => {
+  console.log('Inside getUserFavoritesFromAPI')
+  return $.ajax({
+    url: config.apiUrl + '/get-favorites/',
     method: 'GET',
     headers: {
       Authorization: 'Token token=' + store.user.token
@@ -188,12 +229,15 @@ module.exports = {
   getAllAdvicesFromAPI,
   unapproveAdviceOnAPI,
   // ADVICE API actions
+  addFavorite,
   addUpvote,
-  // checkLikesOnAdviceFromAPI,
+  deleteFavorite,
   deleteUpvote,
   deleteAdviceFromAPI,
   getAdviceFromAPI,
+  getSpecificAdviceFromAPI,
   getUserAdvicesFromAPI,
+  getUserFavoritesFromAPI,
   submitAdviceToAPI,
   // USER API actions
   changePassword,
