@@ -5,12 +5,11 @@ TO-DO LIST:
 
 1. Refactor code so that when Admin makes changes to advice, there's only one
 update route that's used?
-2. CHECK AGAINST REQUIREMENTS
-3. Animations?
-4. Refactor CSS file?
-5. Clean up and comment code
-6. Check breakpoints and other display sizes
-7. Check errors handlers--right now you console.log errors a lot
+2. Animations?
+3. Refactor CSS file?
+4. Clean up and comment code
+5. Check breakpoints and other display sizes
+6. Check errors handlers--right now you console.log errors a lot
 */
 
 // use require with a reference to bundle the file and use it in this file
