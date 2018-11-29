@@ -3,11 +3,14 @@
 /*
 TO-DO LIST:
 
-1. Add Favorite Function
-2. Add tooltips
-3. Adjust sentiment analysis colors? Add something that displays value and explains?
-4. Refactor code so that when Admin makes changes to advice, there's only one
+1. Refactor code so that when Admin makes changes to advice, there's only one
 update route that's used?
+2. CHECK AGAINST REQUIREMENTS
+3. Animations?
+4. Refactor CSS file?
+5. Clean up and comment code
+6. Check breakpoints and other display sizes
+7. Check errors handlers--right now you console.log errors a lot
 */
 
 // use require with a reference to bundle the file and use it in this file
@@ -15,6 +18,7 @@ update route that's used?
 
 // use require without a reference to ensure a file is bundled
 // require('./example')
+
 const events = require('./events.js')
 const ui = require('./ui.js')
 

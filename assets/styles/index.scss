@@ -1,60 +1,39 @@
 @import '~bootstrap/scss/bootstrap';
 
-$yellow: #ffce00;
-$blue: #0357b4;
-$green: #007849;
+// color definitions
 $black: #262228;
-$white: #fff;
+$blue: #0357b4;
 $grey: #808080;
-
-$lightgreen: #4abdac;
-$vermillion: #fc4a1a;
-$anotheryellow: #f7b733;
-$lemon: #dcb239;
-$peach: #fedcd2;
-$powder: #8fd8d2;
 $lesswarm: #e89b7d;
+$powder: #8fd8d2;
 $warm: #df744a;
-$light-grey: #a9a9a9;
+$vermillion: #fc4a1a;
+$white: #fff;
+$yellow: #ffce00;
 
-.approve-confirm-modal-content {
-  width: 325px !important;
-  left: 75px;
+html,
+body {
+  height: 100vh;
 }
 
-.delete-favorite-confirm-modal-content {
-  width: 325px !important;
-}
-
-/* Container holding the image and the text */
-.master-container {
-  position: relative;
-  width: 70%;
-}
-
-/* Centered text */
-.centered {
-    position: absolute;
-    top: 37%;
-    left: 48%;
-    transform: translate(-50%, -50%);
-    width: 80%;
-    word-break: break-word;
-}
-
-.display-text {
-  align-items: center;
-  background-color: $white;
+body {
+  background-color: $powder;
   display: flex;
-  height: 100px;
-  justify-content: center;
-  min-height: 10%;
-  min-width: 20%;
-  width: 400px;
+  flex-direction: column;
+  padding-right: 0 !important;
 }
-
 
 button {
+  &.btn-primary {
+    background-color: $powder;
+    text-shadow: 1px 1px $black;
+  }
+
+  &.btn-secondary {
+    background-color: $grey;
+    text-shadow: 1px 1px $black;
+  }
+
   &.upvote-button {
     background-color: $white;
     border: 0;
@@ -74,113 +53,155 @@ button {
   }
 }
 
-.btn-primary {
-  background-color: $powder;
-  text-shadow: 1px 1px $black;
-}
-
-.btn-secondary {
-  background-color: $grey;
-  text-shadow: 1px 1px $black;
-}
-
-.cover-container {
-  align-items: center;
-  justify-content: center;
-  max-width: 800px;
-}
-
+// color classes
 .failure {
   color: $vermillion;
+}
+
+.grey {
+  color: $grey;
 }
 
 .success {
   color: $blue;
 }
 
-html,
-body {
-  height: 100%;
-}
-
-body {
-  background-color: $powder;
-  display: flex;
-  flex-direction: column;
-  padding-right: 0 !important;
-}
-
-main {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  justify-content: center;
-  align-items: center;
-}
-
 div {
+  &.advice-display {
+    display: flex;
+    justify-content: center;
+  }
+
+  &.advice-footer {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  &.approve-confirm-modal-content {
+    left: 75px;
+    width: 325px !important;
+  }
+
+  &.centered {
+    left: 48%;
+    position: absolute;
+    top: 37%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    word-break: break-word;
+  }
+
   &.color-section {
     background-color: $white;
   }
 
+  &.cover-container {
+    align-items: center;
+    justify-content: center;
+    max-width: 800px;
+  }
+
+  &.delete-favorite-confirm-modal-content {
+    width: 325px !important;
+  }
+
+  &.delete-modal-content {
+    left: 150px;
+    position: relative;
+    width: 275px;
+  }
+
+  &.delete-modal-body {
+    display: flex;
+    justify-content: space-around;
+    padding: 2px;
+  }
+
+  &.encourage-button {
+    border: solid $grey 10px;
+    border-radius: 500px;
+    display: flex;
+    font-family: 'Josefin Sans', sans-serif;
+    text-shadow: 1px 1px $black;
+
+    &:hover {
+      background-color: $yellow;
+      border: solid $lesswarm 10px;
+    }
+  }
+
   &.jumbotron-fluid {
+    background-color: $warm;
+    background-image: linear-gradient($lesswarm, $warm);
+    color: $white;
     text-align: center;
     width: 100%;
-    background-image: linear-gradient($lesswarm, $warm);
+  }
+
+  &.master-container {
+    position: relative;
+    width: 70%;
+  }
+
+  &.modal {
+    padding-right: 0;
+  }
+
+  &.modal-content {
+    border: 1px solid $black;
+    border-radius: 0;
+    color: $black;
+    font-weight: 500;
+  }
+
+  &.modal-body {
+    background-color: $white;
+  }
+
+  &.modal-header {
     background-color: $warm;
+    border-bottom-color: $black;
+    border-radius: 0;
     color: $white;
   }
 
-  &#advice-display {
-    justify-content: center;
-    display: flex;
+  &.modal-footer {
+    background-color: $warm;
+    border-radius: 0;
+    border-top-color: $black;
+    color: $white;
   }
 
-  &.advice-footer {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+  &.navbar-collapse {
+    background-color: $yellow;
+    color: $grey;
+    font-size: 3vw;
+    font-weight: 800;
+    margin: 0;
+    position: absolute;
+    right: 0;
+    text-align: right;
+    width: 25vw;
+    z-index: 100;
+  }
+
+  &.upvote-div {
     align-items: center;
+    display: flex;
+    justify-content: flex-end;
   }
 }
 
-// .btn-colored {
-//   background-color: $warm;
-//   border-radius: 100px;
-//   color: $white;
-//   text-shadow: 1px 1px $black;
-// }
-
-
-#encourage-button {
-  display: flex;
-  border: solid $grey 10px;
-  border-radius: 500px;
-  font-family: 'Josefin Sans', sans-serif;
-  // max-width: 60vw;
-
-  &:hover {
-    background-color: $yellow;
-  }
+footer {
+  background-color: $yellow;
+  height: 56px;
 }
 
 h1 {
+  display: inline;
   font-size: 10vw;
-}
-
-li {
-  &:hover {
-    background-color: $warm;
-    color: $white;
-  }
-}
-
-.nav-tabs {
-  border-bottom: 0;
-}
-
-.grey {
-  color: $grey;
 }
 
 h5 {
@@ -214,50 +235,19 @@ img {
   }
 }
 
-.modal {
-  padding-right: 0;
+li {
+  &:hover {
+    background-color: $warm;
+    color: $white;
+  }
 }
 
-.modal-content {
-  border: 1px solid $black;
-  color: $black;
-  font-weight: 500;
-  border-radius: 0;
-}
-
-.modal-body {
-  background-color: $white;
-}
-
-.modal-header {
-  border-radius: 0;
-  background-color: $warm;
-  color: $white;
-  border-bottom-color: $black;
-}
-
-.modal-footer {
-  border-radius: 0;
-  background-color: $warm;
-  color: $white;
-  border-top-color: $black;
-}
-
-.navbar-toggler-icon {
-  background-image: url('https://mdbootstrap.com/img/svg/hamburger1.svg?color=df744a');
-}
-
-.navbar-collapse {
-  background-color: $yellow;
-  position: absolute;
-  right: 0;
-  margin: 0;
-  width: 300px;
-  font-weight: 800;
-  font-size: 20px;
-  color: $grey;
-  text-align: right;
-  z-index: 100;
+main {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: center;
 }
 
 th {
@@ -266,12 +256,16 @@ th {
 
 ul {
   padding: 5px;
+
+  &.nav-tabs {
+    border-bottom: 0;
+  }
 }
 
 .speech-card {
+  left: 44%;
   position: relative;
   top: 15%;
-  left: 44%;
 }
 
 .speech-bubble {
@@ -290,27 +284,24 @@ ul {
   text-align: center;
 }
 
-.upvote-div {
-  align-items: center;
-  display: flex;
-  justify-content: flex-end;
+nav {
+  &.navbar {
+    background-color: $yellow;
+    min-height: 50px;
+  }
 }
 
-#encourage-e {
-  font-size: 8vw;
+.submission-table {
+  max-height: 250px;
+  overflow-y: scroll;
 }
 
-.navbar {
-  background-color: $yellow;
-  min-height: 50px;
-}
+span {
+  &.encourage-e {
+    font-size: 7vw;
+    color: $powder;
+  }
 
-footer {
-  background-color: $yellow;
-  height: 56px;
-}
-
-scan {
   &.switch-to-sign-in {
     color: $warm;
     text-decoration: underline;
@@ -320,28 +311,15 @@ scan {
     color: $warm;
     text-decoration: underline;
   }
-}
 
-.submission-table {
-  max-height: 250px;
-  overflow-y: scroll;
-}
-
-.delete-modal-content {
-  position: relative;
-  left: 150px;
-  width: 275px;
-}
-
-.delete-modal-body {
-  padding: 2px;
-  display: flex;
-  justify-content: space-around;
+  &.navbar-toggler-icon {
+      background-image: url('https://mdbootstrap.com/img/svg/hamburger1.svg?color=df744a');
+  }
 }
 
 #submission-text {
-  width: 100%;
   height: 50%;
+  width: 100%;
 }
 
 #advice-display {
@@ -349,14 +327,22 @@ scan {
   transition: width 2s;
 }
 
-@media only screen and (min-width: 1224px) {
-  #encourage-button {
+@media screen and (min-width: 800px) {
+  .encourage-button {
     max-width: 40vw;
   }
-  #encourage-e {
-    font-size: 3vw;
+
+  .encourage-e {
+    font-size: 3vw !important;
   }
+
   h1 {
-    font-size: 5vw;
+    display: inline;
+    font-size: 5vw !important;
+  }
+
+  .navbar-collapse {
+    font-size: 1.5vw !important;
+    width: 25vw !important;
   }
 }

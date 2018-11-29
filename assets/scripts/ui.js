@@ -9,7 +9,6 @@
 (5) USER View UI Functions */
 
 const store = require('./store.js')
-const api = require('./api.js')
 
 // sentiment analysis courtesy of https://github.com/thisandagain/sentiment
 const Sentiment = require('sentiment')
@@ -116,7 +115,6 @@ const showAdminView = advices => {
 
 const displayAdvice = data => {
   store.advice = data.advice
-  console.log('inside displayAdvice, data is ', data)
   let likeImageURL = ''
   let likeTitle = ''
   let favoriteImageURL = ''
@@ -166,6 +164,7 @@ const displayAdvice = data => {
           <div>
             <img class="sentiment-image" src="assets/images/face${sentimentValue}.png" data-toggle="tooltip" title="Result of performing sentiment analysis on this piece of encouragement: score is ${sentimentValue}">
           </div>
+
           <div class="upvote-div">
             <button class="btn favorite-button" type="submit" id="favorite-button">
               <img class="favorite-image" src=${favoriteImageURL} data-toggle="tooltip" title="${favoriteTitle}">
@@ -179,7 +178,6 @@ const displayAdvice = data => {
     </div>
     `)
   $('[data-toggle="tooltip"]').tooltip()
-  console.log('inside displayAdvice, displayState is', displayState)
   return displayState
 }
 
@@ -216,7 +214,6 @@ const incrementUpvoteDisplay = data => {
 const sentimentAnalysis = string => {
   const sentiment = new Sentiment()
   const result = (sentiment.analyze(string)).comparative
-  console.log(result)
   if (result >= 1 && result <= 5) {
     $('body').attr('style', 'background-color: #66fff2;')
     return 5
@@ -353,7 +350,7 @@ const handleSignOutSuccess = () => {
 // handleSignOutFailure() displays an error if a sign-out attempt fails
 const handleSignOutFailure = event => {
   $('.sign-out-message').html('<p class="failure">Failed to sign out</p>')
-  console.log(event)
+  console.log('Invalid sign out event', event)
 }
 
 // handleSignUpSuccess() transforms the logInModal after the user successfully
@@ -492,7 +489,6 @@ const showSubmissionsDiv = () => {
 }
 
 const showFavoritesUserView = data => {
-  console.log('In showFavoritesUserView--data is', data)
   let newHTML = ''
   newHTML += `
   <table class="table text-center table-responsive submission-table">
@@ -526,7 +522,6 @@ const showFavoritesUserView = data => {
 }
 
 const showUserView = data => {
-  console.log('in showUser view, data is', data)
   let newHTML = ''
   newHTML += `
   <table class="table text-center table-responsive submission-table">

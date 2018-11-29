@@ -19,6 +19,12 @@ const ui = require('./ui.js')
 //                //
 ////////////////////
 
+const addAdminHandlers = () => {
+  $('.delete-advice').on('click', onAdminDeleteAdvice)
+  $('.approve-advice').on('click', onAdminApproveAdvice)
+  $('.unapprove-advice').on('click', onAdminUnapproveAdvice)
+}
+
 const onAdminApproveAdvice = event => {
   event.preventDefault()
   store.idToApprove = event.currentTarget.id
@@ -42,7 +48,6 @@ const onAdminDeleteAdvice = event => {
 
 const onAdminDeleteConfirm = event => {
   event.preventDefault()
-  console.log('Inside onAdminDeleteConfirm')
   api.deleteAdviceFromAPI(store.idToDelete)
     .then(api.getAllAdvicesFromAPI)
     .then(ui.refreshAdminView)
@@ -52,7 +57,6 @@ const onAdminDeleteConfirm = event => {
 
 const onAdminUnapproveAdvice = event => {
   event.preventDefault()
-  console.log('inside onAdminUnapproveAdvice')
   store.idToUnapprove = event.currentTarget.id
   $('#adminUnapproveConfirmModal').modal('show')
 }
@@ -71,12 +75,6 @@ const onShowAdminView = () => {
     .then(ui.showAdminView)
     .then(addAdminHandlers)
     .catch(console.log)
-}
-
-const addAdminHandlers = () => {
-  $('.delete-advice').on('click', onAdminDeleteAdvice)
-  $('.approve-advice').on('click', onAdminApproveAdvice)
-  $('.unapprove-advice').on('click', onAdminUnapproveAdvice)
 }
 
 /////////////////////
@@ -283,8 +281,6 @@ const storeSignInInfo = data => {
   store.user.email = data.user.email
   store.user.token = data.user.token
   store.user.admin = data.user.admin
-  console.log('data is', data)
-  console.log('store.user.admin is', store.user.admin)
   return data
 }
 
@@ -340,11 +336,7 @@ const onDeleteConfirm = event => {
 
 const onDeleteFavorite = event => {
   event.preventDefault()
-  console.log('Inside onDeleteFavorite')
-  console.log(event)
-  console.log(event.currentTarget.id)
   store.idToDelete = event.currentTarget
-  console.log(store.idToDelete)
   $('#deleteFavoriteConfirmModal').modal('show')
 }
 
@@ -389,7 +381,7 @@ const onUserChooseTagsSubmit = () => {
 }
 
 module.exports = {
-  // ADMIN events
+  // ADMIN Events
   onAdminDeleteConfirm,
   onAdminApproveConfirm,
   onAdminUnapproveConfirm,

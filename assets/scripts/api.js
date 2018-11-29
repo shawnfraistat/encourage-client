@@ -101,16 +101,6 @@ const deleteAdviceFromAPI = id => {
   })
 }
 
-// const checkLikesOnAdviceFromAPI = () => {
-//   return $.ajax({
-//     url: config.apiUrl + '/random-advice',
-//     method: 'GET',
-//     headers: {
-//       Authorization: 'Token token=' + store.user.token
-//     }
-//   })
-// }
-
 const getAdviceFromAPI = () => {
   return $.ajax({
     url: config.apiUrl + '/random-advice',
@@ -132,7 +122,6 @@ const getSpecificAdviceFromAPI = id => {
 }
 
 const getUserFavoritesFromAPI = () => {
-  console.log('Inside getUserFavoritesFromAPI')
   return $.ajax({
     url: config.apiUrl + '/get-favorites/',
     method: 'GET',
