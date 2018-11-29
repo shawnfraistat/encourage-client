@@ -66,8 +66,8 @@ const showAdminView = advices => {
         <td style="text-align: left;">${element.content}</td>
         <td>${element.tags.split(' ').join(', ').slice(0, -2)}</td>
         <td>${element.likes.length}</td>
-        <td style="width: 22px;"><img src="assets/images/approval.png" style="width: 25px;" id="${element.id}" class="approve-advice"></td>
-        <td style="width: 22px;"><img src="assets/images/delete.ico" style="width: 20px;" id="${element.id}" class="delete-advice"></td>
+        <td style="width: 22px;"><img src="public/images/approval.png" style="width: 25px;" id="${element.id}" class="approve-advice"></td>
+        <td style="width: 22px;"><img src="public/images/delete.ico" style="width: 20px;" id="${element.id}" class="delete-advice"></td>
       </tr>
     `
   })
@@ -96,8 +96,8 @@ const showAdminView = advices => {
         <td style="text-align: left;">${element.content}</td>
         <td>${element.tags.split(' ').join(', ').slice(0, -2)}</td>
         <td>${element.likes.length}</td>
-        <td style="width: 22px;"><img src="assets/images/unapprove.png" style="width: 20px;" id="${element.id}" class="unapprove-advice"></td>
-        <td style="width: 22px;"><img src="assets/images/delete.ico" style="width: 20px;" id="${element.id}" class="delete-advice"></td>
+        <td style="width: 22px;"><img src="public/images/unapprove.png" style="width: 20px;" id="${element.id}" class="unapprove-advice"></td>
+        <td style="width: 22px;"><img src="public/images/delete.ico" style="width: 20px;" id="${element.id}" class="delete-advice"></td>
       </tr>
     `
   })
@@ -122,38 +122,38 @@ const displayAdvice = data => {
   const displayState = []
   if (data.advice.likes !== undefined) {
     if (data.advice.likes.every(like => like.user_id !== store.user.id)) {
-      likeImageURL = 'assets/images/thumbs-up3.png'
+      likeImageURL = 'public/images/thumbs-up3.png'
       likeTitle = 'Click here to like'
       displayState.push(false)
     } else {
-      likeImageURL = 'assets/images/thumbs-up-active.png'
+      likeImageURL = 'public/images/thumbs-up-active.png'
       likeTitle = 'Click here to unlike'
       displayState.push(true)
     }
   } else {
-    likeImageURL = 'assets/images/thumbs-up3.png'
+    likeImageURL = 'public/images/thumbs-up3.png'
     likeTitle = 'Click here to like'
     displayState.push(false)
   }
   if (data.advice.favorites !== undefined) {
     if (data.advice.favorites.every(favorite => favorite.user_id !== store.user.id)) {
-      favoriteImageURL = 'assets/images/favorite.png'
+      favoriteImageURL = 'public/images/favorite.png'
       favoriteTitle = 'Click here to favorite'
       displayState.push(false)
     } else {
-      favoriteImageURL = 'assets/images/favorited.png'
+      favoriteImageURL = 'public/images/favorited.png'
       favoriteTitle = 'Click here to unfavorite'
       displayState.push(true)
     }
   } else {
-    favoriteImageURL = 'assets/images/favorite.png'
+    favoriteImageURL = 'public/images/favorite.png'
     favoriteTitle = 'Click here to favorite'
     displayState.push(false)
   }
   const sentimentValue = sentimentAnalysis(data.advice.content)
   $('#advice-display').html(`
     <div class="master-container">
-      <img src="assets/images/speech-bubble.png" alt="speech bubble" style="width:100%;">
+      <img src="public/images/speech-bubble.png" alt="speech bubble" style="width:100%;">
       <div class="centered">
         <blockquote class="blockquote mb-0">
           <p>${data.advice.content}</p>
@@ -162,7 +162,7 @@ const displayAdvice = data => {
         <hr class="advice-display-hr"/>
         <div class="advice-footer">
           <div>
-            <img class="sentiment-image" src="assets/images/face${sentimentValue}.png" data-toggle="tooltip" title="Result of performing sentiment analysis on this piece of encouragement: score is ${sentimentValue}">
+            <img class="sentiment-image" src="public/images/face${sentimentValue}.png" data-toggle="tooltip" title="Result of performing sentiment analysis on this piece of encouragement: score is ${sentimentValue}">
           </div>
 
           <div class="upvote-div">
@@ -182,18 +182,18 @@ const displayAdvice = data => {
 }
 
 const addFavoriteDisplay = data => {
-  $('.favorite-image').attr('src', 'assets/images/favorited.png')
+  $('.favorite-image').attr('src', 'public/images/favorited.png')
   $('.favorite-image').attr('data-original-title', 'Click here to unfavorite')
 }
 
 const deleteFavoriteDisplay = data => {
-  $('.favorite-image').attr('src', 'assets/images/favorite.png')
+  $('.favorite-image').attr('src', 'public/images/favorite.png')
   $('.favorite-image').attr('data-original-title', 'Click here to favorite')
 }
 
 const decrementUpvoteDisplay = data => {
   $('.upvote-count').text(data.advice.likes.length)
-  $('.like-image').attr('src', 'assets/images/thumbs-up3.png')
+  $('.like-image').attr('src', 'public/images/thumbs-up3.png')
   $('.like-image').attr('data-original-title', 'Click here to like')
 }
 
@@ -207,7 +207,7 @@ const handleAdviceSubmissionSuccess = () => {
 
 const incrementUpvoteDisplay = data => {
   $('.upvote-count').text(data.like.advice.likes.length)
-  $('.like-image').attr('src', 'assets/images/thumbs-up-active.png')
+  $('.like-image').attr('src', 'public/images/thumbs-up-active.png')
   $('.like-image').attr('data-original-title', 'Click here to unlike')
 }
 
@@ -511,7 +511,7 @@ const showFavoritesUserView = data => {
         <td>${element.content}</td>
         <td>${element.tags.split(' ').join(', ').slice(0, -2)}</td>
         <td>${element.likes.length}</td>
-        <td style="width: 22px;"><img src="assets/images/delete.ico" style="width: 20px;" id="${element.id}" class="delete-favorite"></td>
+        <td style="width: 22px;"><img src="public/images/delete.ico" style="width: 20px;" id="${element.id}" class="delete-favorite"></td>
       </tr>
     `
   })
@@ -546,7 +546,7 @@ const showUserView = data => {
         <td>${element.tags.split(' ').join(', ').slice(0, -2)}</td>
         <td>${element.likes.length}</td>
         <td>${element.approved}</td>
-        <td style="width: 22px;"><img src="assets/images/delete.ico" style="width: 20px;" id="${element.id}" class="delete-advice"></td>
+        <td style="width: 22px;"><img src="public/images/delete.ico" style="width: 20px;" id="${element.id}" class="delete-advice"></td>
       </tr>
     `
   })
