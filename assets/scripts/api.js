@@ -15,6 +15,8 @@ const store = require('./store.js')
 //                     //
 /////////////////////////
 
+// approveAdviceOnAPI() is called when an admin approves a piece of advice;
+// the advice's approval status is then updated on the API
 const approveAdviceOnAPI = id => {
   return $.ajax({
     url: config.apiUrl + '/advices/' + id,
@@ -25,6 +27,8 @@ const approveAdviceOnAPI = id => {
   })
 }
 
+// unapproveAdviceOnAPI() is called when an admin removes approval from advice;
+// the advice's approval status is then updated on the API
 const unapproveAdviceOnAPI = id => {
   return $.ajax({
     url: config.apiUrl + '/advices/unapprove/' + id,
@@ -35,6 +39,8 @@ const unapproveAdviceOnAPI = id => {
   })
 }
 
+// getAllAdvicesFromAPI() is used to retrieve every piece of advice from the API
+// so that it can be displayed to the admin
 const getAllAdvicesFromAPI = () => {
   return $.ajax({
     url: config.apiUrl + '/advices/',
@@ -51,6 +57,9 @@ const getAllAdvicesFromAPI = () => {
 //                      //
 //////////////////////////
 
+// addUpvote() is called when a user approves a piece of advice
+// it uses the current user's id and the id of the advice in question to create
+// a new like instance
 const addUpvote = data => {
   return $.ajax({
     url: config.apiUrl + '/likes/' + data.id,
@@ -61,6 +70,8 @@ const addUpvote = data => {
   })
 }
 
+// deleteUpvote() is called when a user "unlikes" a piece of advice they'd
+// previously liked; it destroys that like on the API
 const deleteUpvote = data => {
   return $.ajax({
     url: config.apiUrl + '/likes/' + data.id,
@@ -71,6 +82,9 @@ const deleteUpvote = data => {
   })
 }
 
+// addFavorite() is called when a user favorites a piece of advice
+// it uses the current user's id and the id of the advice in question to create
+// a new favorite instance
 const addFavorite = data => {
   return $.ajax({
     url: config.apiUrl + '/favorites/' + data.id,
@@ -81,6 +95,8 @@ const addFavorite = data => {
   })
 }
 
+// deleteFavorite() is called when a user "unfavorites" a piece of advice they'd
+// previously favorited; it destroys that favorite on the API
 const deleteFavorite = data => {
   return $.ajax({
     url: config.apiUrl + '/favorites/' + data.id,
@@ -91,6 +107,8 @@ const deleteFavorite = data => {
   })
 }
 
+// deleteAdviceFromAPI() removes a piece of advice from the API if a user
+// deletes it
 const deleteAdviceFromAPI = id => {
   return $.ajax({
     url: config.apiUrl + '/advices/' + id,
@@ -101,6 +119,8 @@ const deleteAdviceFromAPI = id => {
   })
 }
 
+// getAdviceFromAPI() is called when the ENCOURAGE button is pressed by a
+// logged-in user. It gets a random piece of advice from the API to display.
 const getAdviceFromAPI = () => {
   return $.ajax({
     url: config.apiUrl + '/random-advice',
@@ -111,6 +131,8 @@ const getAdviceFromAPI = () => {
   })
 }
 
+// getSpecificAdviceFromAPI() is called when a particular piece of advice needs
+// to be retrieved, one that's designated by ID number
 const getSpecificAdviceFromAPI = id => {
   return $.ajax({
     url: config.apiUrl + '/advices/' + id,
@@ -121,6 +143,7 @@ const getSpecificAdviceFromAPI = id => {
   })
 }
 
+// getUserAdvicesFromAPI() retrieves everything a given user has favorited
 const getUserFavoritesFromAPI = () => {
   return $.ajax({
     url: config.apiUrl + '/get-favorites/',
@@ -131,6 +154,8 @@ const getUserFavoritesFromAPI = () => {
   })
 }
 
+// getUserAdvicesFromAPI() returns the pieces of advice the current user has
+// created
 const getUserAdvicesFromAPI = () => {
   return $.ajax({
     url: config.apiUrl + '/users/' + store.user.id,
@@ -141,6 +166,7 @@ const getUserAdvicesFromAPI = () => {
   })
 }
 
+// submitAdviceTOAPI() sends a new piece of advice to the API
 const submitAdviceToAPI = data => {
   return $.ajax({
     url: config.apiUrl + '/advices',

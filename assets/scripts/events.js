@@ -19,18 +19,25 @@ const ui = require('./ui.js')
 //                //
 ////////////////////
 
+// addAdminHandlers() enables the buttons in the ADMIN view, connecting them to
+// event handlers in this file
 const addAdminHandlers = () => {
   $('.delete-advice').on('click', onAdminDeleteAdvice)
   $('.approve-advice').on('click', onAdminApproveAdvice)
   $('.unapprove-advice').on('click', onAdminUnapproveAdvice)
 }
 
+// onAdminApproveAdvice() is called when the admin clicks the approve advice
+// button in the ADMIN view; it prompts the admin to check whether they really
+// want to approve
 const onAdminApproveAdvice = event => {
   event.preventDefault()
   store.idToApprove = event.currentTarget.id
   $('#adminApproveConfirmModal').modal('show')
 }
 
+// onAdminApproveConfirm() fires when the admin confirms they want to approve
+// a given piece of advice; it updates the API and then refreshes the ADMIN view
 const onAdminApproveConfirm = event => {
   event.preventDefault()
   api.approveAdviceOnAPI(store.idToApprove)
@@ -40,12 +47,17 @@ const onAdminApproveConfirm = event => {
     .catch(console.log)
 }
 
+// onAdminDeleteAdvice() fires when the admin wants to delete a piece of advice;
+// it pops a confirmation modal
 const onAdminDeleteAdvice = event => {
   event.preventDefault()
   store.idToDelete = event.currentTarget.id
   $('#adminDeleteConfirmModal').modal('show')
 }
 
+// onAdminDeleteConfirm() fires when the admin confirms they want to delete a
+// piece of advice; it tells the API to delete the advice and then refreshes the
+// ADMIN view
 const onAdminDeleteConfirm = event => {
   event.preventDefault()
   api.deleteAdviceFromAPI(store.idToDelete)
@@ -55,12 +67,17 @@ const onAdminDeleteConfirm = event => {
     .catch(console.log)
 }
 
+// onAdminUnapproveAdvice() fires when the admin clicks the "unapprove" advice
+// button in the ADMIN view; it prompts the admin to check whether they really
+// want to reovke approve
 const onAdminUnapproveAdvice = event => {
   event.preventDefault()
   store.idToUnapprove = event.currentTarget.id
   $('#adminUnapproveConfirmModal').modal('show')
 }
 
+// onAdminApproveConfirm() fires when the admin confirms they want to unapprove
+// a given piece of advice; it updates the API and then refreshes the ADMIN view
 const onAdminUnapproveConfirm = event => {
   event.preventDefault()
   api.unapproveAdviceOnAPI(store.idToUnapprove)
@@ -70,6 +87,8 @@ const onAdminUnapproveConfirm = event => {
     .catch(console.log)
 }
 
+// onShowAdminView() fires when the user selects "Admin" from the dropdown nav;
+// it gets all the pieces of advice from the API and prepares to display them
 const onShowAdminView = () => {
   api.getAllAdvicesFromAPI()
     .then(ui.showAdminView)
@@ -83,6 +102,9 @@ const onShowAdminView = () => {
 //                 //
 /////////////////////
 
+// refreshAdvice() fires when a given piece of advice is being displayed, and
+// it's changed in some way--it's liked or favorited, for instance;
+// this refreshes the display
 const refreshAdvice = () => {
   if (store.advice !== undefined) {
     api.getSpecificAdviceFromAPI(store.advice.id)
@@ -92,11 +114,17 @@ const refreshAdvice = () => {
   }
 }
 
+// addHandlersToAdviceButtons() adds event handlers to the like and favorite
+// buttons on pieces of advice; if they've already been liked and/or favorited,
+// then the event handlers on the buttons are set to "unlike" and "unfavorite"
 const addHandlersToAdviceButtons = displayState => {
   displayState[0] ? $('#upvote-button').on('click', onLikeButtonUnclick) : $('#upvote-button').on('click', onLikeButtonClick)
   displayState[1] ? $('#favorite-button').on('click', onFavoriteButtonUnclick) : $('#favorite-button').on('click', onFavoriteButtonClick)
 }
 
+// onAdviceSubmission() is called if the user clicks the submit button on the
+// "Submit Encouragement" form; it grabs the submission data, checks to see if
+// it's valid, and then passes it on the API
 const onAdviceSubmission = event => {
   event.preventDefault()
   const data = {
@@ -126,6 +154,11 @@ const onAdviceSubmission = event => {
   }
 }
 
+// onFavoriteButtonClick() fires when the user clicks the favorite button on a
+// piece of advice; it tells the API to create a new favorite object, then
+// switches the display so the button visually updates, and then switches the
+// event handlers around so that if the user clicks on the button again, it
+// removes the favorite
 const onFavoriteButtonClick = event => {
   event.preventDefault()
   api.addFavorite(store.advice)
@@ -135,6 +168,11 @@ const onFavoriteButtonClick = event => {
     .catch(console.log)
 }
 
+// onFavoriteButtonUnclick() fires when the user clicks the favorite button on a
+// piece of advice that's already been favorited; it tells the API to delete the
+// favorite. It switches the display so the button visually updates, and then
+// switches the event handlers around so that if the user clicks on the button
+// again, it adds a favorite
 const onFavoriteButtonUnclick = event => {
   event.preventDefault()
   api.deleteFavorite(store.advice)
@@ -144,6 +182,11 @@ const onFavoriteButtonUnclick = event => {
     .catch(console.log)
 }
 
+// onFavoriteButtonClick() fires when the user clicks the like button on a
+// piece of advice; it tells the API to create a new like object, then
+// switches the display so the button visually updates, and then switches the
+// event handlers around so that if the user clicks on the button again, it
+// removes the like
 const onLikeButtonClick = event => {
   event.preventDefault()
   api.addUpvote(store.advice)
@@ -153,6 +196,11 @@ const onLikeButtonClick = event => {
     .catch(console.log)
 }
 
+// onLikeButtonUnclick() fires when the user clicks the favorite button on a
+// piece of advice that's already been liked; it tells the API to delete the
+// liked. It switches the display so the button visually updates, and then
+// switches the event handlers around so that if the user clicks on the button
+// again, it adds a like
 const onLikeButtonUnclick = event => {
   event.preventDefault()
   api.deleteUpvote(store.advice)
@@ -168,11 +216,16 @@ const onLikeButtonUnclick = event => {
 //                           //
 ///////////////////////////////
 
+// onFirstEncourageClick() fires if the user clicks the ENCOURAGE button before
+// logging in; it shows the log-in modal
 const onFirstEncourageClick = event => {
   event.preventDefault()
   $('#logInModal').modal('show')
 }
 
+// onLoggedInEncourageClick() fires if the user clicks the ENCOURAGE button once
+// they're logged in; it then gets a random piece of advice from the API and
+// displays it
 const onLoggedInEncourageClick = event => {
   event.preventDefault()
   api.getAdviceFromAPI()
@@ -181,11 +234,16 @@ const onLoggedInEncourageClick = event => {
     .catch(console.log)
 }
 
+// switchEncourageButtonToAdvice() flips around the event handlers once the user
+// logs in, so that pressing the ENCOURAGE button now displays a random piece of
+// advice
 const switchEncourageButtonToAdvice = () => {
   $('#encourage-button').off('click', onFirstEncourageClick)
   $('#encourage-button').on('click', onLoggedInEncourageClick)
 }
 
+// switchEncourageButtonToAdvice() flips around the event handlers if the user
+// logs out, so that pressing the ENCOURAGE button now displays the log-in modal
 const switchEncourageButtonToLogIn = () => {
   $('#encourage-button').off('click', onLoggedInEncourageClick)
   $('#encourage-button').on('click', onFirstEncourageClick)
@@ -297,10 +355,13 @@ const storeSignUpInfo = data => {
 //                    //
 ////////////////////////
 
+// addDeleteHandlers() enables the "delete advice" buttons in the USER view
 const addDeleteHandlers = () => {
   $('.delete-advice').on('click', onDeleteAdvice)
 }
 
+// addFavoriteDeleteHandlers() enables the buttons in the USER view that allow
+// users to unfavorite pieces of advice they've favorited
 const addFavoriteDeleteHandlers = () => {
   $('.delete-favorite').on('click', onDeleteFavorite)
 }
@@ -319,12 +380,17 @@ const onChangePasswordSubmit = event => {
   }
 }
 
+// onDeleteAdvice() fires when the user clicks the "delete advice" button in the
+// USER view; it pops a confirmation modal
 const onDeleteAdvice = event => {
   store.idToDelete = event.currentTarget.id
   $('#deleteConfirmModal').modal('show')
   event.preventDefault()
 }
 
+// onDeleteConfirm() fires when the user clicks the confirmation button on the
+// delete advice confirmation modal; it goes ahead and deletes the piece of
+// advice from the API and refreshes the view
 const onDeleteConfirm = event => {
   event.preventDefault()
   api.deleteAdviceFromAPI(store.idToDelete)
@@ -334,12 +400,17 @@ const onDeleteConfirm = event => {
     .catch(console.log)
 }
 
+// onDeleteAdvice() fires when the user clicks the "remove favorite" button in the
+// USER view; it pops a confirmation modal
 const onDeleteFavorite = event => {
   event.preventDefault()
   store.idToDelete = event.currentTarget
   $('#deleteFavoriteConfirmModal').modal('show')
 }
 
+// onDeleteConfirm() fires when the user clicks the confirmation button on the
+// unfavorite advice confirmation modal; it goes ahead and deletes the favorite
+// from the API and refreshes the view
 const onDeleteFavoriteConfirm = event => {
   event.preventDefault()
   api.deleteFavorite(store.idToDelete)
@@ -349,6 +420,9 @@ const onDeleteFavoriteConfirm = event => {
     .catch(console.log)
 }
 
+// onShowUserView() fires when the user opens the USER view via the "User
+// Settings" nav link; it gets all of the advice the current user has authored
+// from the API and gets them ready to display in a table
 const onShowUserView = () => {
   api.getUserAdvicesFromAPI()
     .then(ui.showUserView)
@@ -356,12 +430,18 @@ const onShowUserView = () => {
     .catch(console.log)
 }
 
+// onShowUseFavoritesrView() fires when the user opens the USER view via the "User
+// Settings" nav link; it gets all of the favorited advice associated with the
+// current user and gets them ready to display in a table
 const onShowUserFavoritesView = () => {
   api.getUserFavoritesFromAPI()
     .then(ui.showFavoritesUserView)
     .then(addFavoriteDeleteHandlers)
     .catch(console.log)
 }
+
+// onUserChooseTagsSubmit() fires when the user selects new tags in the USER
+// view; it updates the API with the current user's tag preferences
 const onUserChooseTagsSubmit = () => {
   let tags = ''
   const checkBoxArray = $('.choose-tags-check')

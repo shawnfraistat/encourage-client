@@ -10,6 +10,9 @@ update route that's used?
 4. Clean up and comment code
 5. Check breakpoints and other display sizes
 6. Check errors handlers--right now you console.log errors a lot
+7. If you close the USER view, it doesn't refresh the "Tags updated!" message
+8. The tag check boxes in the USER view are blank by default; it'd be good if they defaulted to the current user's tags
+9. What happens if the user only selects tags for which no pieces of advice exist? Display "error" or warning?
 */
 
 // use require with a reference to bundle the file and use it in this file
@@ -39,8 +42,8 @@ $(() => {
   $('#sign-up-submit').on('click', events.onSignUp)
   $('#sign-up-continue').on('click', events.onSignUpContinue)
   $('#submit-advice-submit').on('click', events.onAdviceSubmission)
-  $('.switch-to-sign-in').on('click', events.onSwitchToSignIn)
-  $('.switch-to-sign-up').on('click', events.onSwitchToSignUp)
+  $('#switch-to-sign-in').on('click', events.onSwitchToSignIn)
+  $('#switch-to-sign-up').on('click', events.onSwitchToSignUp)
   $('#unapproved-submissions-nav-link').on('click', ui.showUnapprovedDiv)
   $('#user-view-done').on('click', events.refreshAdvice)
   $('#user-view-done').on('click', ui.clearForms)

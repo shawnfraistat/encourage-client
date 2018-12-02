@@ -55,3 +55,13 @@ Unsolved Problems:
 I'd like to add more event handlers for failures. I'd also like to adjust the
 CSS so that it handles different display sizes better. It would be good to also
 add some animations to smooth out transitions
+
+
+Link to Deployed Client:
+https://shawnfraistat.github.io/encourage-client/
+
+Link to Deployed Server:
+https://mighty-coast-69207.herokuapp.com/
+
+Link to Sever Repo:
+https://github.com/shawnfraistat/encourage-api
