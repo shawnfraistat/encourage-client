@@ -321,7 +321,7 @@ const clearForms = () => {
   document.getElementById('submit-advice').reset()
   $('.change-password-message').text('')
   $('#user-name').text('')
-  $('.change-tags-message').text('')
+  $('.choose-tags-message').text('')
 }
 
 ////////////////////////////////////
