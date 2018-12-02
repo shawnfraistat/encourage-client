@@ -6,14 +6,13 @@ TO-DO LIST:
 1. Refactor code so that when Admin makes changes to advice, there's only one
 update route that's used?
 2. Animations?
-3. Refactor CSS file?
-4. Clean up and comment code
-5. Check breakpoints and other display sizes
-6. Check errors handlers--right now you console.log errors a lot
-7. If you close the USER view, it doesn't refresh the "Tags updated!" message
-8. The tag check boxes in the USER view are blank by default; it'd be good if they defaulted to the current user's tags
-9. What happens if the user only selects tags for which no pieces of advice exist? Display "error" or warning?
-10. If user has no submissions or favorites, display some message instead of just a blank div?
+3. Clean up and comment code
+4. Check breakpoints and other display sizes
+5. Check errors handlers--right now you console.log errors a lot
+6. If you close the USER view, it doesn't refresh the "Tags updated!" message
+7. The tag check boxes in the USER view are blank by default; it'd be good if they defaulted to the current user's tags
+8. What happens if the user only selects tags for which no pieces of advice exist? Display "error" or warning?
+9. If user has no submissions or favorites, display some message instead of just a blank div?
 */
 
 // use require with a reference to bundle the file and use it in this file

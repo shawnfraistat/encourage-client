@@ -262,28 +262,6 @@ ul {
   }
 }
 
-.speech-card {
-  left: 44%;
-  position: relative;
-  top: 15%;
-}
-
-.speech-bubble {
-  height: 50%;
-  left: 35%;
-  position: relative;
-  width: 60%;
-}
-
-.upvote-count {
-  background-color: $white;
-  border: 1px solid $grey;
-  font-size: 16px;
-  margin: 1px;
-  padding: 0 5px;
-  text-align: center;
-}
-
 nav {
   &.navbar {
     background-color: $yellow;
@@ -291,15 +269,14 @@ nav {
   }
 }
 
-.submission-table {
-  max-height: 250px;
-  overflow-y: scroll;
-}
-
 span {
   &.encourage-e {
     font-size: 7vw;
     // color: $powder;
+  }
+
+  &.navbar-toggler-icon {
+    background-image: url('https://mdbootstrap.com/img/svg/hamburger1.svg?color=df744a');
   }
 
   &.switch-to-sign-in {
@@ -312,19 +289,28 @@ span {
     text-decoration: underline;
   }
 
-  &.navbar-toggler-icon {
-      background-image: url('https://mdbootstrap.com/img/svg/hamburger1.svg?color=df744a');
+  &.upvote-count {
+    background-color: $white;
+    border: 1px solid $grey;
+    font-size: 16px;
+    margin: 1px;
+    padding: 0 5px;
+    text-align: center;
   }
 }
 
-#submission-text {
-  height: 50%;
-  width: 100%;
+table {
+  &.submission-table {
+    max-height: 250px;
+    overflow-y: scroll;
+  }
 }
 
-#advice-display {
-  -webkit-transition: width 2s; /* Safari */
-  transition: width 2s;
+textarea {
+  &.submission-text {
+    height: 50%;
+    width: 100%;
+  }
 }
 
 @media screen and (min-width: 800px) {
