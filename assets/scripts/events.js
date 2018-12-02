@@ -190,7 +190,7 @@ const onFavoriteButtonUnclick = event => {
 const onLikeButtonClick = event => {
   event.preventDefault()
   api.addUpvote(store.advice)
-    .then(ui.incrementUpvoteDisplay)
+    .then(ui.addLikeDisplay)
     .then($('#upvote-button').off('click', onLikeButtonClick))
     .then($('#upvote-button').on('click', onLikeButtonUnclick))
     .catch(console.log)
@@ -204,7 +204,7 @@ const onLikeButtonClick = event => {
 const onLikeButtonUnclick = event => {
   event.preventDefault()
   api.deleteUpvote(store.advice)
-    .then(ui.decrementUpvoteDisplay)
+    .then(ui.deleteLikeDisplay)
     .then($('#upvote-button').off('click', onLikeButtonUnclick))
     .then($('#upvote-button').on('click', onLikeButtonClick))
     .catch(console.log)
@@ -420,16 +420,6 @@ const onDeleteFavoriteConfirm = event => {
     .catch(console.log)
 }
 
-// onShowUserView() fires when the user opens the USER view via the "User
-// Settings" nav link; it gets all of the advice the current user has authored
-// from the API and gets them ready to display in a table
-const onShowUserView = () => {
-  api.getUserAdvicesFromAPI()
-    .then(ui.showUserView)
-    .then(addDeleteHandlers)
-    .catch(console.log)
-}
-
 // onShowUseFavoritesrView() fires when the user opens the USER view via the "User
 // Settings" nav link; it gets all of the favorited advice associated with the
 // current user and gets them ready to display in a table
@@ -437,6 +427,16 @@ const onShowUserFavoritesView = () => {
   api.getUserFavoritesFromAPI()
     .then(ui.showFavoritesUserView)
     .then(addFavoriteDeleteHandlers)
+    .catch(console.log)
+}
+
+// onShowUserView() fires when the user opens the USER view via the "User
+// Settings" nav link; it gets all of the advice the current user has authored
+// from the API and gets them ready to display in a table
+const onShowUserView = () => {
+  api.getUserAdvicesFromAPI()
+    .then(ui.showUserView)
+    .then(addDeleteHandlers)
     .catch(console.log)
 }
 
@@ -483,7 +483,7 @@ module.exports = {
   onChangePasswordSubmit,
   onDeleteConfirm,
   onDeleteFavoriteConfirm,
-  onShowUserView,
   onShowUserFavoritesView,
+  onShowUserView,
   onUserChooseTagsSubmit
 }

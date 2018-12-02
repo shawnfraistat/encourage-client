@@ -19,6 +19,8 @@ const Sentiment = require('sentiment')
 //                       //
 ///////////////////////////
 
+// showApprovedDiv() fires in the ADMIN view when the user switches to the
+// "approved advice" tab; it displays a div loaded with all the approved advice
 const showApprovedDiv = () => {
   $('#approved-submissions-div').removeClass('collapse')
   $('#unapproved-submissions-div').addClass('collapse')
@@ -26,6 +28,8 @@ const showApprovedDiv = () => {
   $('#unapproved-submissions-nav-link').removeClass('active')
 }
 
+// showApprovedDiv() fires in the ADMIN view when the user switches to the
+// "unapproved advice" tab; it displays a div loaded with unapproved advice
 const showUnapprovedDiv = () => {
   $('#approved-submissions-div').addClass('collapse')
   $('#unapproved-submissions-div').removeClass('collapse')
@@ -33,6 +37,8 @@ const showUnapprovedDiv = () => {
   $('#unapproved-submissions-nav-link').addClass('active')
 }
 
+// refreshAdminView() fires when advice is approved, unapproved, or deleted;
+// it refreshes the display to reflect the changes
 const refreshAdminView = advices => {
   $('#adminApproveConfirmModal').modal('hide')
   $('#adminDeleteConfirmModal').modal('hide')
@@ -40,6 +46,8 @@ const refreshAdminView = advices => {
   showAdminView(advices)
 }
 
+// showAdminView() fires when the user clicks the ADMIN nav link; it loads up
+// two divs with lists of approved and unapproved advice, displayed in tables
 const showAdminView = advices => {
   const unapprovedAdvices = advices.advices.filter(advice => advice.approved !== 'true')
   const approvedAdvices = advices.advices.filter(advice => advice.approved === 'true')
@@ -113,6 +121,8 @@ const showAdminView = advices => {
 //                        //
 ////////////////////////////
 
+// displayAdvice() is used to display a random piece of advice in a speech
+// bubble popping out of the ENCOURAGE button
 const displayAdvice = data => {
   store.advice = data.advice
   let likeImageURL = ''
@@ -181,36 +191,53 @@ const displayAdvice = data => {
   return displayState
 }
 
+// addFavoriteDisplay() switches the favorite button image and pop-up text
+// around after the button's been clicked
 const addFavoriteDisplay = data => {
   $('.favorite-image').attr('src', 'public/images/favorited.png')
   $('.favorite-image').attr('data-original-title', 'Click here to unfavorite')
 }
 
-const deleteFavoriteDisplay = data => {
-  $('.favorite-image').attr('src', 'public/images/favorite.png')
-  $('.favorite-image').attr('data-original-title', 'Click here to favorite')
-}
-
-const decrementUpvoteDisplay = data => {
-  $('.upvote-count').text(data.advice.likes.length)
-  $('.like-image').attr('src', 'public/images/thumbs-up3.png')
-  $('.like-image').attr('data-original-title', 'Click here to like')
-}
-
-const handleAdviceSubmissionFailure = () => {
-  $('.submit-advice-message').html(`<h5 class="submit-advice-message failure">Encouragement submission failed</h5>`)
-}
-
-const handleAdviceSubmissionSuccess = () => {
-  $('.submit-advice-message').html(`<h5 class="submit-advice-message success">Encouragement submitted!</h5>`)
-}
-
-const incrementUpvoteDisplay = data => {
+// addLikeDisplay() switches the like button image and pop-up text around after
+// the button's been clicked
+const addLikeDisplay = data => {
   $('.upvote-count').text(data.like.advice.likes.length)
   $('.like-image').attr('src', 'public/images/thumbs-up-active.png')
   $('.like-image').attr('data-original-title', 'Click here to unlike')
 }
 
+// deleteFavoriteDisplay() reverts the favorite button image and pop-up text
+// if the favorite button is unclicked
+const deleteFavoriteDisplay = data => {
+  $('.favorite-image').attr('src', 'public/images/favorite.png')
+  $('.favorite-image').attr('data-original-title', 'Click here to favorite')
+}
+
+// deleteLikeDisplay() reverts the like button image and pop-up text around after
+// the button's been clicked
+const deleteLikeDisplay = data => {
+  $('.upvote-count').text(data.advice.likes.length)
+  $('.like-image').attr('src', 'public/images/thumbs-up3.png')
+  $('.like-image').attr('data-original-title', 'Click here to like')
+}
+
+// handleAdviceSubmissionFailure() displays an error if the user attempts to
+// submit a piece of advice and API returns failure
+const handleAdviceSubmissionFailure = () => {
+  $('.submit-advice-message').html(`<h5 class="submit-advice-message failure">Encouragement submission failed</h5>`)
+}
+
+// handleAdviceSubmissionSuccess() displays a success message if the user
+// attempts to submit a piece of advice and the API returns success
+const handleAdviceSubmissionSuccess = () => {
+  $('.submit-advice-message').html(`<h5 class="submit-advice-message success">Encouragement submitted!</h5>`)
+}
+
+// sentimentAnalysis() analyzes the content of the random piece of advice
+// returned by the API, assessing the emotional valence of each word and scoring
+// the whole string according to how "positive" or "negative" the sentiment is
+// that it expresses on scale of -5 to 5; then it changes the background color
+// to reflect the mode and returns the  rating
 const sentimentAnalysis = string => {
   const sentiment = new Sentiment()
   const result = (sentiment.analyze(string)).comparative
@@ -247,6 +274,8 @@ const sentimentAnalysis = string => {
   }
 }
 
+// submitContentFailure() displays an error if a user attempts to submit advice
+// but it's blank or doesn't have any tags selected
 const submitContentFailure = error => {
   if (error === 'contentError') {
     $('.submit-advice-message').html('<h5 class="submit-advice-message failure">Encouragement needs content</h5>')
@@ -261,8 +290,7 @@ const submitContentFailure = error => {
 //                //
 ////////////////////
 
-// clearForms() clears form content in the sign-in/up and change password forms,
-// so the form inputs are blank if the user reopens the model
+// clearForms() clears form content and messages
 const clearForms = () => {
   document.getElementById('sign-up').reset()
   $('.sign-up-message').html('<h5 class="sign-up-message"></h5>')
@@ -439,28 +467,42 @@ const handleChangePasswordSuccess = function (newPassword) {
   $('.change-password-message').html('<h6 class="change-password-message success">Password changed</h6>')
 }
 
+// handleUpdateTagsFailure() displays an error if the user's tags fail to update
+// on the API
 const handleUpdateTagsFailure = () => {
   $('.choose-tags-message').html('<h6 class="choose-tags-message failure">Tags failed to update/h6>')
 }
 
+// handleUpdateTagsFailure() displays an error if the user tries to update tags
+// but doesn't select any
 const handleUpdateTagsNoTags = () => {
   $('.choose-tags-message').html('<h6 class="choose-tags-message failure">Must select at least one tag</h6>')
 }
 
+// handleUpdateTagsSuccess() displays if the user chooses tags and they update
+// properly on the API
 const handleUpdateTagsSuccess = () => {
   $('.choose-tags-message').html('<h6 class="choose-tags-message success">Tags updated!</h6>')
 }
 
+// refreshFavoritesUserView() closes the "delete favorite" confirmation modal
+// and refreshes the favorites displayed in the USER view in the event
+// something's been deleted
 const refreshFavoritesUserView = advices => {
   $('#deleteFavoriteConfirmModal').modal('hide')
   showFavoritesUserView(advices)
 }
 
+// refreshFavoritesUserView() closes the "delete advice" confirmation modal
+// and refreshes the advice displayed in the USER view in the event
+// something's been deleted
 const refreshUserView = advices => {
   $('#deleteConfirmModal').modal('hide')
   showUserView(advices)
 }
 
+// showFavoritesDiv() displays a div loaded with the pieces of advice the user
+// has favorited if that tab is selected in the USER view
 const showFavoritesDiv = () => {
   $('#settings-div').addClass('collapse')
   $('#your-favorites-div').removeClass('collapse')
@@ -470,6 +512,8 @@ const showFavoritesDiv = () => {
   $('#your-submissions-nav-link').removeClass('active')
 }
 
+// showFavoritesDiv() displays user settings (change password, update tags) when
+// the setting tab is selected in the USER view
 const showSettingsDiv = () => {
   $('#settings-div').removeClass('collapse')
   $('#your-favorites-div').addClass('collapse')
@@ -479,6 +523,8 @@ const showSettingsDiv = () => {
   $('#your-submissions-nav-link').removeClass('active')
 }
 
+// showSubmissionsDiv() displays a div loaded with the pieces of advice the user
+// has submmited when the "your submissions" tab is selected in the USER view
 const showSubmissionsDiv = () => {
   $('#settings-div').addClass('collapse')
   $('#your-favorites-div').addClass('collapse')
@@ -488,6 +534,8 @@ const showSubmissionsDiv = () => {
   $('#your-submissions-nav-link').addClass('active')
 }
 
+// showFavoritesUserView() loads up a div with the pieces of advice the user has
+// favorited, formatted into a table
 const showFavoritesUserView = data => {
   let newHTML = ''
   newHTML += `
@@ -521,6 +569,8 @@ const showFavoritesUserView = data => {
   $('[data-toggle="tooltip"]').tooltip()
 }
 
+// showUserView() loads up a div with the pieces of advice the user has
+// created, formatted into a table
 const showUserView = data => {
   let newHTML = ''
   newHTML += `
@@ -564,13 +614,13 @@ module.exports = {
   showUnapprovedDiv,
   // ADVICE UI Functions,
   addFavoriteDisplay,
+  addLikeDisplay,
   deleteFavoriteDisplay,
+  deleteLikeDisplay,
   displayAdvice,
   handleAdviceSubmissionFailure,
   handleAdviceSubmissionSuccess,
   submitContentFailure,
-  decrementUpvoteDisplay,
-  incrementUpvoteDisplay,
   // FORM Reset
   clearForms,
   // SIGN-IN/UP View UI Functions

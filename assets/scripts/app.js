@@ -13,6 +13,7 @@ update route that's used?
 7. If you close the USER view, it doesn't refresh the "Tags updated!" message
 8. The tag check boxes in the USER view are blank by default; it'd be good if they defaulted to the current user's tags
 9. What happens if the user only selects tags for which no pieces of advice exist? Display "error" or warning?
+10. If user has no submissions or favorites, display some message instead of just a blank div?
 */
 
 // use require with a reference to bundle the file and use it in this file
