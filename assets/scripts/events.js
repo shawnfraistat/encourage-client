@@ -118,8 +118,10 @@ const refreshAdvice = () => {
 // buttons on pieces of advice; if they've already been liked and/or favorited,
 // then the event handlers on the buttons are set to "unlike" and "unfavorite"
 const addHandlersToAdviceButtons = displayState => {
-  displayState[0] ? $('#upvote-button').on('click', onLikeButtonUnclick) : $('#upvote-button').on('click', onLikeButtonClick)
-  displayState[1] ? $('#favorite-button').on('click', onFavoriteButtonUnclick) : $('#favorite-button').on('click', onFavoriteButtonClick)
+  if (displayState !== null) {
+    displayState[0] ? $('#upvote-button').on('click', onLikeButtonUnclick) : $('#upvote-button').on('click', onLikeButtonClick)
+    displayState[1] ? $('#favorite-button').on('click', onFavoriteButtonUnclick) : $('#favorite-button').on('click', onFavoriteButtonClick)
+  }
 }
 
 // onAdviceSubmission() is called if the user clicks the submit button on the

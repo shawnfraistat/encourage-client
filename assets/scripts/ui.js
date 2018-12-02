@@ -111,6 +111,12 @@ const showAdminView = advices => {
   })
   approvedHTML += `  </tbody>
   </table>`
+  if (unapprovedHTML === '') {
+    unapprovedHTML = '<h6>No unapproved submissions pending</h6>'
+  }
+  if (approvedHTML === '') {
+    approvedHTML = '<h6>No approved submissions</h6>'
+  }
   $('.unapproved-submissions-field').html(unapprovedHTML)
   $('.approved-submissions-field').html(approvedHTML)
 }
@@ -124,71 +130,85 @@ const showAdminView = advices => {
 // displayAdvice() is used to display a random piece of advice in a speech
 // bubble popping out of the ENCOURAGE button
 const displayAdvice = data => {
-  store.advice = data.advice
-  let likeImageURL = ''
-  let likeTitle = ''
-  let favoriteImageURL = ''
-  let favoriteTitle = ''
-  const displayState = []
-  if (data.advice.likes !== undefined) {
-    if (data.advice.likes.every(like => like.user_id !== store.user.id)) {
+  if (data !== undefined) {
+    store.advice = data.advice
+    let likeImageURL = ''
+    let likeTitle = ''
+    let favoriteImageURL = ''
+    let favoriteTitle = ''
+    const displayState = []
+    if (data.advice.likes !== undefined) {
+      if (data.advice.likes.every(like => like.user_id !== store.user.id)) {
+        likeImageURL = 'public/images/thumbs-up3.png'
+        likeTitle = 'Click here to like'
+        displayState.push(false)
+      } else {
+        likeImageURL = 'public/images/thumbs-up-active.png'
+        likeTitle = 'Click here to unlike'
+        displayState.push(true)
+      }
+    } else {
       likeImageURL = 'public/images/thumbs-up3.png'
       likeTitle = 'Click here to like'
       displayState.push(false)
-    } else {
-      likeImageURL = 'public/images/thumbs-up-active.png'
-      likeTitle = 'Click here to unlike'
-      displayState.push(true)
     }
-  } else {
-    likeImageURL = 'public/images/thumbs-up3.png'
-    likeTitle = 'Click here to like'
-    displayState.push(false)
-  }
-  if (data.advice.favorites !== undefined) {
-    if (data.advice.favorites.every(favorite => favorite.user_id !== store.user.id)) {
+    if (data.advice.favorites !== undefined) {
+      if (data.advice.favorites.every(favorite => favorite.user_id !== store.user.id)) {
+        favoriteImageURL = 'public/images/favorite.png'
+        favoriteTitle = 'Click here to favorite'
+        displayState.push(false)
+      } else {
+        favoriteImageURL = 'public/images/favorited.png'
+        favoriteTitle = 'Click here to unfavorite'
+        displayState.push(true)
+      }
+    } else {
       favoriteImageURL = 'public/images/favorite.png'
       favoriteTitle = 'Click here to favorite'
       displayState.push(false)
-    } else {
-      favoriteImageURL = 'public/images/favorited.png'
-      favoriteTitle = 'Click here to unfavorite'
-      displayState.push(true)
     }
-  } else {
-    favoriteImageURL = 'public/images/favorite.png'
-    favoriteTitle = 'Click here to favorite'
-    displayState.push(false)
-  }
-  const sentimentValue = sentimentAnalysis(data.advice.content)
-  $('#advice-display').html(`
-    <div class="master-container">
-      <img src="public/images/speech-bubble.png" alt="speech bubble" style="width:100%;">
-      <div class="centered">
-        <blockquote class="blockquote mb-0">
-          <p>${data.advice.content}</p>
-          <div class="blockquote-footer text-right mr-2">${data.advice.first_name} ${data.advice.last_name}</div>
-        </blockquote>
-        <hr class="advice-display-hr"/>
-        <div class="advice-footer">
-          <div>
-            <img class="sentiment-image" src="public/images/face${sentimentValue}.png" data-toggle="tooltip" title="Result of performing sentiment analysis on this piece of encouragement: score is ${sentimentValue}">
-          </div>
+    const sentimentValue = sentimentAnalysis(data.advice.content)
+    $('#advice-display').html(`
+      <div class="master-container">
+        <img src="public/images/speech-bubble.png" alt="speech bubble" style="width:100%;">
+        <div class="centered">
+          <blockquote class="blockquote mb-0">
+            <p>${data.advice.content}</p>
+            <div class="blockquote-footer text-right mr-2">${data.advice.first_name} ${data.advice.last_name}</div>
+          </blockquote>
+          <hr class="advice-display-hr"/>
+          <div class="advice-footer">
+            <div>
+              <img class="sentiment-image" src="public/images/face${sentimentValue}.png" data-toggle="tooltip" title="Result of performing sentiment analysis on this piece of encouragement: score is ${sentimentValue}">
+            </div>
 
-          <div class="upvote-div">
-            <button class="btn favorite-button" type="submit" id="favorite-button">
-              <img class="favorite-image" src=${favoriteImageURL} data-toggle="tooltip" title="${favoriteTitle}">
-            </button>
-            <button class="btn upvote-button" type="submit" id="upvote-button">
-              <img class="like-image" src=${likeImageURL} data-toggle="tooltip" title="${likeTitle}" alt="${likeTitle}">
-            </button>
-            <span class="upvote-count" data-toggle="tooltip" title="Total likes">${data.advice.likes.length}</span></div>
+            <div class="upvote-div">
+              <button class="btn favorite-button" type="submit" id="favorite-button">
+                <img class="favorite-image" src=${favoriteImageURL} data-toggle="tooltip" title="${favoriteTitle}">
+              </button>
+              <button class="btn upvote-button" type="submit" id="upvote-button">
+                <img class="like-image" src=${likeImageURL} data-toggle="tooltip" title="${likeTitle}" alt="${likeTitle}">
+              </button>
+              <span class="upvote-count" data-toggle="tooltip" title="Total likes">${data.advice.likes.length}</span></div>
+          </div>
         </div>
       </div>
-    </div>
-    `)
-  $('[data-toggle="tooltip"]').tooltip()
-  return displayState
+      `)
+    $('[data-toggle="tooltip"]').tooltip()
+    return displayState
+  } else {
+    $('#advice-display').html(`
+      <div class="master-container">
+        <img src="public/images/speech-bubble.png" alt="speech bubble" style="width:100%;">
+        <div class="centered">
+          <blockquote class="blockquote mb-0">
+            <p>No pieces of encouragement currently exist for your selected tags; choose additional tags in User Profile and try again</p>
+          </blockquote>
+        </div>
+      </div>
+      `)
+    return null
+  }
 }
 
 // addFavoriteDisplay() switches the favorite button image and pop-up text
