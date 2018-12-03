@@ -111,14 +111,19 @@ const showAdminView = advices => {
   })
   approvedHTML += `  </tbody>
   </table>`
-  if (unapprovedHTML === '') {
-    unapprovedHTML = '<h6>No unapproved submissions pending</h6>'
-  }
-  if (approvedHTML === '') {
+  if (approvedAdvices.length === 0) {
     approvedHTML = '<h6>No approved submissions</h6>'
   }
-  $('.unapproved-submissions-field').html(unapprovedHTML)
+  if (unapprovedAdvices.length === 0) {
+    unapprovedHTML = '<h6>No unapproved submissions pending</h6>'
+  }
   $('.approved-submissions-field').html(approvedHTML)
+  $('.unapproved-submissions-field').html(unapprovedHTML)
+}
+
+const showAdminViewFail = () => {
+  $('.approved-submissions-field').html('<h6 class="failure">Error: could not reach server</h6>')
+  $('.unapproved-submissions-field').html('<h6 class="failure">Error: could not reach server</h6>')
 }
 
 ////////////////////////////
@@ -616,6 +621,9 @@ const showFavoritesUserView = data => {
   })
   newHTML += `  </tbody>
   </table>`
+  if (data.advices.length === 0) {
+    newHTML = '<h6>You have not favorited any advice</h6>'
+  }
   $('.your-favorites-field').html(newHTML)
   $('[data-toggle="tooltip"]').tooltip()
 }
@@ -653,6 +661,9 @@ const showUserView = data => {
   })
   newHTML += `  </tbody>
   </table>`
+  if (data.advices.length === 0) {
+    newHTML = '<h6>You have no submissions</h6>'
+  }
   $('.your-submissions-field').html(newHTML)
   $('[data-toggle="tooltip"]').tooltip()
 }
@@ -661,6 +672,7 @@ module.exports = {
   // ADMIN UI Functions
   refreshAdminView,
   showAdminView,
+  showAdminViewFail,
   showApprovedDiv,
   showUnapprovedDiv,
   // ADVICE UI Functions,

@@ -44,7 +44,7 @@ const onAdminApproveConfirm = event => {
     .then(api.getAllAdvicesFromAPI)
     .then(ui.refreshAdminView)
     .then(addAdminHandlers)
-    .catch(console.log)
+    .catch(ui.handleServerFail)
 }
 
 // onAdminDeleteAdvice() fires when the admin wants to delete a piece of advice;
@@ -93,7 +93,7 @@ const onShowAdminView = () => {
   api.getAllAdvicesFromAPI()
     .then(ui.showAdminView)
     .then(addAdminHandlers)
-    .catch(console.log)
+    .catch(ui.showAdminViewFail)
 }
 
 /////////////////////
@@ -110,7 +110,7 @@ const refreshAdvice = () => {
     api.getSpecificAdviceFromAPI(store.advice.id)
       .then(ui.displayAdvice)
       .then(addHandlersToAdviceButtons)
-      .catch(console.log)
+      .catch(ui.handleLoggedInEncourageClickError)
   }
 }
 
