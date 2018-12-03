@@ -4,7 +4,7 @@
 
 (1) ADMIN UI functions
 (2) ADVICE UI Functions
-(3) FORM Reset
+(3) FORM Functions
 (4) SIGN-IN/UP View UI functions
 (5) USER View UI Functions */
 
@@ -253,6 +253,21 @@ const handleAdviceSubmissionSuccess = () => {
   $('.submit-advice-message').html(`<h5 class="submit-advice-message success">Encouragement submitted!</h5>`)
 }
 
+// handleLoggedInEncourageClickError() displays a bubble with an error if the
+// ENCOURAGE button is clicked and the server is unreachable
+const handleLoggedInEncourageClickError = () => {
+  $('#advice-display').html(`
+    <div class="master-container">
+      <img src="public/images/speech-bubble.png" alt="speech bubble" style="width:100%;">
+      <div class="centered">
+        <blockquote class="blockquote mb-0">
+          <p class="text-center">Error: couldn't reach server</p>
+        </blockquote>
+      </div>
+    </div>
+    `)
+}
+
 // sentimentAnalysis() analyzes the content of the random piece of advice
 // returned by the API, assessing the emotional valence of each word and scoring
 // the whole string according to how "positive" or "negative" the sentiment is
@@ -304,11 +319,11 @@ const submitContentFailure = error => {
   }
 }
 
-////////////////////
-//                //
-//  FORM  Reset   //
-//                //
-////////////////////
+//////////////////////
+//                  //
+//  FORM Functions  //
+//                  //
+//////////////////////
 
 // clearForms() clears form content and messages
 const clearForms = () => {
@@ -322,6 +337,17 @@ const clearForms = () => {
   $('.change-password-message').text('')
   $('#user-name').text('')
   $('.choose-tags-message').text('')
+}
+
+// handleServerFail() displays a warning if like buttons, favorite buttons, or
+// delete buttons fail due to a server action
+const handleServerFail = () => {
+  $('#adminApproveConfirmModal').modal('hide')
+  $('#adminUnapproveConfirmModal').modal('hide')
+  $('#adminDeleteConfirmModal').modal('hide')
+  $('#deleteAdviceConfirmModal').modal('hide')
+  $('#deleteFavoriteConfirmModal').modal('hide')
+  $('#serverFailModal').modal('show')
 }
 
 ////////////////////////////////////
@@ -398,7 +424,6 @@ const handleSignOutSuccess = () => {
 // handleSignOutFailure() displays an error if a sign-out attempt fails
 const handleSignOutFailure = event => {
   $('.sign-out-message').html('<p class="failure">Failed to sign out</p>')
-  console.log('Invalid sign out event', event)
 }
 
 // handleSignUpSuccess() transforms the logInModal after the user successfully
@@ -415,14 +440,12 @@ const handleSignUpSuccess = event => {
 // handleSignUpFailure() displays an error if a sign-up attempt fails
 const handleSignUpFailure = event => {
   $('.sign-up-message').html('<h5 class="sign-up-message failure">Sign up failed</h5>')
-  console.log('Invalid sign up event', event)
 }
 
 // handleSignUpMismatchingPasswords() displays an error if, when the user tries
 // to sign up, the password and password_confirmation fields don't match
 const handleSignUpMismatchingPasswords = event => {
   $('.sign-up-message').html('<h5 class="sign-up-message failure">Passwords do not match</h5>')
-  console.log('Invalid sign up event', event)
 }
 
 // handleSignUpNoTags() displays an error if there are no tags selected
@@ -469,28 +492,36 @@ const switchToSignUp = function () {
 
 // handleChangePasswordFailure() displays an error message if the attempt to
 // change a user's password on the API failed
-const handleChangePasswordFailure = function () {
+const handleChangePasswordFailure = () => {
   $('.change-password-message').html('<h6 class="change-password-message failure">Invalid password</h6>')
 }
 
 // handleChangePasswordMismatchingPasswords() displays an error if the user
 // tries to change their password, and the new password and
 // new password confirmation fields don't match
-const handleChangePasswordMismatchingPasswords = function () {
+const handleChangePasswordMismatchingPasswords = () => {
   $('.change-password-message').html('<h6 class="change-password-message failure">New passwords do not match</h6>')
 }
 
 // handleChangePasswordSuccess() displays a message when the user successfully
 // changes their password
-const handleChangePasswordSuccess = function (newPassword) {
+const handleChangePasswordSuccess = newPassword => {
   store.user.password = newPassword
   $('.change-password-message').html('<h6 class="change-password-message success">Password changed</h6>')
+}
+
+const handleShowFavoritesViewFailure = () => {
+  $('.your-favorites-field').html(`<h6 class="failure">Couldn't load favorites</h6>`)
+}
+
+const handleShowUserViewFailure = () => {
+  $('.your-submissions-field').html(`<h6 class="failure">Couldn't load submissions</h6>`)
 }
 
 // handleUpdateTagsFailure() displays an error if the user's tags fail to update
 // on the API
 const handleUpdateTagsFailure = () => {
-  $('.choose-tags-message').html('<h6 class="choose-tags-message failure">Tags failed to update/h6>')
+  $('.choose-tags-message').html('<h6 class="choose-tags-message failure">Tags failed to update</h6>')
 }
 
 // handleUpdateTagsFailure() displays an error if the user tries to update tags
@@ -640,9 +671,11 @@ module.exports = {
   displayAdvice,
   handleAdviceSubmissionFailure,
   handleAdviceSubmissionSuccess,
+  handleLoggedInEncourageClickError,
   submitContentFailure,
-  // FORM Reset
+  // FORM Functions
   clearForms,
+  handleServerFail,
   // SIGN-IN/UP View UI Functions
   handleSignInSuccess,
   handleSignInFailure,
@@ -661,6 +694,8 @@ module.exports = {
   handleChangePasswordFailure,
   handleChangePasswordMismatchingPasswords,
   handleChangePasswordSuccess,
+  handleShowFavoritesViewFailure,
+  handleShowUserViewFailure,
   handleUpdateTagsFailure,
   handleUpdateTagsNoTags,
   handleUpdateTagsSuccess,

@@ -64,7 +64,7 @@ const onAdminDeleteConfirm = event => {
     .then(api.getAllAdvicesFromAPI)
     .then(ui.refreshAdminView)
     .then(addAdminHandlers)
-    .catch(console.log)
+    .catch(ui.handleServerFail)
 }
 
 // onAdminUnapproveAdvice() fires when the admin clicks the "unapprove" advice
@@ -84,7 +84,7 @@ const onAdminUnapproveConfirm = event => {
     .then(api.getAllAdvicesFromAPI)
     .then(ui.refreshAdminView)
     .then(addAdminHandlers)
-    .catch(console.log)
+    .catch(ui.handleServerFail)
 }
 
 // onShowAdminView() fires when the user selects "Admin" from the dropdown nav;
@@ -167,7 +167,7 @@ const onFavoriteButtonClick = event => {
     .then(ui.addFavoriteDisplay)
     .then($('#favorite-button').off('click', onFavoriteButtonClick))
     .then($('#favorite-button').on('click', onFavoriteButtonUnclick))
-    .catch(console.log)
+    .catch(ui.handleServerFail)
 }
 
 // onFavoriteButtonUnclick() fires when the user clicks the favorite button on a
@@ -181,7 +181,7 @@ const onFavoriteButtonUnclick = event => {
     .then(ui.deleteFavoriteDisplay)
     .then($('#favorite-button').off('click', onFavoriteButtonUnclick))
     .then($('#favorite-button').on('click', onFavoriteButtonClick))
-    .catch(console.log)
+    .catch(ui.handleServerFail)
 }
 
 // onFavoriteButtonClick() fires when the user clicks the like button on a
@@ -195,7 +195,7 @@ const onLikeButtonClick = event => {
     .then(ui.addLikeDisplay)
     .then($('#upvote-button').off('click', onLikeButtonClick))
     .then($('#upvote-button').on('click', onLikeButtonUnclick))
-    .catch(console.log)
+    .catch(ui.handleServerFail)
 }
 
 // onLikeButtonUnclick() fires when the user clicks the favorite button on a
@@ -209,7 +209,7 @@ const onLikeButtonUnclick = event => {
     .then(ui.deleteLikeDisplay)
     .then($('#upvote-button').off('click', onLikeButtonUnclick))
     .then($('#upvote-button').on('click', onLikeButtonClick))
-    .catch(console.log)
+    .catch(ui.handleServerFail)
 }
 
 ///////////////////////////////
@@ -233,7 +233,7 @@ const onLoggedInEncourageClick = event => {
   api.getAdviceFromAPI()
     .then(ui.displayAdvice)
     .then(addHandlersToAdviceButtons)
-    .catch(console.log)
+    .catch(ui.handleLoggedInEncourageClickError)
 }
 
 // switchEncourageButtonToAdvice() flips around the event handlers once the user
@@ -399,7 +399,7 @@ const onDeleteConfirm = event => {
     .then(api.getUserAdvicesFromAPI)
     .then(ui.refreshUserView)
     .then(addDeleteHandlers)
-    .catch(console.log)
+    .catch(ui.handleServerFail)
 }
 
 // onDeleteAdvice() fires when the user clicks the "remove favorite" button in the
@@ -419,7 +419,7 @@ const onDeleteFavoriteConfirm = event => {
     .then(api.getUserFavoritesFromAPI)
     .then(ui.refreshFavoritesUserView)
     .then(addFavoriteDeleteHandlers)
-    .catch(console.log)
+    .catch(ui.handleServerFail)
 }
 
 // onShowUseFavoritesrView() fires when the user opens the USER view via the "User
@@ -429,7 +429,7 @@ const onShowUserFavoritesView = () => {
   api.getUserFavoritesFromAPI()
     .then(ui.showFavoritesUserView)
     .then(addFavoriteDeleteHandlers)
-    .catch(console.log)
+    .catch(ui.handleShowFavoritesViewFailure)
 }
 
 // onShowUserView() fires when the user opens the USER view via the "User
@@ -439,7 +439,7 @@ const onShowUserView = () => {
   api.getUserAdvicesFromAPI()
     .then(ui.showUserView)
     .then(addDeleteHandlers)
-    .catch(console.log)
+    .catch(ui.handleShowUserViewFailure)
 }
 
 // onUserChooseTagsSubmit() fires when the user selects new tags in the USER

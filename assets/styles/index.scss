@@ -187,6 +187,12 @@ div {
     z-index: 100;
   }
 
+  &.server-fail-modal-content {
+    left: 75px;
+    top: -100px;
+    width: 350px !important;
+  }
+
   &.upvote-div {
     align-items: center;
     display: flex;
