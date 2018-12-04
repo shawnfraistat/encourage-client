@@ -63,5 +63,5 @@ https://shawnfraistat.github.io/encourage-client/
 Link to Deployed Server:
 https://mighty-coast-69207.herokuapp.com/
 
-Link to Sever Repo:
+Link to Server Repo:
 https://github.com/shawnfraistat/encourage-api

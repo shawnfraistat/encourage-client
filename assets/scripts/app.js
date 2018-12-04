@@ -7,9 +7,7 @@ TO-DO LIST:
 update route that's used?
 2. Animations?
 3. Check breakpoints and other display sizes
-4. Check errors handlers--right now you console.log errors a lot
-5. The tag check boxes in the USER view are blank by default; it'd be good if they defaulted to the current user's tags
-6. If user has no submissions or favorites, display some message instead of just a blank div?
+4. The tag check boxes in the USER view are blank by default; it'd be good if they defaulted to the current user's tags
 */
 
 // use require with a reference to bundle the file and use it in this file
