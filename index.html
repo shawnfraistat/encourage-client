@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html>
+    <head>
+      <title>Encourage</title>
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link href="https://fonts.googleapis.com/css?family=Josefin+Sans" rel="stylesheet">
+      <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+      <!-- Do not add `link` tags-->
+      <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+
+      <!-- Do not add `script` tags-->
+      <script src="public/vendor.js" type="text/javascript" charset="utf-8" defer></script>
+      <script src="public/application.js" type="text/javascript" charset="utf-8" defer></script>
+    </head>
+
+    <body>
+
+      <!-- admin modal -->
+      <div class="modal fade" id="adminModal" role="dialog">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="adminModalTitle">Admin Tools</h5>
+              <button type="button" class="close" data-dismiss="modal">
+                <span class='modal-x'>x</span>
+              </button>
+            </div>
+            <ul class="nav nav-tabs">
+              <li class="nav-item">
+                <button class="nav-link active" id="unapproved-submissions-nav-link">Unapproved Submissions</button>
+              </li>
+              <li class="nav-item">
+                <button class="nav-link" id="approved-submissions-nav-link">Approved Submissions</button>
+              </li>
+            </ul>
+            <div class="modal-body">
+              <div id="unapproved-submissions-div">
+                <h5 class="unapproved-submissions-message"></h5>
+                <div class="unapproved-submissions-field"></div>
+                <br />
+              </div>
+              <div id="approved-submissions-div" class="collapse">
+                <h5 class="approved-submissions-message"></h5>
+                <div class="approved-submissions-field"></div>
+                <br />
+              </div>
+            </div>
+
+            <div class="modal-footer">
+              <button type="button" id="admin-done" data-dismiss="modal" class="btn btn-primary">Done</button>
+            </div>
+
+            </div>
+          </div>
+        </div>
+
+      <!-- logInModal -->
+      <div class="modal fade sign-view" id="logInModal" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header" id="logInModalHeader">
+              <h5 class="modal-title" id="logInModalTitle">Sign In</h5>
+              <button type="button" class="close" data-dismiss="modal">
+                <span class='modal-x'>x</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <p class="sign-in-message"></p>
+              <form id="sign-in">
+                <fieldset>
+                  <input type="text" name="credentials[email]" placeholder="Email" />
+                  <input type="password" name="credentials[password]" placeholder="Password" />
+                  <br />
+                  <br />
+                  <h6>New users <span id="switch-to-sign-up" class="switch-to-sign-up">sign up</span></h6>
+                </fieldset>
+              </form>
+            <p class="sign-up-message"></p>
+            <form id="sign-up" class="collapse">
+              <fieldset>
+                <h5>User Info</h5>
+                <input type="text" name="credentials[first_name]" placeholder="First Name" />
+                <input type="text" name="credentials[last_name]" placeholder="Last Name" />
+                <br />
+                <input type="password" name="credentials[password]" placeholder="Password" />
+                <input type="password" name="credentials[password_confirmation]" placeholder="Confirm Password" />
+                <br />
+                <input type="text" name="credentials[email]" placeholder="Email" />
+                <br />
+                <br />
+                <h5 data-toggle="tooltip" title="eNCOURAGE will display random pieces of encouragement based on your interests--select your interests here">Choose Types of Encouragement You Want to Receive</h5>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input sign-up-check" type="checkbox" id="inlineCheckbox1" value="general">
+                  <label class="form-check-label" for="inlineCheckbox1">General</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input sign-up-check" type="checkbox" id="inlineCheckbox2" value="coding">
+                  <label class="form-check-label" for="inlineCheckbox2">Coding</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input sign-up-check" type="checkbox" id="inlineCheckbox3" value="bleak">
+                  <label class="form-check-label" for="inlineCheckbox3">Bleak</label>
+                </div>
+                <br />
+                <br />
+                <h6>Existing users <span id= "switch-to-sign-in" class="switch-to-sign-in">sign in</span></h6>
+              </fieldset>
+            </form>
+            </div>
+          <div class="modal-footer">
+            <div class="sign-in-footer-buttons">
+              <button type="button" id="sign-in-cancel" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+              <button type="button" id="sign-in-submit" class="btn btn-primary">Submit</button>
+              <button type="button" id="sign-in-continue" class="btn btn-primary collapse" data-dismiss="modal">Continue</button>
+            </div>
+            <div class="sign-up-footer-buttons collapse">
+              <button type="button" id="sign-up-cancel" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+              <button type="button" id="sign-up-submit" class="btn btn-primary">Submit</button>
+              <button type="button" id="sign-up-continue" class="btn btn-primary collapse">Continue</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+
+      <!-- signOutModal -->
+      <div class="modal fade sign-view" id="signOutModal" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-body">
+              <h5 class="modal-title" id="signOutModalTitle">Sign Out?</h5>
+              <h3 class="sign-out-message"></h3>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+              <button type="button" id="sign-out-submit" class="btn btn-primary">Confirm</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- userViewModal -->
+      <div class="modal fade user-view-modal" id="userViewModal" role="dialog">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="userViewTitle">User Profile</h5>
+              <button type="button" class="close" data-dismiss="modal">
+                <span class='modal-x'>x</span>
+              </button>
+            </div>
+            <ul class="nav nav-tabs">
+              <li class="nav-item">
+                <button class="nav-link active" id="settings-nav-link">Settings</button>
+              </li>
+              <li class="nav-item">
+                <button class="nav-link" id="your-submissions-nav-link">Your Submissions</button>
+              </li>
+              <li class="nav-item">
+                <button class="nav-link" id="your-favorites-nav-link">Favorites</button>
+              </li>
+            </ul>
+            <div class="modal-body">
+              <div id="settings-div">
+                <form id="change-password">
+                  <div class="form group">
+                      <fieldset>
+                        <h5>Change Password</h5>
+                        <h5 class="change-password-message"></h5>
+                        <input type="password" name="passwords[old]" placeholder="Current Password" />
+                        <input type="password" name="passwords[new]" placeholder="New Password" />
+                        <input type="password" name="passwords[confirm_new]" placeholder="Confirm New" />
+                        <button type="button" id="change-password-submit">Submit</button>
+                      </fieldset>
+                  </div>
+                </form>
+                <br />
+                <form id="choose-tags">
+                  <div class="form group">
+                      <fieldset>
+                        <h5 title="Change which types of encouragement you'd like to view">Update Tags</h5>
+                        <h5 class="choose-tags-message"></h5>
+                        <div class="form-check form-check-inline">
+                          <input class="form-check-input choose-tags-check" type="checkbox" id="inlineCheckbox4" value="general">
+                          <label class="form-check-label" for="inlineCheckbox4">General</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                          <input class="form-check-input choose-tags-check" type="checkbox" id="inlineCheckbox5" value="coding">
+                          <label class="form-check-label" for="inlineCheckbox5">Coding</label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                          <input class="form-check-input choose-tags-check" type="checkbox" id="inlineCheckbox6" value="bleak">
+                          <label class="form-check-label" for="inlineCheckbox6">Bleak</label>
+                        </div>
+                        <button type="button" id="user-choose-tags-submit">Submit</button>
+                      </fieldset>
+                  </div>
+                </form>
+              </div>
+              <div id="your-submissions-div" class="collapse">
+                <h5>Your Submissions</h5>
+                <h5 class="your-submissions-message"></h5>
+                <div class="your-submissions-field"></div>
+              </div>
+            <div id="your-favorites-div" class="collapse">
+              <h5>Your Favorites</h5>
+              <h5 class="your-favorites-message"></h5>
+              <div class="your-favorites-field"></div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" id="user-view-done" data-dismiss="modal" class="btn btn-primary">Done</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+      <!-- deleteConfirmModal-->
+
+      <div class="modal fadel" id="deleteConfirmModal" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content delete-modal-content">
+            <div class="modal-body delete-modal-body">
+              <h5 class="modal-title" id="deleteConfirmModalTitle">
+                Delete This Item?
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">&times;</button>
+                  <button type="button" id="delete-item-submit" class="btn btn-primary">&#10004;</button>
+              </h5>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- adminDeleteConfirmModal-->
+
+      <div class="modal fadel" id="adminDeleteConfirmModal" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content delete-modal-content">
+            <div class="modal-body delete-modal-body">
+              <h5 class="modal-title" id="adminDeleteConfirmModalTitle">
+                Delete This Item?
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">&times;</button>
+                  <button type="button" id="admin-delete-item-submit" class="btn btn-primary">&#10004;</button>
+              </h5>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- deleteFavoriteConfirmModal-->
+
+      <div class="modal fadel" id="deleteFavoriteConfirmModal" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content delete-favorite-confirm-modal-content">
+            <div class="modal-body delete-modal-body">
+              <h5 class="modal-title" id="deleteFavoriteConfirmModalTitle">
+                Unfavorite This Item?
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">&times;</button>
+                  <button type="button" id="delete-favorite-submit" class="btn btn-primary">&#10004;</button>
+              </h5>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- adminApproveConfirmModal-->
+
+      <div class="modal fadel" id="adminApproveConfirmModal" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content approve-confirm-modal-content">
+            <div class="modal-body approve-confirm-modal-body">
+              <h5 class="modal-title" id="adminApproveConfirmModalTitle">
+                Approve This Item?
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">&times;</button>
+                  <button type="button" id="admin-approve-item-submit" class="btn btn-primary">&#10004;</button>
+              </h5>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- adminUnapproveConfirmModal-->
+
+      <div class="modal fadel" id="adminUnapproveConfirmModal" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content approve-confirm-modal-content">
+            <div class="modal-body approve-confirm-modal-body">
+              <h5 class="modal-title" id="adminUnapproveConfirmModalTitle">
+                Unapprove This?
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">&times;</button>
+                  <button type="button" id="admin-unapprove-item-submit" class="btn btn-primary">&#10004;</button>
+              </h5>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- submitAdviceModal-->
+
+      <div class="modal fade" id="submitAdviceModal" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="submitAdviceTitle">Submit Encouragement</h5>
+              <button type="button" class="close" data-dismiss="modal">
+                <span class='modal-x'>x</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <br />
+              <form id="submit-advice">
+                <div class="form group">
+                    <fieldset>
+                      <h5 class="submit-advice-message"></h5>
+                      <textarea name="submission-text" rows="4" maxlength="150" class="submission-text" id="submission-text" placeholder="Encouragement Text"></textarea>
+                      <p class="grey">150 character limit</p>
+                      <p class="select-tags-text" title="Choose how this piece of encouragement should be classified">Select Tags:</p>
+                      <div class="form-check form-check-inline">
+                        <input class="encourage-form-check-input" type="checkbox" id="inlineCheckbox7" value="general">
+                        <label class="form-check-label" for="inlineCheckbox7">General</label>
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <input class="encourage-form-check-input" type="checkbox" id="inlineCheckbox8" value="coding">
+                        <label class="form-check-label" for="inlineCheckbox8">Coding</label>
+                      </div>
+                      <div class="form-check form-check-inline">
+                        <input class="encourage-form-check-input" type="checkbox" id="inlineCheckbox9" value="bleak">
+                        <label class="form-check-label" for="inlineCheckbox9">Bleak</label>
+                      </div>
+                      <button type="button" id="submit-advice-submit">Submit</button>
+                    </fieldset>
+                </div>
+              </form>
+              <br />
+            </div>
+            <div class="modal-footer">
+              <button type="button" data-dismiss="modal" class="btn btn-primary">Done</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- serverFailModal -->
+
+      <div class="modal fadel" id="serverFailModal" role="dialog">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content server-fail-modal-content">
+            <div class="modal-body server-fail-modal-body">
+              <h5 class="modal-title" id="serverFailModalTitle">
+                  Error: couldn't reach server
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">&times;</button>
+              </h5>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- main page body -->
+
+      <header>
+          <nav class="navbar justify-content-end">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-content" aria-controls="navbarSupportedContent15" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+          </nav>
+          <div class="collapse navbar-collapse" id="navbar-content">
+            <ul class="navbar-nav mr-auto">
+              <li class="nav-item m-2 collapse" id="user-profile-nav-button" data-toggle="modal" data-target="#userViewModal">
+                User Profile
+              </li>
+              <li class="nav-item m-2 collapse" id="submit-encouragement-nav-button" data-toggle="modal" data-target="#submitAdviceModal">
+                Submit Encouragement
+              </li>
+              <li class="nav-item m-2" id="login-nav-button" data-toggle="modal" data-target="#logInModal">
+                Log In
+              </li>
+              <div id="admin-div" class="collapse">
+                <hr />
+                <li class="nav-item m-2" id="admin-nav-button" data-toggle="modal" data-target="#adminModal">
+                  Admin
+                </li>
+                <hr />
+              </div>
+              <li class="nav-item m-2 collapse" id="sign-out-nav-button"  data-toggle="modal" data-target="#signOutModal">
+                Sign Out
+              </li>
+            </ul>
+          </div>
+      </header>
+
+      <main role="main">
+        <div class="cover-container d-flex flex-column w-100 h-100 p-3 mx-auto">
+          <div id="advice-display" class="advice-display">
+          </div>
+          <div class="jumbotron jumbotron-fluid btn encourage-button" role="button" id="encourage-button">
+            <div class="container core-container">
+              <span class="encourage-e">e</span><h1 class="encourage-text">ncourage</h1>
+            </div>
+          </div>
+        </div>
+      </main>
+
+      <footer>
+        <p></p>
+        <br/>
+      </footer>
+
+  </body>
+</html>
