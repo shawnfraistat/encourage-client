@@ -12,9 +12,9 @@ $white: #fff;
 $yellow: #ffce00;
 
 :root:before {
-  content: url('../../public/images/speech-bubble.png');
+  content: url('public/images/speech-bubble.png');
   /* partial fallback */
-  background-image: url('../../public/images/speech-bubble.png');
+  background-image: url('public/images/speech-bubble.png');
   visibility: hidden;
   position: absolute;
   left: -999em;
