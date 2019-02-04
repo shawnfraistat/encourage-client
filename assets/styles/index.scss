@@ -11,6 +11,15 @@ $vermillion: #fc4a1a;
 $white: #fff;
 $yellow: #ffce00;
 
+:root:before {
+  content: url('../../public/images/speech-bubble.png');
+  /* partial fallback */
+  background-image: url('../../public/images/speech-bubble.png');
+  visibility: hidden;
+  position: absolute;
+  left: -999em;
+}
+
 html,
 body {
   height: 100vh;
@@ -318,6 +327,7 @@ textarea {
     width: 100%;
   }
 }
+
 
 @media screen and (min-width: 800px) {
   .encourage-button {
